@@ -1,8 +1,9 @@
 import React from 'react';
 import { Shield, Activity, Award, User, Calendar, MapPin, Hash, Info } from 'lucide-react';
+import { BASE_URL } from '../services/api';
 
 const FichaTecnicaPDF = ({ dog }) => {
-  const photoURL = dog.foto_url ? `http://localhost:5000${dog.foto_url}` : 'https://via.placeholder.com/150?text=No+Foto';
+  const photoURL = dog.foto_url ? `${BASE_URL}${dog.foto_url}` : 'https://via.placeholder.com/150?text=No+Foto';
   const today = new Date().toLocaleDateString();
 
   return (

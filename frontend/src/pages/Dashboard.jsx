@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 import { Activity, AlertTriangle, CheckCircle, Clock, Download, Search } from 'lucide-react';
 
 const Dashboard = () => {
@@ -150,7 +150,7 @@ const Dashboard = () => {
                     <tr key={dog.id} onClick={() => navigate(`/dogs/${dog.id}`)} className="border-b border-slate-100 last:border-0 hover:bg-slate-50 transition-colors cursor-pointer">
                       <td className="py-4 font-medium text-slate-800 flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-slate-200 overflow-hidden">
-                          {dog.foto_url ? <img src={`http://localhost:5000${dog.foto_url}`} alt="" className="w-full h-full object-cover"/> : null}
+                          {dog.foto_url ? <img src={`${BASE_URL}${dog.foto_url}`} alt="" className="w-full h-full object-cover"/> : null}
                         </div>
                         {dog.nombre}
                       </td>

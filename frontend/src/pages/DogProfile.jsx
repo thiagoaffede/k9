@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
 import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import FichaTecnicaPDF from '../components/FichaTecnicaPDF';
@@ -27,7 +27,7 @@ const DogProfile = () => {
 
   if (!dog) return <div className="p-8">Cargando perfil...</div>;
 
-  const photoURL = dog.foto_url ? `http://localhost:5000${dog.foto_url}` : 'https://via.placeholder.com/150?text=No+Foto';
+  const photoURL = dog.foto_url ? `${BASE_URL}${dog.foto_url}` : 'https://via.placeholder.com/150?text=No+Foto';
 
   const handleDeleteDog = async () => {
     if (window.confirm('¿Eliminar registro de este perro? (Soft Delete)')) {
