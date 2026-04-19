@@ -66,6 +66,9 @@ const createDog = async (req, res) => {
     if (!data.nro_chip || data.nro_chip.trim() === '') {
       data.nro_chip = null;
     }
+    if (data.fecha_nacimiento) {
+      data.fecha_nacimiento = new Date(data.fecha_nacimiento);
+    }
     const dog = await prisma.dog.create({ data });
     await addHistoryLog(dog.id, 'CREACION', 'Perro registrado en el sistema', req.user.nombre);
     res.status(201).json(dog);
@@ -77,11 +80,34 @@ const createDog = async (req, res) => {
 const updateDog = async (req, res) => {
   try {
     const id = parseInt(req.params.id);
-    const data = { ...req.body };
-    if (!data.nro_chip || data.nro_chip.trim() === '') {
-      data.nro_chip = null;
+    const { 
+      nombre, raza, sexo, color, senas_particulares, 
+      nro_chip, estado, origen, observaciones, fecha_nacimiento 
+    } = req.body;
+
+    const data = { 
+      nombre, raza, sexo, color, senas_particulares, 
+      estado, origen, observaciones 
+    };
+
+    if (fecha_nacimiento) {
+      data.fecha_nacimiento = new Date(fecha_nacimiento);
     }
-    const dog = await prisma.dog.update({ where: { id }, data });
+
+    // Manejo de nro_chip para evitar Unique Constraint con strings vacíos
+    if (nro_chip === undefined) {
+      // Si no se envía el campo, no lo tocamos
+    } else if (!nro_chip || nro_chip.trim() === '') {
+      data.nro_chip = null;
+    } else {
+      data.nro_chip = nro_chip;
+    }
+
+    const dog = await prisma.dog.update({ 
+      where: { id }, 
+      data 
+    });
+
     await addHistoryLog(dog.id, 'MODIFICACION', 'Datos generales del perro actualizados', req.user.nombre);
     res.json(dog);
   } catch (error) {

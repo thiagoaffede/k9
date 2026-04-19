@@ -6,7 +6,7 @@ const NewDog = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: '', raza: '', sexo: 'macho', color: '', nro_chip: '',
-    estado: 'entrenamiento', origen: '', observaciones: ''
+    estado: 'entrenamiento', origen: '', observaciones: '', fecha_nacimiento: ''
   });
   const [foto, setFoto] = useState(null);
 
@@ -69,6 +69,11 @@ const NewDog = () => {
               <option value="activo">Servicio Activo</option>
               <option value="retirado">Retirado</option>
             </select>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">Fecha de Nacimiento</label>
+            <input type="date" className="mt-1 w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              value={formData.fecha_nacimiento} onChange={e => setFormData({ ...formData, fecha_nacimiento: e.target.value })} />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">Foto</label>

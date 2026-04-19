@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
-import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon } from 'lucide-react';
+import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const DogProfile = () => {
@@ -14,6 +14,7 @@ const DogProfile = () => {
   // States para Formularios
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({});
+  const [editDogData, setEditDogData] = useState(null);
 
   const fetchDog = () => {
     api.get(`/dogs/${id}`).then(res => setDog(res.data)).catch(err => console.error(err));
@@ -49,6 +50,18 @@ const DogProfile = () => {
     }
   };
 
+  const handleUpdateDog = async (e) => {
+    e.preventDefault();
+    try {
+      await api.put(`/dogs/${dog.id}`, editDogData);
+      setEditDogData(null);
+      fetchDog();
+    } catch (err) {
+      console.error(err);
+      alert('Error actualizando información del perro');
+    }
+  };
+
   const printRecord = () => {
     window.print();
   };
@@ -69,9 +82,16 @@ const DogProfile = () => {
         </div>
         
         <div className="flex flex-col space-y-2 print:hidden">
-          <button onClick={printRecord} className="px-4 py-2 bg-slate-800 text-white rounded-lg flex items-center text-sm"><Printer className="w-4 h-4 mr-2"/> Ficha PDF</button>
+          <button onClick={() => setEditDogData({ ...dog })} className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center text-sm hover:bg-blue-700 transition-colors">
+            <Edit className="w-4 h-4 mr-2"/> Editar Info
+          </button>
+          <button onClick={printRecord} className="px-4 py-2 bg-slate-800 text-white rounded-lg flex items-center text-sm hover:bg-slate-900 transition-colors">
+            <Printer className="w-4 h-4 mr-2"/> Ficha PDF
+          </button>
           {user?.rol === 'admin' && (
-            <button onClick={handleDeleteDog} className="px-4 py-2 bg-red-100 text-red-600 rounded-lg flex items-center text-sm hover:bg-red-200"><Trash2 className="w-4 h-4 mr-2"/> Eliminar</button>
+            <button onClick={handleDeleteDog} className="px-4 py-2 bg-red-100 text-red-600 rounded-lg flex items-center text-sm hover:bg-red-200 transition-colors">
+              <Trash2 className="w-4 h-4 mr-2"/> Eliminar
+            </button>
           )}
         </div>
       </div>
@@ -90,20 +110,78 @@ const DogProfile = () => {
           
           {/* TAB: RESUMEN / EXPORT PRINT WILL JUST RENDER THIS VISTA */}
           {(activeTab === 'resumen') && (
-             <div className="grid grid-cols-2 gap-4 text-sm mt-4">
-                <div><span className="text-slate-500">Origen:</span> <p className="font-semibold">{dog.origen || 'No registrado'}</p></div>
-                <div><span className="text-slate-500">Color:</span> <p className="font-semibold">{dog.color || 'No registrado'}</p></div>
-                <div className="col-span-2"><span className="text-slate-500">Observaciones Generales:</span> <p className="p-3 bg-white mt-1 border border-slate-200 rounded">{dog.observaciones || 'No hay observaciones'}</p></div>
-                
-                <div className="col-span-2 mt-4">
-                  <h3 className="font-bold text-lg mb-2">Asignación Actual</h3>
-                  {dog.assignments?.length > 0 ? (
-                    <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                      <p className="font-bold text-blue-800">Guía: {dog.assignments[0].guia}</p>
-                      <p className="text-sm text-blue-600">Desde: {new Date(dog.assignments[0].fecha_inicio).toLocaleDateString()} | Turno: {dog.assignments[0].turno}</p>
+             <div className="mt-4">
+                {editDogData ? (
+                  <form onSubmit={handleUpdateDog} className="bg-white p-6 rounded-lg border border-blue-100 shadow-sm space-y-4">
+                    <h3 className="font-bold text-lg text-blue-800 border-b pb-2 mb-4">Editando Información Básica</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Nombre</label>
+                        <input required className="w-full border rounded p-2 mt-1" value={editDogData.nombre || ''} onChange={e => setEditDogData({...editDogData, nombre: e.target.value})} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Nro Chip</label>
+                        <input className="w-full border rounded p-2 mt-1" value={editDogData.nro_chip || ''} onChange={e => setEditDogData({...editDogData, nro_chip: e.target.value})} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Raza</label>
+                        <input className="w-full border rounded p-2 mt-1" value={editDogData.raza || ''} onChange={e => setEditDogData({...editDogData, raza: e.target.value})} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Sexo</label>
+                        <select className="w-full border rounded p-2 mt-1" value={editDogData.sexo} onChange={e => setEditDogData({...editDogData, sexo: e.target.value})}>
+                          <option value="macho">Macho</option>
+                          <option value="hembra">Hembra</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Color</label>
+                        <input className="w-full border rounded p-2 mt-1" value={editDogData.color || ''} onChange={e => setEditDogData({...editDogData, color: e.target.value})} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Origen</label>
+                        <input className="w-full border rounded p-2 mt-1" value={editDogData.origen || ''} onChange={e => setEditDogData({...editDogData, origen: e.target.value})} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Estado</label>
+                        <select className="w-full border rounded p-2 mt-1" value={editDogData.estado} onChange={e => setEditDogData({...editDogData, estado: e.target.value})}>
+                          <option value="entrenamiento">Entrenamiento</option>
+                          <option value="activo">Servicio Activo</option>
+                          <option value="retirado">Retirado</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Fecha Nacimiento</label>
+                        <input type="date" className="w-full border rounded p-2 mt-1" value={editDogData.fecha_nacimiento ? editDogData.fecha_nacimiento.split('T')[0] : ''} onChange={e => setEditDogData({...editDogData, fecha_nacimiento: e.target.value})} />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase">Observaciones</label>
+                        <textarea className="w-full border rounded p-2 mt-1" rows="3" value={editDogData.observaciones || ''} onChange={e => setEditDogData({...editDogData, observaciones: e.target.value})} />
+                      </div>
                     </div>
-                  ) : <p className="text-slate-500">Sin guía asignado actualmente.</p>}
-                </div>
+                    <div className="flex justify-end space-x-3 pt-4 border-t">
+                      <button type="button" onClick={() => setEditDogData(null)} className="px-4 py-2 text-slate-600 bg-slate-100 rounded-lg hover:bg-slate-200 transition-colors">Cancelar</button>
+                      <button type="submit" className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-md">Guardar Cambios</button>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div><span className="text-slate-500">Origen:</span> <p className="font-semibold">{dog.origen || 'No registrado'}</p></div>
+                    <div><span className="text-slate-500">Color:</span> <p className="font-semibold">{dog.color || 'No registrado'}</p></div>
+                    <div><span className="text-slate-500">Fecha Nacimiento:</span> <p className="font-semibold">{dog.fecha_nacimiento ? new Date(dog.fecha_nacimiento).toLocaleDateString() : 'No registrado'}</p></div>
+                    <div className="col-span-2"><span className="text-slate-500">Observaciones Generales:</span> <p className="p-3 bg-white mt-1 border border-slate-200 rounded">{dog.observaciones || 'No hay observaciones'}</p></div>
+                    
+                    <div className="col-span-2 mt-4">
+                      <h3 className="font-bold text-lg mb-2">Asignación Actual</h3>
+                      {dog.assignments?.length > 0 ? (
+                        <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
+                          <p className="font-bold text-blue-800">Guía: {dog.assignments[0].guia}</p>
+                          <p className="text-sm text-blue-600">Desde: {new Date(dog.assignments[0].fecha_inicio).toLocaleDateString()} | Turno: {dog.assignments[0].turno}</p>
+                        </div>
+                      ) : <p className="text-slate-500">Sin guía asignado actualmente.</p>}
+                    </div>
+                  </div>
+                )}
              </div>
           )}
 
