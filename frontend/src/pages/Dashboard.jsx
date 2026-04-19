@@ -75,57 +75,60 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">Panel de Control General</h1>
-        <button onClick={exportCSV} className="flex items-center px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-700">
-          <Download className="w-4 h-4 mr-2" /> Exportar CSV
+    <div className="fade-in">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-slate-800 outfit">Panel General</h1>
+          <p className="text-slate-500 mt-1 font-medium">Resumen operativo y estado sanitario del cuartel.</p>
+        </div>
+        <button onClick={exportCSV} className="flex items-center px-5 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl shadow-sm hover:shadow-md hover:border-slate-300 hover:-translate-y-0.5 transition-all">
+          <Download className="w-4 h-4 mr-2" /> Exportar a CSV
         </button>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-4">
-          <div className="p-3 bg-blue-100 text-blue-600 rounded-lg"><Activity className="w-8 h-8" /></div>
+        <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100 flex items-center space-x-5 hover:-translate-y-1 hover:shadow-lg transition-transform duration-300 cursor-default">
+          <div className="p-4 bg-blue-50 text-blue-600 rounded-2xl"><Activity className="w-8 h-8" /></div>
           <div>
-            <p className="text-sm font-medium text-slate-500">Perros Totales</p>
-            <p className="text-2xl font-bold text-slate-800">{dogs.length}</p>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wide">Perros Totales</p>
+            <p className="text-3xl font-extrabold text-slate-800 outfit">{dogs.length}</p>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-4">
-          <div className="p-3 bg-emerald-100 text-emerald-600 rounded-lg"><CheckCircle className="w-8 h-8" /></div>
+        <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100 flex items-center space-x-5 hover:-translate-y-1 hover:shadow-lg transition-transform duration-300 cursor-default">
+          <div className="p-4 bg-emerald-50 text-emerald-600 rounded-2xl"><CheckCircle className="w-8 h-8" /></div>
           <div>
-            <p className="text-sm font-medium text-slate-500">En Servicio Activo</p>
-            <p className="text-2xl font-bold text-slate-800">{activeDogs.length}</p>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wide">Servicio Activo</p>
+            <p className="text-3xl font-extrabold text-slate-800 outfit">{activeDogs.length}</p>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-4">
-          <div className="p-3 bg-amber-100 text-amber-600 rounded-lg"><Clock className="w-8 h-8" /></div>
+        <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100 flex items-center space-x-5 hover:-translate-y-1 hover:shadow-lg transition-transform duration-300 cursor-default">
+          <div className="p-4 bg-amber-50 text-amber-500 rounded-2xl"><Clock className="w-8 h-8" /></div>
           <div>
-            <p className="text-sm font-medium text-slate-500">Por Vencer (Sanidad)</p>
-            <p className="text-2xl font-bold text-slate-800">{proxCount > 0 ? proxCount : '?'}</p>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wide">Por Vencer</p>
+            <p className="text-3xl font-extrabold text-slate-800 outfit">{proxCount > 0 ? proxCount : '0'}</p>
           </div>
         </div>
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center space-x-4">
-          <div className="p-3 bg-red-100 text-red-600 rounded-lg"><AlertTriangle className="w-8 h-8" /></div>
+        <div className="bg-white p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-slate-100 flex items-center space-x-5 hover:-translate-y-1 hover:shadow-lg transition-transform duration-300 cursor-default">
+          <div className="p-4 bg-red-50 text-red-500 rounded-2xl"><AlertTriangle className="w-8 h-8" /></div>
           <div>
-            <p className="text-sm font-medium text-slate-500">Alertas Vencidas</p>
-            <p className="text-2xl font-bold text-slate-800">{venciCount > 0 ? venciCount : '?'}</p>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wide">Para Atención</p>
+            <p className="text-3xl font-extrabold text-slate-800 outfit">{venciCount > 0 ? venciCount : '0'}</p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden mb-6">
-         <div className="px-6 py-4 border-b border-slate-100 bg-slate-50 flex gap-4">
+      <div className="bg-white rounded-2xl shadow-[0_4px_24px_rgba(0,0,0,0.02)] border border-slate-100 overflow-hidden mb-8">
+         <div className="px-6 py-5 border-b border-slate-100 bg-white flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-               <Search className="absolute left-3 top-2.5 text-slate-400 w-5 h-5" />
-               <input type="text" placeholder="Buscar perro por nombre..." className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200"
+               <Search className="absolute left-4 top-3 text-slate-400 w-5 h-5 transition-colors group-focus-within:text-blue-500" />
+               <input type="text" placeholder="Buscar por nombre..." className="w-full pl-12 pr-4 py-2.5 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all font-medium text-slate-700"
                 value={search} onChange={(e) => setSearch(e.target.value)} />
             </div>
-            <select className="px-4 py-2 border border-slate-200 rounded-lg" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-               <option value="">Cualquier estado</option>
-               <option value="activo">En Servicio Activo</option>
-               <option value="entrenamiento">Entrenamiento</option>
-               <option value="retirado">Retirado</option>
+            <select className="px-4 py-2.5 border border-slate-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-50 focus:border-blue-400 transition-all font-medium text-slate-600 appearance-none min-w-[200px]" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+               <option value="">Todos los Estados</option>
+               <option value="activo">Servicio Activo</option>
+               <option value="entrenamiento">En Entrenamiento</option>
+               <option value="retirado">Retirado / Baja</option>
             </select>
          </div>
         
