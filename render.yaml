@@ -28,7 +28,7 @@ services:
         fromService:
           type: web
           name: k9-backend
-          property: host
+          property: url
     routes:
       - type: rewrite
         source: /*
