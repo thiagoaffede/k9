@@ -55,7 +55,7 @@ const Layout = ({ children }) => {
             <div className="p-2 bg-blue-600 rounded-xl shadow-md shadow-blue-200">
                <Dog className="w-7 h-7 text-white" />
             </div>
-            <h1 className="text-2xl font-extrabold tracking-tight outfit text-slate-800">K9 SYS</h1>
+            <h1 className="text-2xl font-black tracking-tight outfit text-slate-800 uppercase leading-none">Sección<br/><span className="text-blue-600">Canes</span></h1>
           </div>
           <button onClick={closeSidebar} className="md:hidden text-slate-400 hover:text-slate-800 transition-colors bg-slate-50 p-2 rounded-full">
              <X className="w-5 h-5" />
@@ -111,7 +111,7 @@ const Layout = ({ children }) => {
              <button onClick={() => setIsSidebarOpen(true)} className="mr-3 p-2 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors focus:outline-none">
                <Menu className="w-6 h-6 text-slate-600" />
              </button>
-             <h2 className="text-xl font-extrabold outfit">K9 SYS</h2>
+             <h2 className="text-xl font-black outfit text-slate-800 uppercase">Sección Canes</h2>
           </div>
           <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">
              {user?.nombre.charAt(0).toUpperCase()}

@@ -32,8 +32,8 @@ const Login = () => {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white shadow-xl mb-6">
             <Shield className="w-10 h-10 text-blue-600" />
           </div>
-          <h2 className="text-4xl font-extrabold text-slate-800 outfit tracking-tight">K9 SYSTEM</h2>
-          <p className="text-slate-500 mt-3 font-medium">Gestión Integrada de Escuadrones</p>
+          <h2 className="text-4xl font-black text-slate-800 outfit tracking-tighter uppercase">SECCIÓN CANES</h2>
+          <p className="text-slate-500 mt-3 font-bold uppercase tracking-widest text-xs">Unidad N° 4 - Gestión Operativa</p>
         </div>
 
         {error && (
@@ -52,7 +52,7 @@ const Login = () => {
               <input type="email" required name="email" autoComplete="username"
                 className="pl-11 block w-full bg-white/80 border border-slate-200 rounded-xl py-3.5 px-4 text-slate-800 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all shadow-sm"
                 value={email} onChange={(e) => setEmail(e.target.value)}
-                placeholder="usuario@k9.com" />
+                placeholder="usuario@canes.com" />
             </div>
           </div>
           <div>

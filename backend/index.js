@@ -5,14 +5,39 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://k9-emmo.onrender.com',
+  'https://seccioncanes.com',
+  /\.vercel\.app$/ // Matches Vercel preview deploys
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.some(o => typeof o === 'string' ? o === origin : o.test(origin))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 app.use(express.json());
 // Exponer la carpeta uploads de manera estática
 app.use('/uploads', express.static('uploads'));
 
+// Health check para Render
+app.get('/health', (req, res) => res.status(200).json({ status: 'ok' }));
+
 // Rutas
 app.get('/', (req, res) => {
-  res.send('API K9 Funcional');
+  res.json({
+    status: "online",
+    service: "Sección Canes U4",
+    message: "API Activa y Operativa",
+    timestamp: new Date()
+  });
 });
 
 // Registrar routers a futuro aquí

@@ -210,7 +210,10 @@ const DogProfile = () => {
                          <label className="text-xs text-slate-500">Próxima Dosis</label>
                          <input type="date" className="w-full border rounded p-2 text-sm" value={formData.proxima_dosis||''} onChange={e=>setFormData({...formData, proxima_dosis: e.target.value})} />
                        </div>
-                       <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded text-sm md:col-span-4 mt-2">Guardar Vacuna</button>
+                       <div className="md:col-span-4 flex justify-end space-x-2 mt-2">
+                         <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                         <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">Guardar Vacuna</button>
+                       </div>
                     </form>
                   )}
 
@@ -237,7 +240,10 @@ const DogProfile = () => {
                     <form onSubmit={e => handleEntitySubmit(e, 'vetcontrols')} className="bg-white p-4 border rounded mb-4">
                        <input required placeholder="Motivo del control" className="w-full border rounded p-2 text-sm mb-2" value={formData.motivo||''} onChange={e=>setFormData({...formData, motivo: e.target.value})} />
                        <input placeholder="Tratamiento/Medicación" className="w-full border rounded p-2 text-sm mb-2" value={formData.tratamiento||''} onChange={e=>setFormData({...formData, tratamiento: e.target.value})} />
-                       <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded text-sm mt-2">Guardar Control</button>
+                       <div className="flex justify-end space-x-2 mt-2">
+                         <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                         <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded text-sm">Guardar Control</button>
+                       </div>
                     </form>
                   )}
 
@@ -268,7 +274,10 @@ const DogProfile = () => {
                          <input placeholder="Nivel" className="w-1/2 border rounded p-2 text-sm" value={formData.nivel||''} onChange={e=>setFormData({...formData, nivel: e.target.value})} />
                        </div>
                        <textarea placeholder="Evaluación / Resultados" className="w-full border rounded p-2 text-sm" value={formData.evaluacion||''} onChange={e=>setFormData({...formData, evaluacion: e.target.value})} />
-                       <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded text-sm mt-2">Guardar Entrenamiento</button>
+                       <div className="flex justify-end space-x-2 mt-2">
+                         <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                         <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded text-sm">Guardar Entrenamiento</button>
+                       </div>
                     </form>
                   )}
 

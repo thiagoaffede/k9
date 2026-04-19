@@ -70,7 +70,7 @@ const Dashboard = () => {
     const blob = new Blob(["\ufeff" + headers + rows], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "Sistema_K9_Export.csv";
+    link.download = "SeccionCanes_Export.csv";
     link.click();
   };
 

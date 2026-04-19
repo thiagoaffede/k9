@@ -12,7 +12,7 @@ const FichaTecnicaPDF = ({ dog }) => {
         <div>
           <div className="flex flex-col mb-2">
             <h1 className="text-3xl font-black tracking-tighter uppercase outfit text-slate-900 leading-none">Ficha Técnica de Operaciones</h1>
-            <p className="text-blue-600 font-extrabold tracking-[0.2em] text-[9px] uppercase mt-2 pl-1 border-t border-blue-100 pt-1">Documento Oficial de Registro • K9 Management Division</p>
+            <p className="text-blue-600 font-extrabold tracking-[0.2em] text-[9px] uppercase mt-2 pl-1 border-t border-blue-100 pt-1">Sección Canes - Unidad N° 4 • Registro Oficial</p>
           </div>
         </div>
         <div className="text-right">
