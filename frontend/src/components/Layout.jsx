@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Dog, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Dog, LogOut, Menu, X, Shield } from 'lucide-react';
 
 const Layout = ({ children }) => {
   const { user, logout } = useContext(AuthContext);
@@ -51,6 +51,11 @@ const Layout = ({ children }) => {
           {user?.rol !== 'guia' && (
             <Link to="/dogs/new" onClick={closeSidebar} className="flex items-center p-3 rounded-lg hover:bg-slate-800 transition-colors">
               <Dog className="w-5 h-5 mr-3" /> Registrar Perro
+            </Link>
+          )}
+          {user?.rol === 'admin' && (
+            <Link to="/users" onClick={closeSidebar} className="flex items-center p-3 rounded-lg hover:bg-slate-800 transition-colors">
+              <Shield className="w-5 h-5 mr-3" /> Personal y Accesos
             </Link>
           )}
         </nav>

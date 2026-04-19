@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import NewDog from './pages/NewDog';
 import DogProfile from './pages/DogProfile';
+import UsersList from './pages/UsersList';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
