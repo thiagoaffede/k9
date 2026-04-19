@@ -49,7 +49,7 @@ const Login = () => {
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-400">
                 <User className="h-5 w-5" />
               </div>
-              <input type="email" required
+              <input type="email" required name="email" autoComplete="username"
                 className="pl-11 block w-full bg-white/80 border border-slate-200 rounded-xl py-3.5 px-4 text-slate-800 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all shadow-sm"
                 value={email} onChange={(e) => setEmail(e.target.value)}
                 placeholder="usuario@k9.com" />
@@ -61,7 +61,7 @@ const Login = () => {
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none transition-colors group-focus-within:text-blue-500 text-slate-400">
                 <Lock className="h-5 w-5" />
               </div>
-              <input type="password" required
+              <input type="password" required name="password" autoComplete="current-password"
                 className="pl-11 block w-full bg-white/80 border border-slate-200 rounded-xl py-3.5 px-4 text-slate-800 focus:bg-white focus:ring-4 focus:ring-blue-100 focus:border-blue-500 transition-all shadow-sm"
                 value={password} onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" />
