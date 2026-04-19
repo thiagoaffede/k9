@@ -18,6 +18,7 @@ app.get('/', (req, res) => {
 // Registrar routers a futuro aquí
 app.use('/api/dogs', require('./src/routes/dog.routes'));
 app.use('/api/auth', require('./src/routes/auth.routes'));
+app.use('/api/users', require('./src/routes/user.routes'));
 
 app.listen(PORT, () => {
   console.log(`Server corriendo en http://localhost:${PORT}`);
