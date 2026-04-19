@@ -42,6 +42,13 @@ function App() {
                </Layout>
             </ProtectedRoute>
           } />
+          <Route path="/users" element={
+             <ProtectedRoute>
+                <Layout>
+                   <UsersList />
+                </Layout>
+             </ProtectedRoute>
+          } />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
