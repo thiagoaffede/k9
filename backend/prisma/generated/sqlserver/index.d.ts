@@ -1,0 +1,14998 @@
+
+/**
+ * Client
+**/
+
+import * as runtime from './runtime/library.js';
+import $Types = runtime.Types // general types
+import $Public = runtime.Types.Public
+import $Utils = runtime.Types.Utils
+import $Extensions = runtime.Types.Extensions
+import $Result = runtime.Types.Result
+
+export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+
+/**
+ * Model Dog
+ * 
+ */
+export type Dog = $Result.DefaultSelection<Prisma.$DogPayload>
+/**
+ * Model Vaccine
+ * 
+ */
+export type Vaccine = $Result.DefaultSelection<Prisma.$VaccinePayload>
+/**
+ * Model VetControl
+ * 
+ */
+export type VetControl = $Result.DefaultSelection<Prisma.$VetControlPayload>
+/**
+ * Model Feeding
+ * 
+ */
+export type Feeding = $Result.DefaultSelection<Prisma.$FeedingPayload>
+/**
+ * Model Training
+ * 
+ */
+export type Training = $Result.DefaultSelection<Prisma.$TrainingPayload>
+/**
+ * Model Assignment
+ * 
+ */
+export type Assignment = $Result.DefaultSelection<Prisma.$AssignmentPayload>
+/**
+ * Model History
+ * 
+ */
+export type History = $Result.DefaultSelection<Prisma.$HistoryPayload>
+/**
+ * Model Incident
+ * 
+ */
+export type Incident = $Result.DefaultSelection<Prisma.$IncidentPayload>
+/**
+ * Model User
+ * 
+ */
+export type User = $Result.DefaultSelection<Prisma.$UserPayload>
+
+/**
+ * ##  Prisma Client ʲˢ
+ *
+ * Type-safe database client for TypeScript & Node.js
+ * @example
+ * ```
+ * const prisma = new PrismaClient()
+ * // Fetch zero or more Dogs
+ * const dogs = await prisma.dog.findMany()
+ * ```
+ *
+ *
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ */
+export class PrismaClient<
+  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
+> {
+  [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
+
+    /**
+   * ##  Prisma Client ʲˢ
+   *
+   * Type-safe database client for TypeScript & Node.js
+   * @example
+   * ```
+   * const prisma = new PrismaClient()
+   * // Fetch zero or more Dogs
+   * const dogs = await prisma.dog.findMany()
+   * ```
+   *
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+   */
+
+  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+
+  /**
+   * Connect with the database
+   */
+  $connect(): $Utils.JsPromise<void>;
+
+  /**
+   * Disconnect from the database
+   */
+  $disconnect(): $Utils.JsPromise<void>;
+
+/**
+   * Executes a prepared raw query and returns the number of affected rows.
+   * @example
+   * ```
+   * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Executes a raw query and returns the number of affected rows.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
+
+  /**
+   * Performs a prepared raw query and returns the `SELECT` data.
+   * @example
+   * ```
+   * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
+
+  /**
+   * Performs a raw query and returns the `SELECT` data.
+   * Susceptible to SQL injections, see documentation.
+   * @example
+   * ```
+   * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
+   * ```
+   *
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
+   */
+  $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
+
+  /**
+   * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
+   * @example
+   * ```
+   * const [george, bob, alice] = await prisma.$transaction([
+   *   prisma.user.create({ data: { name: 'George' } }),
+   *   prisma.user.create({ data: { name: 'Bob' } }),
+   *   prisma.user.create({ data: { name: 'Alice' } }),
+   * ])
+   * ```
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   */
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+
+  $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
+
+
+  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
+    extArgs: ExtArgs
+  }>>
+
+      /**
+   * `prisma.dog`: Exposes CRUD operations for the **Dog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dogs
+    * const dogs = await prisma.dog.findMany()
+    * ```
+    */
+  get dog(): Prisma.DogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vaccine`: Exposes CRUD operations for the **Vaccine** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Vaccines
+    * const vaccines = await prisma.vaccine.findMany()
+    * ```
+    */
+  get vaccine(): Prisma.VaccineDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.vetControl`: Exposes CRUD operations for the **VetControl** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more VetControls
+    * const vetControls = await prisma.vetControl.findMany()
+    * ```
+    */
+  get vetControl(): Prisma.VetControlDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.feeding`: Exposes CRUD operations for the **Feeding** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Feedings
+    * const feedings = await prisma.feeding.findMany()
+    * ```
+    */
+  get feeding(): Prisma.FeedingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.training`: Exposes CRUD operations for the **Training** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Trainings
+    * const trainings = await prisma.training.findMany()
+    * ```
+    */
+  get training(): Prisma.TrainingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.assignment`: Exposes CRUD operations for the **Assignment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Assignments
+    * const assignments = await prisma.assignment.findMany()
+    * ```
+    */
+  get assignment(): Prisma.AssignmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.history`: Exposes CRUD operations for the **History** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Histories
+    * const histories = await prisma.history.findMany()
+    * ```
+    */
+  get history(): Prisma.HistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.incident`: Exposes CRUD operations for the **Incident** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Incidents
+    * const incidents = await prisma.incident.findMany()
+    * ```
+    */
+  get incident(): Prisma.IncidentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+}
+
+export namespace Prisma {
+  export import DMMF = runtime.DMMF
+
+  export type PrismaPromise<T> = $Public.PrismaPromise<T>
+
+  /**
+   * Validator
+   */
+  export import validator = runtime.Public.validator
+
+  /**
+   * Prisma Errors
+   */
+  export import PrismaClientKnownRequestError = runtime.PrismaClientKnownRequestError
+  export import PrismaClientUnknownRequestError = runtime.PrismaClientUnknownRequestError
+  export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
+  export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
+  export import PrismaClientValidationError = runtime.PrismaClientValidationError
+
+  /**
+   * Re-export of sql-template-tag
+   */
+  export import sql = runtime.sqltag
+  export import empty = runtime.empty
+  export import join = runtime.join
+  export import raw = runtime.raw
+  export import Sql = runtime.Sql
+
+
+
+  /**
+   * Decimal.js
+   */
+  export import Decimal = runtime.Decimal
+
+  export type DecimalJsLike = runtime.DecimalJsLike
+
+  /**
+   * Metrics
+   */
+  export type Metrics = runtime.Metrics
+  export type Metric<T> = runtime.Metric<T>
+  export type MetricHistogram = runtime.MetricHistogram
+  export type MetricHistogramBucket = runtime.MetricHistogramBucket
+
+  /**
+  * Extensions
+  */
+  export import Extension = $Extensions.UserArgs
+  export import getExtensionContext = runtime.Extensions.getExtensionContext
+  export import Args = $Public.Args
+  export import Payload = $Public.Payload
+  export import Result = $Public.Result
+  export import Exact = $Public.Exact
+
+  /**
+   * Prisma Client JS version: 6.19.3
+   * Query Engine version: c2990dca591cba766e3b7ef5d9e8a84796e47ab7
+   */
+  export type PrismaVersion = {
+    client: string
+  }
+
+  export const prismaVersion: PrismaVersion
+
+  /**
+   * Utility Types
+   */
+
+
+  export import Bytes = runtime.Bytes
+  export import JsonObject = runtime.JsonObject
+  export import JsonArray = runtime.JsonArray
+  export import JsonValue = runtime.JsonValue
+  export import InputJsonObject = runtime.InputJsonObject
+  export import InputJsonArray = runtime.InputJsonArray
+  export import InputJsonValue = runtime.InputJsonValue
+
+  /**
+   * Types of the values used to represent different kinds of `null` values when working with JSON fields.
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  namespace NullTypes {
+    /**
+    * Type of `Prisma.DbNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class DbNull {
+      private DbNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.JsonNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class JsonNull {
+      private JsonNull: never
+      private constructor()
+    }
+
+    /**
+    * Type of `Prisma.AnyNull`.
+    *
+    * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
+    *
+    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+    */
+    class AnyNull {
+      private AnyNull: never
+      private constructor()
+    }
+  }
+
+  /**
+   * Helper for filtering JSON entries that have `null` on the database (empty on the db)
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const DbNull: NullTypes.DbNull
+
+  /**
+   * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const JsonNull: NullTypes.JsonNull
+
+  /**
+   * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
+   */
+  export const AnyNull: NullTypes.AnyNull
+
+  type SelectAndInclude = {
+    select: any
+    include: any
+  }
+
+  type SelectAndOmit = {
+    select: any
+    omit: any
+  }
+
+  /**
+   * Get the type of the value, that the Promise holds.
+   */
+  export type PromiseType<T extends PromiseLike<any>> = T extends PromiseLike<infer U> ? U : T;
+
+  /**
+   * Get the return type of a function which returns a Promise.
+   */
+  export type PromiseReturnType<T extends (...args: any) => $Utils.JsPromise<any>> = PromiseType<ReturnType<T>>
+
+  /**
+   * From T, pick a set of properties whose keys are in the union K
+   */
+  type Prisma__Pick<T, K extends keyof T> = {
+      [P in K]: T[P];
+  };
+
+
+  export type Enumerable<T> = T | Array<T>;
+
+  export type RequiredKeys<T> = {
+    [K in keyof T]-?: {} extends Prisma__Pick<T, K> ? never : K
+  }[keyof T]
+
+  export type TruthyKeys<T> = keyof {
+    [K in keyof T as T[K] extends false | undefined | null ? never : K]: K
+  }
+
+  export type TrueKeys<T> = TruthyKeys<Prisma__Pick<T, RequiredKeys<T>>>
+
+  /**
+   * Subset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection
+   */
+  export type Subset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never;
+  };
+
+  /**
+   * SelectSubset
+   * @desc From `T` pick properties that exist in `U`. Simple version of Intersection.
+   * Additionally, it validates, if both select and include are present. If the case, it errors.
+   */
+  export type SelectSubset<T, U> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    (T extends SelectAndInclude
+      ? 'Please either choose `select` or `include`.'
+      : T extends SelectAndOmit
+        ? 'Please either choose `select` or `omit`.'
+        : {})
+
+  /**
+   * Subset + Intersection
+   * @desc From `T` pick properties that exist in `U` and intersect `K`
+   */
+  export type SubsetIntersection<T, U, K> = {
+    [key in keyof T]: key extends keyof U ? T[key] : never
+  } &
+    K
+
+  type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
+
+  /**
+   * XOR is needed to have a real mutually exclusive union type
+   * https://stackoverflow.com/questions/42123407/does-typescript-support-mutually-exclusive-types
+   */
+  type XOR<T, U> =
+    T extends object ?
+    U extends object ?
+      (Without<T, U> & U) | (Without<U, T> & T)
+    : U : T
+
+
+  /**
+   * Is T a Record?
+   */
+  type IsObject<T extends any> = T extends Array<any>
+  ? False
+  : T extends Date
+  ? False
+  : T extends Uint8Array
+  ? False
+  : T extends BigInt
+  ? False
+  : T extends object
+  ? True
+  : False
+
+
+  /**
+   * If it's T[], return T
+   */
+  export type UnEnumerate<T extends unknown> = T extends Array<infer U> ? U : T
+
+  /**
+   * From ts-toolbelt
+   */
+
+  type __Either<O extends object, K extends Key> = Omit<O, K> &
+    {
+      // Merge all but K
+      [P in K]: Prisma__Pick<O, P & keyof O> // With K possibilities
+    }[K]
+
+  type EitherStrict<O extends object, K extends Key> = Strict<__Either<O, K>>
+
+  type EitherLoose<O extends object, K extends Key> = ComputeRaw<__Either<O, K>>
+
+  type _Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean
+  > = {
+    1: EitherStrict<O, K>
+    0: EitherLoose<O, K>
+  }[strict]
+
+  type Either<
+    O extends object,
+    K extends Key,
+    strict extends Boolean = 1
+  > = O extends unknown ? _Either<O, K, strict> : never
+
+  export type Union = any
+
+  type PatchUndefined<O extends object, O1 extends object> = {
+    [K in keyof O]: O[K] extends undefined ? At<O1, K> : O[K]
+  } & {}
+
+  /** Helper Types for "Merge" **/
+  export type IntersectOf<U extends Union> = (
+    U extends unknown ? (k: U) => void : never
+  ) extends (k: infer I) => void
+    ? I
+    : never
+
+  export type Overwrite<O extends object, O1 extends object> = {
+      [K in keyof O]: K extends keyof O1 ? O1[K] : O[K];
+  } & {};
+
+  type _Merge<U extends object> = IntersectOf<Overwrite<U, {
+      [K in keyof U]-?: At<U, K>;
+  }>>;
+
+  type Key = string | number | symbol;
+  type AtBasic<O extends object, K extends Key> = K extends keyof O ? O[K] : never;
+  type AtStrict<O extends object, K extends Key> = O[K & keyof O];
+  type AtLoose<O extends object, K extends Key> = O extends unknown ? AtStrict<O, K> : never;
+  export type At<O extends object, K extends Key, strict extends Boolean = 1> = {
+      1: AtStrict<O, K>;
+      0: AtLoose<O, K>;
+  }[strict];
+
+  export type ComputeRaw<A extends any> = A extends Function ? A : {
+    [K in keyof A]: A[K];
+  } & {};
+
+  export type OptionalFlat<O> = {
+    [K in keyof O]?: O[K];
+  } & {};
+
+  type _Record<K extends keyof any, T> = {
+    [P in K]: T;
+  };
+
+  // cause typescript not to expand types and preserve names
+  type NoExpand<T> = T extends unknown ? T : never;
+
+  // this type assumes the passed object is entirely optional
+  type AtLeast<O extends object, K extends string> = NoExpand<
+    O extends unknown
+    ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
+      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
+    : never>;
+
+  type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
+
+  export type Strict<U extends object> = ComputeRaw<_Strict<U>>;
+  /** End Helper Types for "Merge" **/
+
+  export type Merge<U extends object> = ComputeRaw<_Merge<Strict<U>>>;
+
+  /**
+  A [[Boolean]]
+  */
+  export type Boolean = True | False
+
+  // /**
+  // 1
+  // */
+  export type True = 1
+
+  /**
+  0
+  */
+  export type False = 0
+
+  export type Not<B extends Boolean> = {
+    0: 1
+    1: 0
+  }[B]
+
+  export type Extends<A1 extends any, A2 extends any> = [A1] extends [never]
+    ? 0 // anything `never` is false
+    : A1 extends A2
+    ? 1
+    : 0
+
+  export type Has<U extends Union, U1 extends Union> = Not<
+    Extends<Exclude<U1, U>, U1>
+  >
+
+  export type Or<B1 extends Boolean, B2 extends Boolean> = {
+    0: {
+      0: 0
+      1: 1
+    }
+    1: {
+      0: 1
+      1: 1
+    }
+  }[B1][B2]
+
+  export type Keys<U extends Union> = U extends unknown ? keyof U : never
+
+  type Cast<A, B> = A extends B ? A : B;
+
+  export const type: unique symbol;
+
+
+
+  /**
+   * Used by group by
+   */
+
+  export type GetScalarType<T, O> = O extends object ? {
+    [P in keyof T]: P extends keyof O
+      ? O[P]
+      : never
+  } : never
+
+  type FieldPaths<
+    T,
+    U = Omit<T, '_avg' | '_sum' | '_count' | '_min' | '_max'>
+  > = IsObject<T> extends True ? U : T
+
+  type GetHavingFields<T> = {
+    [K in keyof T]: Or<
+      Or<Extends<'OR', K>, Extends<'AND', K>>,
+      Extends<'NOT', K>
+    > extends True
+      ? // infer is only needed to not hit TS limit
+        // based on the brilliant idea of Pierre-Antoine Mills
+        // https://github.com/microsoft/TypeScript/issues/30188#issuecomment-478938437
+        T[K] extends infer TK
+        ? GetHavingFields<UnEnumerate<TK> extends object ? Merge<UnEnumerate<TK>> : never>
+        : never
+      : {} extends FieldPaths<T[K]>
+      ? never
+      : K
+  }[keyof T]
+
+  /**
+   * Convert tuple to union
+   */
+  type _TupleToUnion<T> = T extends (infer E)[] ? E : never
+  type TupleToUnion<K extends readonly any[]> = _TupleToUnion<K>
+  type MaybeTupleToUnion<T> = T extends any[] ? TupleToUnion<T> : T
+
+  /**
+   * Like `Pick`, but additionally can also accept an array of keys
+   */
+  type PickEnumerable<T, K extends Enumerable<keyof T> | keyof T> = Prisma__Pick<T, MaybeTupleToUnion<K>>
+
+  /**
+   * Exclude all keys with underscores
+   */
+  type ExcludeUnderscoreKeys<T extends string> = T extends `_${string}` ? never : T
+
+
+  export type FieldRef<Model, FieldType> = runtime.FieldRef<Model, FieldType>
+
+  type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRef<Model, FieldType>
+
+
+  export const ModelName: {
+    Dog: 'Dog',
+    Vaccine: 'Vaccine',
+    VetControl: 'VetControl',
+    Feeding: 'Feeding',
+    Training: 'Training',
+    Assignment: 'Assignment',
+    History: 'History',
+    Incident: 'Incident',
+    User: 'User'
+  };
+
+  export type ModelName = (typeof ModelName)[keyof typeof ModelName]
+
+
+  export type Datasources = {
+    db?: Datasource
+  }
+
+  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
+  }
+
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
+    globalOmitOptions: {
+      omit: GlobalOmitOptions
+    }
+    meta: {
+      modelProps: "dog" | "vaccine" | "vetControl" | "feeding" | "training" | "assignment" | "history" | "incident" | "user"
+      txIsolationLevel: Prisma.TransactionIsolationLevel
+    }
+    model: {
+      Dog: {
+        payload: Prisma.$DogPayload<ExtArgs>
+        fields: Prisma.DogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          findFirst: {
+            args: Prisma.DogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          findMany: {
+            args: Prisma.DogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>[]
+          }
+          create: {
+            args: Prisma.DogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          createMany: {
+            args: Prisma.DogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.DogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          update: {
+            args: Prisma.DogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          deleteMany: {
+            args: Prisma.DogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          aggregate: {
+            args: Prisma.DogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDog>
+          }
+          groupBy: {
+            args: Prisma.DogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DogCountArgs<ExtArgs>
+            result: $Utils.Optional<DogCountAggregateOutputType> | number
+          }
+        }
+      }
+      Vaccine: {
+        payload: Prisma.$VaccinePayload<ExtArgs>
+        fields: Prisma.VaccineFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VaccineFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VaccineFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>
+          }
+          findFirst: {
+            args: Prisma.VaccineFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VaccineFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>
+          }
+          findMany: {
+            args: Prisma.VaccineFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>[]
+          }
+          create: {
+            args: Prisma.VaccineCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>
+          }
+          createMany: {
+            args: Prisma.VaccineCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.VaccineDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>
+          }
+          update: {
+            args: Prisma.VaccineUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>
+          }
+          deleteMany: {
+            args: Prisma.VaccineDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VaccineUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VaccineUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VaccinePayload>
+          }
+          aggregate: {
+            args: Prisma.VaccineAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVaccine>
+          }
+          groupBy: {
+            args: Prisma.VaccineGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VaccineGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VaccineCountArgs<ExtArgs>
+            result: $Utils.Optional<VaccineCountAggregateOutputType> | number
+          }
+        }
+      }
+      VetControl: {
+        payload: Prisma.$VetControlPayload<ExtArgs>
+        fields: Prisma.VetControlFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.VetControlFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.VetControlFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>
+          }
+          findFirst: {
+            args: Prisma.VetControlFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.VetControlFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>
+          }
+          findMany: {
+            args: Prisma.VetControlFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>[]
+          }
+          create: {
+            args: Prisma.VetControlCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>
+          }
+          createMany: {
+            args: Prisma.VetControlCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.VetControlDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>
+          }
+          update: {
+            args: Prisma.VetControlUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>
+          }
+          deleteMany: {
+            args: Prisma.VetControlDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.VetControlUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.VetControlUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$VetControlPayload>
+          }
+          aggregate: {
+            args: Prisma.VetControlAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateVetControl>
+          }
+          groupBy: {
+            args: Prisma.VetControlGroupByArgs<ExtArgs>
+            result: $Utils.Optional<VetControlGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.VetControlCountArgs<ExtArgs>
+            result: $Utils.Optional<VetControlCountAggregateOutputType> | number
+          }
+        }
+      }
+      Feeding: {
+        payload: Prisma.$FeedingPayload<ExtArgs>
+        fields: Prisma.FeedingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FeedingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FeedingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>
+          }
+          findFirst: {
+            args: Prisma.FeedingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FeedingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>
+          }
+          findMany: {
+            args: Prisma.FeedingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>[]
+          }
+          create: {
+            args: Prisma.FeedingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>
+          }
+          createMany: {
+            args: Prisma.FeedingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.FeedingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>
+          }
+          update: {
+            args: Prisma.FeedingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>
+          }
+          deleteMany: {
+            args: Prisma.FeedingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FeedingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FeedingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FeedingPayload>
+          }
+          aggregate: {
+            args: Prisma.FeedingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFeeding>
+          }
+          groupBy: {
+            args: Prisma.FeedingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FeedingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FeedingCountArgs<ExtArgs>
+            result: $Utils.Optional<FeedingCountAggregateOutputType> | number
+          }
+        }
+      }
+      Training: {
+        payload: Prisma.$TrainingPayload<ExtArgs>
+        fields: Prisma.TrainingFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TrainingFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TrainingFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>
+          }
+          findFirst: {
+            args: Prisma.TrainingFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TrainingFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>
+          }
+          findMany: {
+            args: Prisma.TrainingFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>[]
+          }
+          create: {
+            args: Prisma.TrainingCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>
+          }
+          createMany: {
+            args: Prisma.TrainingCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.TrainingDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>
+          }
+          update: {
+            args: Prisma.TrainingUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>
+          }
+          deleteMany: {
+            args: Prisma.TrainingDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TrainingUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.TrainingUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TrainingPayload>
+          }
+          aggregate: {
+            args: Prisma.TrainingAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTraining>
+          }
+          groupBy: {
+            args: Prisma.TrainingGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TrainingGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TrainingCountArgs<ExtArgs>
+            result: $Utils.Optional<TrainingCountAggregateOutputType> | number
+          }
+        }
+      }
+      Assignment: {
+        payload: Prisma.$AssignmentPayload<ExtArgs>
+        fields: Prisma.AssignmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AssignmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AssignmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>
+          }
+          findFirst: {
+            args: Prisma.AssignmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AssignmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>
+          }
+          findMany: {
+            args: Prisma.AssignmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>[]
+          }
+          create: {
+            args: Prisma.AssignmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>
+          }
+          createMany: {
+            args: Prisma.AssignmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.AssignmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>
+          }
+          update: {
+            args: Prisma.AssignmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.AssignmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AssignmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AssignmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AssignmentPayload>
+          }
+          aggregate: {
+            args: Prisma.AssignmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAssignment>
+          }
+          groupBy: {
+            args: Prisma.AssignmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AssignmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AssignmentCountArgs<ExtArgs>
+            result: $Utils.Optional<AssignmentCountAggregateOutputType> | number
+          }
+        }
+      }
+      History: {
+        payload: Prisma.$HistoryPayload<ExtArgs>
+        fields: Prisma.HistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.HistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>
+          }
+          findMany: {
+            args: Prisma.HistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>[]
+          }
+          create: {
+            args: Prisma.HistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>
+          }
+          createMany: {
+            args: Prisma.HistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.HistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>
+          }
+          update: {
+            args: Prisma.HistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.HistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.HistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.HistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHistory>
+          }
+          groupBy: {
+            args: Prisma.HistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<HistoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      Incident: {
+        payload: Prisma.$IncidentPayload<ExtArgs>
+        fields: Prisma.IncidentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IncidentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IncidentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>
+          }
+          findFirst: {
+            args: Prisma.IncidentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IncidentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>
+          }
+          findMany: {
+            args: Prisma.IncidentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>[]
+          }
+          create: {
+            args: Prisma.IncidentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>
+          }
+          createMany: {
+            args: Prisma.IncidentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.IncidentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>
+          }
+          update: {
+            args: Prisma.IncidentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>
+          }
+          deleteMany: {
+            args: Prisma.IncidentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IncidentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.IncidentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IncidentPayload>
+          }
+          aggregate: {
+            args: Prisma.IncidentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIncident>
+          }
+          groupBy: {
+            args: Prisma.IncidentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IncidentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IncidentCountArgs<ExtArgs>
+            result: $Utils.Optional<IncidentCountAggregateOutputType> | number
+          }
+        }
+      }
+      User: {
+        payload: Prisma.$UserPayload<ExtArgs>
+        fields: Prisma.UserFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findFirst: {
+            args: Prisma.UserFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          findMany: {
+            args: Prisma.UserFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>[]
+          }
+          create: {
+            args: Prisma.UserCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          createMany: {
+            args: Prisma.UserCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UserDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          update: {
+            args: Prisma.UserUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          deleteMany: {
+            args: Prisma.UserDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UserUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserPayload>
+          }
+          aggregate: {
+            args: Prisma.UserAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUser>
+          }
+          groupBy: {
+            args: Prisma.UserGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserCountArgs<ExtArgs>
+            result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+    }
+  } & {
+    other: {
+      payload: any
+      operations: {
+        $executeRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $executeRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+        $queryRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
+          result: any
+        }
+      }
+    }
+  }
+  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export type DefaultPrismaClient = PrismaClient
+  export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
+  export interface PrismaClientOptions {
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasources?: Datasources
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasourceUrl?: string
+    /**
+     * @default "colorless"
+     */
+    errorFormat?: ErrorFormat
+    /**
+     * @example
+     * ```
+     * // Shorthand for `emit: 'stdout'`
+     * log: ['query', 'info', 'warn', 'error']
+     * 
+     * // Emit as events only
+     * log: [
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
+     * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
+     * ```
+     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
+     */
+    log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
+    /**
+     * Global configuration for omitting model fields by default.
+     * 
+     * @example
+     * ```
+     * const prisma = new PrismaClient({
+     *   omit: {
+     *     user: {
+     *       password: true
+     *     }
+     *   }
+     * })
+     * ```
+     */
+    omit?: Prisma.GlobalOmitConfig
+  }
+  export type GlobalOmitConfig = {
+    dog?: DogOmit
+    vaccine?: VaccineOmit
+    vetControl?: VetControlOmit
+    feeding?: FeedingOmit
+    training?: TrainingOmit
+    assignment?: AssignmentOmit
+    history?: HistoryOmit
+    incident?: IncidentOmit
+    user?: UserOmit
+  }
+
+  /* Types for Logging */
+  export type LogLevel = 'info' | 'query' | 'warn' | 'error'
+  export type LogDefinition = {
+    level: LogLevel
+    emit: 'stdout' | 'event'
+  }
+
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
+
+  export type QueryEvent = {
+    timestamp: Date
+    query: string
+    params: string
+    duration: number
+    target: string
+  }
+
+  export type LogEvent = {
+    timestamp: Date
+    message: string
+    target: string
+  }
+  /* End Types for Logging */
+
+
+  export type PrismaAction =
+    | 'findUnique'
+    | 'findUniqueOrThrow'
+    | 'findMany'
+    | 'findFirst'
+    | 'findFirstOrThrow'
+    | 'create'
+    | 'createMany'
+    | 'createManyAndReturn'
+    | 'update'
+    | 'updateMany'
+    | 'updateManyAndReturn'
+    | 'upsert'
+    | 'delete'
+    | 'deleteMany'
+    | 'executeRaw'
+    | 'queryRaw'
+    | 'aggregate'
+    | 'count'
+    | 'runCommandRaw'
+    | 'findRaw'
+    | 'groupBy'
+
+  // tested in getLogLevel.test.ts
+  export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
+
+  /**
+   * `PrismaClient` proxy available in interactive transactions.
+   */
+  export type TransactionClient = Omit<Prisma.DefaultPrismaClient, runtime.ITXClientDenyList>
+
+  export type Datasource = {
+    url?: string
+  }
+
+  /**
+   * Count Types
+   */
+
+
+  /**
+   * Count Type DogCountOutputType
+   */
+
+  export type DogCountOutputType = {
+    vaccines: number
+    vetControls: number
+    feedings: number
+    trainings: number
+    assignments: number
+    history: number
+    incidents: number
+  }
+
+  export type DogCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vaccines?: boolean | DogCountOutputTypeCountVaccinesArgs
+    vetControls?: boolean | DogCountOutputTypeCountVetControlsArgs
+    feedings?: boolean | DogCountOutputTypeCountFeedingsArgs
+    trainings?: boolean | DogCountOutputTypeCountTrainingsArgs
+    assignments?: boolean | DogCountOutputTypeCountAssignmentsArgs
+    history?: boolean | DogCountOutputTypeCountHistoryArgs
+    incidents?: boolean | DogCountOutputTypeCountIncidentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DogCountOutputType
+     */
+    select?: DogCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountVaccinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VaccineWhereInput
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountVetControlsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VetControlWhereInput
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountFeedingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FeedingWhereInput
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountTrainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrainingWhereInput
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssignmentWhereInput
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistoryWhereInput
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountIncidentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IncidentWhereInput
+  }
+
+
+  /**
+   * Models
+   */
+
+  /**
+   * Model Dog
+   */
+
+  export type AggregateDog = {
+    _count: DogCountAggregateOutputType | null
+    _avg: DogAvgAggregateOutputType | null
+    _sum: DogSumAggregateOutputType | null
+    _min: DogMinAggregateOutputType | null
+    _max: DogMaxAggregateOutputType | null
+  }
+
+  export type DogAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DogSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type DogMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    raza: string | null
+    sexo: string | null
+    fecha_nacimiento: Date | null
+    color: string | null
+    senas_particulares: string | null
+    nro_chip: string | null
+    estado: string | null
+    fecha_ingreso: Date | null
+    origen: string | null
+    observaciones: string | null
+    foto_url: string | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DogMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    raza: string | null
+    sexo: string | null
+    fecha_nacimiento: Date | null
+    color: string | null
+    senas_particulares: string | null
+    nro_chip: string | null
+    estado: string | null
+    fecha_ingreso: Date | null
+    origen: string | null
+    observaciones: string | null
+    foto_url: string | null
+    deletedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DogCountAggregateOutputType = {
+    id: number
+    nombre: number
+    raza: number
+    sexo: number
+    fecha_nacimiento: number
+    color: number
+    senas_particulares: number
+    nro_chip: number
+    estado: number
+    fecha_ingreso: number
+    origen: number
+    observaciones: number
+    foto_url: number
+    deletedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DogAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type DogSumAggregateInputType = {
+    id?: true
+  }
+
+  export type DogMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    raza?: true
+    sexo?: true
+    fecha_nacimiento?: true
+    color?: true
+    senas_particulares?: true
+    nro_chip?: true
+    estado?: true
+    fecha_ingreso?: true
+    origen?: true
+    observaciones?: true
+    foto_url?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DogMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    raza?: true
+    sexo?: true
+    fecha_nacimiento?: true
+    color?: true
+    senas_particulares?: true
+    nro_chip?: true
+    estado?: true
+    fecha_ingreso?: true
+    origen?: true
+    observaciones?: true
+    foto_url?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DogCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    raza?: true
+    sexo?: true
+    fecha_nacimiento?: true
+    color?: true
+    senas_particulares?: true
+    nro_chip?: true
+    estado?: true
+    fecha_ingreso?: true
+    origen?: true
+    observaciones?: true
+    foto_url?: true
+    deletedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dog to aggregate.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dogs
+    **/
+    _count?: true | DogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DogMaxAggregateInputType
+  }
+
+  export type GetDogAggregateType<T extends DogAggregateArgs> = {
+        [P in keyof T & keyof AggregateDog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDog[P]>
+      : GetScalarType<T[P], AggregateDog[P]>
+  }
+
+
+
+
+  export type DogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DogWhereInput
+    orderBy?: DogOrderByWithAggregationInput | DogOrderByWithAggregationInput[]
+    by: DogScalarFieldEnum[] | DogScalarFieldEnum
+    having?: DogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DogCountAggregateInputType | true
+    _avg?: DogAvgAggregateInputType
+    _sum?: DogSumAggregateInputType
+    _min?: DogMinAggregateInputType
+    _max?: DogMaxAggregateInputType
+  }
+
+  export type DogGroupByOutputType = {
+    id: number
+    nombre: string
+    raza: string | null
+    sexo: string
+    fecha_nacimiento: Date | null
+    color: string | null
+    senas_particulares: string | null
+    nro_chip: string | null
+    estado: string
+    fecha_ingreso: Date | null
+    origen: string | null
+    observaciones: string | null
+    foto_url: string | null
+    deletedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DogCountAggregateOutputType | null
+    _avg: DogAvgAggregateOutputType | null
+    _sum: DogSumAggregateOutputType | null
+    _min: DogMinAggregateOutputType | null
+    _max: DogMaxAggregateOutputType | null
+  }
+
+  type GetDogGroupByPayload<T extends DogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DogGroupByOutputType[P]>
+            : GetScalarType<T[P], DogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    raza?: boolean
+    sexo?: boolean
+    fecha_nacimiento?: boolean
+    color?: boolean
+    senas_particulares?: boolean
+    nro_chip?: boolean
+    estado?: boolean
+    fecha_ingreso?: boolean
+    origen?: boolean
+    observaciones?: boolean
+    foto_url?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vaccines?: boolean | Dog$vaccinesArgs<ExtArgs>
+    vetControls?: boolean | Dog$vetControlsArgs<ExtArgs>
+    feedings?: boolean | Dog$feedingsArgs<ExtArgs>
+    trainings?: boolean | Dog$trainingsArgs<ExtArgs>
+    assignments?: boolean | Dog$assignmentsArgs<ExtArgs>
+    history?: boolean | Dog$historyArgs<ExtArgs>
+    incidents?: boolean | Dog$incidentsArgs<ExtArgs>
+    _count?: boolean | DogCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dog"]>
+
+
+
+  export type DogSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    raza?: boolean
+    sexo?: boolean
+    fecha_nacimiento?: boolean
+    color?: boolean
+    senas_particulares?: boolean
+    nro_chip?: boolean
+    estado?: boolean
+    fecha_ingreso?: boolean
+    origen?: boolean
+    observaciones?: boolean
+    foto_url?: boolean
+    deletedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "raza" | "sexo" | "fecha_nacimiento" | "color" | "senas_particulares" | "nro_chip" | "estado" | "fecha_ingreso" | "origen" | "observaciones" | "foto_url" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["dog"]>
+  export type DogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vaccines?: boolean | Dog$vaccinesArgs<ExtArgs>
+    vetControls?: boolean | Dog$vetControlsArgs<ExtArgs>
+    feedings?: boolean | Dog$feedingsArgs<ExtArgs>
+    trainings?: boolean | Dog$trainingsArgs<ExtArgs>
+    assignments?: boolean | Dog$assignmentsArgs<ExtArgs>
+    history?: boolean | Dog$historyArgs<ExtArgs>
+    incidents?: boolean | Dog$incidentsArgs<ExtArgs>
+    _count?: boolean | DogCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $DogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dog"
+    objects: {
+      vaccines: Prisma.$VaccinePayload<ExtArgs>[]
+      vetControls: Prisma.$VetControlPayload<ExtArgs>[]
+      feedings: Prisma.$FeedingPayload<ExtArgs>[]
+      trainings: Prisma.$TrainingPayload<ExtArgs>[]
+      assignments: Prisma.$AssignmentPayload<ExtArgs>[]
+      history: Prisma.$HistoryPayload<ExtArgs>[]
+      incidents: Prisma.$IncidentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      raza: string | null
+      sexo: string
+      fecha_nacimiento: Date | null
+      color: string | null
+      senas_particulares: string | null
+      nro_chip: string | null
+      estado: string
+      fecha_ingreso: Date | null
+      origen: string | null
+      observaciones: string | null
+      foto_url: string | null
+      deletedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["dog"]>
+    composites: {}
+  }
+
+  type DogGetPayload<S extends boolean | null | undefined | DogDefaultArgs> = $Result.GetResult<Prisma.$DogPayload, S>
+
+  type DogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DogCountAggregateInputType | true
+    }
+
+  export interface DogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dog'], meta: { name: 'Dog' } }
+    /**
+     * Find zero or one Dog that matches the filter.
+     * @param {DogFindUniqueArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DogFindUniqueArgs>(args: SelectSubset<T, DogFindUniqueArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Dog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DogFindUniqueOrThrowArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DogFindUniqueOrThrowArgs>(args: SelectSubset<T, DogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogFindFirstArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DogFindFirstArgs>(args?: SelectSubset<T, DogFindFirstArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogFindFirstOrThrowArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DogFindFirstOrThrowArgs>(args?: SelectSubset<T, DogFindFirstOrThrowArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Dogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dogs
+     * const dogs = await prisma.dog.findMany()
+     * 
+     * // Get first 10 Dogs
+     * const dogs = await prisma.dog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dogWithIdOnly = await prisma.dog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DogFindManyArgs>(args?: SelectSubset<T, DogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Dog.
+     * @param {DogCreateArgs} args - Arguments to create a Dog.
+     * @example
+     * // Create one Dog
+     * const Dog = await prisma.dog.create({
+     *   data: {
+     *     // ... data to create a Dog
+     *   }
+     * })
+     * 
+     */
+    create<T extends DogCreateArgs>(args: SelectSubset<T, DogCreateArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Dogs.
+     * @param {DogCreateManyArgs} args - Arguments to create many Dogs.
+     * @example
+     * // Create many Dogs
+     * const dog = await prisma.dog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DogCreateManyArgs>(args?: SelectSubset<T, DogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Dog.
+     * @param {DogDeleteArgs} args - Arguments to delete one Dog.
+     * @example
+     * // Delete one Dog
+     * const Dog = await prisma.dog.delete({
+     *   where: {
+     *     // ... filter to delete one Dog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DogDeleteArgs>(args: SelectSubset<T, DogDeleteArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Dog.
+     * @param {DogUpdateArgs} args - Arguments to update one Dog.
+     * @example
+     * // Update one Dog
+     * const dog = await prisma.dog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DogUpdateArgs>(args: SelectSubset<T, DogUpdateArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Dogs.
+     * @param {DogDeleteManyArgs} args - Arguments to filter Dogs to delete.
+     * @example
+     * // Delete a few Dogs
+     * const { count } = await prisma.dog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DogDeleteManyArgs>(args?: SelectSubset<T, DogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dogs
+     * const dog = await prisma.dog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DogUpdateManyArgs>(args: SelectSubset<T, DogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Dog.
+     * @param {DogUpsertArgs} args - Arguments to update or create a Dog.
+     * @example
+     * // Update or create a Dog
+     * const dog = await prisma.dog.upsert({
+     *   create: {
+     *     // ... data to create a Dog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DogUpsertArgs>(args: SelectSubset<T, DogUpsertArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Dogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogCountArgs} args - Arguments to filter Dogs to count.
+     * @example
+     * // Count the number of Dogs
+     * const count = await prisma.dog.count({
+     *   where: {
+     *     // ... the filter for the Dogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends DogCountArgs>(
+      args?: Subset<T, DogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DogAggregateArgs>(args: Subset<T, DogAggregateArgs>): Prisma.PrismaPromise<GetDogAggregateType<T>>
+
+    /**
+     * Group by Dog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DogGroupByArgs['orderBy'] }
+        : { orderBy?: DogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dog model
+   */
+  readonly fields: DogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    vaccines<T extends Dog$vaccinesArgs<ExtArgs> = {}>(args?: Subset<T, Dog$vaccinesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    vetControls<T extends Dog$vetControlsArgs<ExtArgs> = {}>(args?: Subset<T, Dog$vetControlsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    feedings<T extends Dog$feedingsArgs<ExtArgs> = {}>(args?: Subset<T, Dog$feedingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    trainings<T extends Dog$trainingsArgs<ExtArgs> = {}>(args?: Subset<T, Dog$trainingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assignments<T extends Dog$assignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Dog$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    history<T extends Dog$historyArgs<ExtArgs> = {}>(args?: Subset<T, Dog$historyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    incidents<T extends Dog$incidentsArgs<ExtArgs> = {}>(args?: Subset<T, Dog$incidentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dog model
+   */
+  interface DogFieldRefs {
+    readonly id: FieldRef<"Dog", 'Int'>
+    readonly nombre: FieldRef<"Dog", 'String'>
+    readonly raza: FieldRef<"Dog", 'String'>
+    readonly sexo: FieldRef<"Dog", 'String'>
+    readonly fecha_nacimiento: FieldRef<"Dog", 'DateTime'>
+    readonly color: FieldRef<"Dog", 'String'>
+    readonly senas_particulares: FieldRef<"Dog", 'String'>
+    readonly nro_chip: FieldRef<"Dog", 'String'>
+    readonly estado: FieldRef<"Dog", 'String'>
+    readonly fecha_ingreso: FieldRef<"Dog", 'DateTime'>
+    readonly origen: FieldRef<"Dog", 'String'>
+    readonly observaciones: FieldRef<"Dog", 'String'>
+    readonly foto_url: FieldRef<"Dog", 'String'>
+    readonly deletedAt: FieldRef<"Dog", 'DateTime'>
+    readonly createdAt: FieldRef<"Dog", 'DateTime'>
+    readonly updatedAt: FieldRef<"Dog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dog findUnique
+   */
+  export type DogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog findUniqueOrThrow
+   */
+  export type DogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog findFirst
+   */
+  export type DogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dogs.
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dogs.
+     */
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
+  }
+
+  /**
+   * Dog findFirstOrThrow
+   */
+  export type DogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dogs.
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dogs.
+     */
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
+  }
+
+  /**
+   * Dog findMany
+   */
+  export type DogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dogs to fetch.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dogs.
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
+  }
+
+  /**
+   * Dog create
+   */
+  export type DogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dog.
+     */
+    data: XOR<DogCreateInput, DogUncheckedCreateInput>
+  }
+
+  /**
+   * Dog createMany
+   */
+  export type DogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dogs.
+     */
+    data: DogCreateManyInput | DogCreateManyInput[]
+  }
+
+  /**
+   * Dog update
+   */
+  export type DogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dog.
+     */
+    data: XOR<DogUpdateInput, DogUncheckedUpdateInput>
+    /**
+     * Choose, which Dog to update.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog updateMany
+   */
+  export type DogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dogs.
+     */
+    data: XOR<DogUpdateManyMutationInput, DogUncheckedUpdateManyInput>
+    /**
+     * Filter which Dogs to update
+     */
+    where?: DogWhereInput
+    /**
+     * Limit how many Dogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dog upsert
+   */
+  export type DogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dog to update in case it exists.
+     */
+    where: DogWhereUniqueInput
+    /**
+     * In case the Dog found by the `where` argument doesn't exist, create a new Dog with this data.
+     */
+    create: XOR<DogCreateInput, DogUncheckedCreateInput>
+    /**
+     * In case the Dog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DogUpdateInput, DogUncheckedUpdateInput>
+  }
+
+  /**
+   * Dog delete
+   */
+  export type DogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter which Dog to delete.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog deleteMany
+   */
+  export type DogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dogs to delete
+     */
+    where?: DogWhereInput
+    /**
+     * Limit how many Dogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dog.vaccines
+   */
+  export type Dog$vaccinesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    where?: VaccineWhereInput
+    orderBy?: VaccineOrderByWithRelationInput | VaccineOrderByWithRelationInput[]
+    cursor?: VaccineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VaccineScalarFieldEnum | VaccineScalarFieldEnum[]
+  }
+
+  /**
+   * Dog.vetControls
+   */
+  export type Dog$vetControlsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    where?: VetControlWhereInput
+    orderBy?: VetControlOrderByWithRelationInput | VetControlOrderByWithRelationInput[]
+    cursor?: VetControlWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: VetControlScalarFieldEnum | VetControlScalarFieldEnum[]
+  }
+
+  /**
+   * Dog.feedings
+   */
+  export type Dog$feedingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    where?: FeedingWhereInput
+    orderBy?: FeedingOrderByWithRelationInput | FeedingOrderByWithRelationInput[]
+    cursor?: FeedingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FeedingScalarFieldEnum | FeedingScalarFieldEnum[]
+  }
+
+  /**
+   * Dog.trainings
+   */
+  export type Dog$trainingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    where?: TrainingWhereInput
+    orderBy?: TrainingOrderByWithRelationInput | TrainingOrderByWithRelationInput[]
+    cursor?: TrainingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TrainingScalarFieldEnum | TrainingScalarFieldEnum[]
+  }
+
+  /**
+   * Dog.assignments
+   */
+  export type Dog$assignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    where?: AssignmentWhereInput
+    orderBy?: AssignmentOrderByWithRelationInput | AssignmentOrderByWithRelationInput[]
+    cursor?: AssignmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AssignmentScalarFieldEnum | AssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Dog.history
+   */
+  export type Dog$historyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    where?: HistoryWhereInput
+    orderBy?: HistoryOrderByWithRelationInput | HistoryOrderByWithRelationInput[]
+    cursor?: HistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HistoryScalarFieldEnum | HistoryScalarFieldEnum[]
+  }
+
+  /**
+   * Dog.incidents
+   */
+  export type Dog$incidentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    where?: IncidentWhereInput
+    orderBy?: IncidentOrderByWithRelationInput | IncidentOrderByWithRelationInput[]
+    cursor?: IncidentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IncidentScalarFieldEnum | IncidentScalarFieldEnum[]
+  }
+
+  /**
+   * Dog without action
+   */
+  export type DogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Vaccine
+   */
+
+  export type AggregateVaccine = {
+    _count: VaccineCountAggregateOutputType | null
+    _avg: VaccineAvgAggregateOutputType | null
+    _sum: VaccineSumAggregateOutputType | null
+    _min: VaccineMinAggregateOutputType | null
+    _max: VaccineMaxAggregateOutputType | null
+  }
+
+  export type VaccineAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type VaccineSumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type VaccineMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    vacuna: string | null
+    fecha_aplicacion: Date | null
+    proxima_dosis: Date | null
+    veterinario: string | null
+    observaciones: string | null
+    createdAt: Date | null
+  }
+
+  export type VaccineMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    vacuna: string | null
+    fecha_aplicacion: Date | null
+    proxima_dosis: Date | null
+    veterinario: string | null
+    observaciones: string | null
+    createdAt: Date | null
+  }
+
+  export type VaccineCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    vacuna: number
+    fecha_aplicacion: number
+    proxima_dosis: number
+    veterinario: number
+    observaciones: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type VaccineAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type VaccineSumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type VaccineMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    vacuna?: true
+    fecha_aplicacion?: true
+    proxima_dosis?: true
+    veterinario?: true
+    observaciones?: true
+    createdAt?: true
+  }
+
+  export type VaccineMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    vacuna?: true
+    fecha_aplicacion?: true
+    proxima_dosis?: true
+    veterinario?: true
+    observaciones?: true
+    createdAt?: true
+  }
+
+  export type VaccineCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    vacuna?: true
+    fecha_aplicacion?: true
+    proxima_dosis?: true
+    veterinario?: true
+    observaciones?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type VaccineAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vaccine to aggregate.
+     */
+    where?: VaccineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vaccines to fetch.
+     */
+    orderBy?: VaccineOrderByWithRelationInput | VaccineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VaccineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vaccines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vaccines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Vaccines
+    **/
+    _count?: true | VaccineCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VaccineAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VaccineSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VaccineMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VaccineMaxAggregateInputType
+  }
+
+  export type GetVaccineAggregateType<T extends VaccineAggregateArgs> = {
+        [P in keyof T & keyof AggregateVaccine]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVaccine[P]>
+      : GetScalarType<T[P], AggregateVaccine[P]>
+  }
+
+
+
+
+  export type VaccineGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VaccineWhereInput
+    orderBy?: VaccineOrderByWithAggregationInput | VaccineOrderByWithAggregationInput[]
+    by: VaccineScalarFieldEnum[] | VaccineScalarFieldEnum
+    having?: VaccineScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VaccineCountAggregateInputType | true
+    _avg?: VaccineAvgAggregateInputType
+    _sum?: VaccineSumAggregateInputType
+    _min?: VaccineMinAggregateInputType
+    _max?: VaccineMaxAggregateInputType
+  }
+
+  export type VaccineGroupByOutputType = {
+    id: number
+    id_perro: number
+    vacuna: string
+    fecha_aplicacion: Date
+    proxima_dosis: Date | null
+    veterinario: string | null
+    observaciones: string | null
+    createdAt: Date
+    _count: VaccineCountAggregateOutputType | null
+    _avg: VaccineAvgAggregateOutputType | null
+    _sum: VaccineSumAggregateOutputType | null
+    _min: VaccineMinAggregateOutputType | null
+    _max: VaccineMaxAggregateOutputType | null
+  }
+
+  type GetVaccineGroupByPayload<T extends VaccineGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VaccineGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VaccineGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VaccineGroupByOutputType[P]>
+            : GetScalarType<T[P], VaccineGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VaccineSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    vacuna?: boolean
+    fecha_aplicacion?: boolean
+    proxima_dosis?: boolean
+    veterinario?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vaccine"]>
+
+
+
+  export type VaccineSelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    vacuna?: boolean
+    fecha_aplicacion?: boolean
+    proxima_dosis?: boolean
+    veterinario?: boolean
+    observaciones?: boolean
+    createdAt?: boolean
+  }
+
+  export type VaccineOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "vacuna" | "fecha_aplicacion" | "proxima_dosis" | "veterinario" | "observaciones" | "createdAt", ExtArgs["result"]["vaccine"]>
+  export type VaccineInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $VaccinePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Vaccine"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      vacuna: string
+      fecha_aplicacion: Date
+      proxima_dosis: Date | null
+      veterinario: string | null
+      observaciones: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["vaccine"]>
+    composites: {}
+  }
+
+  type VaccineGetPayload<S extends boolean | null | undefined | VaccineDefaultArgs> = $Result.GetResult<Prisma.$VaccinePayload, S>
+
+  type VaccineCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VaccineFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VaccineCountAggregateInputType | true
+    }
+
+  export interface VaccineDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Vaccine'], meta: { name: 'Vaccine' } }
+    /**
+     * Find zero or one Vaccine that matches the filter.
+     * @param {VaccineFindUniqueArgs} args - Arguments to find a Vaccine
+     * @example
+     * // Get one Vaccine
+     * const vaccine = await prisma.vaccine.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VaccineFindUniqueArgs>(args: SelectSubset<T, VaccineFindUniqueArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Vaccine that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VaccineFindUniqueOrThrowArgs} args - Arguments to find a Vaccine
+     * @example
+     * // Get one Vaccine
+     * const vaccine = await prisma.vaccine.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VaccineFindUniqueOrThrowArgs>(args: SelectSubset<T, VaccineFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vaccine that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineFindFirstArgs} args - Arguments to find a Vaccine
+     * @example
+     * // Get one Vaccine
+     * const vaccine = await prisma.vaccine.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VaccineFindFirstArgs>(args?: SelectSubset<T, VaccineFindFirstArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Vaccine that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineFindFirstOrThrowArgs} args - Arguments to find a Vaccine
+     * @example
+     * // Get one Vaccine
+     * const vaccine = await prisma.vaccine.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VaccineFindFirstOrThrowArgs>(args?: SelectSubset<T, VaccineFindFirstOrThrowArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Vaccines that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Vaccines
+     * const vaccines = await prisma.vaccine.findMany()
+     * 
+     * // Get first 10 Vaccines
+     * const vaccines = await prisma.vaccine.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const vaccineWithIdOnly = await prisma.vaccine.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VaccineFindManyArgs>(args?: SelectSubset<T, VaccineFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Vaccine.
+     * @param {VaccineCreateArgs} args - Arguments to create a Vaccine.
+     * @example
+     * // Create one Vaccine
+     * const Vaccine = await prisma.vaccine.create({
+     *   data: {
+     *     // ... data to create a Vaccine
+     *   }
+     * })
+     * 
+     */
+    create<T extends VaccineCreateArgs>(args: SelectSubset<T, VaccineCreateArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Vaccines.
+     * @param {VaccineCreateManyArgs} args - Arguments to create many Vaccines.
+     * @example
+     * // Create many Vaccines
+     * const vaccine = await prisma.vaccine.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VaccineCreateManyArgs>(args?: SelectSubset<T, VaccineCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Vaccine.
+     * @param {VaccineDeleteArgs} args - Arguments to delete one Vaccine.
+     * @example
+     * // Delete one Vaccine
+     * const Vaccine = await prisma.vaccine.delete({
+     *   where: {
+     *     // ... filter to delete one Vaccine
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VaccineDeleteArgs>(args: SelectSubset<T, VaccineDeleteArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Vaccine.
+     * @param {VaccineUpdateArgs} args - Arguments to update one Vaccine.
+     * @example
+     * // Update one Vaccine
+     * const vaccine = await prisma.vaccine.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VaccineUpdateArgs>(args: SelectSubset<T, VaccineUpdateArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Vaccines.
+     * @param {VaccineDeleteManyArgs} args - Arguments to filter Vaccines to delete.
+     * @example
+     * // Delete a few Vaccines
+     * const { count } = await prisma.vaccine.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VaccineDeleteManyArgs>(args?: SelectSubset<T, VaccineDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Vaccines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Vaccines
+     * const vaccine = await prisma.vaccine.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VaccineUpdateManyArgs>(args: SelectSubset<T, VaccineUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Vaccine.
+     * @param {VaccineUpsertArgs} args - Arguments to update or create a Vaccine.
+     * @example
+     * // Update or create a Vaccine
+     * const vaccine = await prisma.vaccine.upsert({
+     *   create: {
+     *     // ... data to create a Vaccine
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Vaccine we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VaccineUpsertArgs>(args: SelectSubset<T, VaccineUpsertArgs<ExtArgs>>): Prisma__VaccineClient<$Result.GetResult<Prisma.$VaccinePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Vaccines.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineCountArgs} args - Arguments to filter Vaccines to count.
+     * @example
+     * // Count the number of Vaccines
+     * const count = await prisma.vaccine.count({
+     *   where: {
+     *     // ... the filter for the Vaccines we want to count
+     *   }
+     * })
+    **/
+    count<T extends VaccineCountArgs>(
+      args?: Subset<T, VaccineCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VaccineCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Vaccine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VaccineAggregateArgs>(args: Subset<T, VaccineAggregateArgs>): Prisma.PrismaPromise<GetVaccineAggregateType<T>>
+
+    /**
+     * Group by Vaccine.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VaccineGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VaccineGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VaccineGroupByArgs['orderBy'] }
+        : { orderBy?: VaccineGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VaccineGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVaccineGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Vaccine model
+   */
+  readonly fields: VaccineFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Vaccine.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VaccineClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Vaccine model
+   */
+  interface VaccineFieldRefs {
+    readonly id: FieldRef<"Vaccine", 'Int'>
+    readonly id_perro: FieldRef<"Vaccine", 'Int'>
+    readonly vacuna: FieldRef<"Vaccine", 'String'>
+    readonly fecha_aplicacion: FieldRef<"Vaccine", 'DateTime'>
+    readonly proxima_dosis: FieldRef<"Vaccine", 'DateTime'>
+    readonly veterinario: FieldRef<"Vaccine", 'String'>
+    readonly observaciones: FieldRef<"Vaccine", 'String'>
+    readonly createdAt: FieldRef<"Vaccine", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Vaccine findUnique
+   */
+  export type VaccineFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * Filter, which Vaccine to fetch.
+     */
+    where: VaccineWhereUniqueInput
+  }
+
+  /**
+   * Vaccine findUniqueOrThrow
+   */
+  export type VaccineFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * Filter, which Vaccine to fetch.
+     */
+    where: VaccineWhereUniqueInput
+  }
+
+  /**
+   * Vaccine findFirst
+   */
+  export type VaccineFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * Filter, which Vaccine to fetch.
+     */
+    where?: VaccineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vaccines to fetch.
+     */
+    orderBy?: VaccineOrderByWithRelationInput | VaccineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Vaccines.
+     */
+    cursor?: VaccineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vaccines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vaccines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Vaccines.
+     */
+    distinct?: VaccineScalarFieldEnum | VaccineScalarFieldEnum[]
+  }
+
+  /**
+   * Vaccine findFirstOrThrow
+   */
+  export type VaccineFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * Filter, which Vaccine to fetch.
+     */
+    where?: VaccineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vaccines to fetch.
+     */
+    orderBy?: VaccineOrderByWithRelationInput | VaccineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Vaccines.
+     */
+    cursor?: VaccineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vaccines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vaccines.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Vaccines.
+     */
+    distinct?: VaccineScalarFieldEnum | VaccineScalarFieldEnum[]
+  }
+
+  /**
+   * Vaccine findMany
+   */
+  export type VaccineFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * Filter, which Vaccines to fetch.
+     */
+    where?: VaccineWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Vaccines to fetch.
+     */
+    orderBy?: VaccineOrderByWithRelationInput | VaccineOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Vaccines.
+     */
+    cursor?: VaccineWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Vaccines from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Vaccines.
+     */
+    skip?: number
+    distinct?: VaccineScalarFieldEnum | VaccineScalarFieldEnum[]
+  }
+
+  /**
+   * Vaccine create
+   */
+  export type VaccineCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Vaccine.
+     */
+    data: XOR<VaccineCreateInput, VaccineUncheckedCreateInput>
+  }
+
+  /**
+   * Vaccine createMany
+   */
+  export type VaccineCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Vaccines.
+     */
+    data: VaccineCreateManyInput | VaccineCreateManyInput[]
+  }
+
+  /**
+   * Vaccine update
+   */
+  export type VaccineUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Vaccine.
+     */
+    data: XOR<VaccineUpdateInput, VaccineUncheckedUpdateInput>
+    /**
+     * Choose, which Vaccine to update.
+     */
+    where: VaccineWhereUniqueInput
+  }
+
+  /**
+   * Vaccine updateMany
+   */
+  export type VaccineUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Vaccines.
+     */
+    data: XOR<VaccineUpdateManyMutationInput, VaccineUncheckedUpdateManyInput>
+    /**
+     * Filter which Vaccines to update
+     */
+    where?: VaccineWhereInput
+    /**
+     * Limit how many Vaccines to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vaccine upsert
+   */
+  export type VaccineUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Vaccine to update in case it exists.
+     */
+    where: VaccineWhereUniqueInput
+    /**
+     * In case the Vaccine found by the `where` argument doesn't exist, create a new Vaccine with this data.
+     */
+    create: XOR<VaccineCreateInput, VaccineUncheckedCreateInput>
+    /**
+     * In case the Vaccine was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VaccineUpdateInput, VaccineUncheckedUpdateInput>
+  }
+
+  /**
+   * Vaccine delete
+   */
+  export type VaccineDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+    /**
+     * Filter which Vaccine to delete.
+     */
+    where: VaccineWhereUniqueInput
+  }
+
+  /**
+   * Vaccine deleteMany
+   */
+  export type VaccineDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Vaccines to delete
+     */
+    where?: VaccineWhereInput
+    /**
+     * Limit how many Vaccines to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Vaccine without action
+   */
+  export type VaccineDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vaccine
+     */
+    select?: VaccineSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vaccine
+     */
+    omit?: VaccineOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VaccineInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model VetControl
+   */
+
+  export type AggregateVetControl = {
+    _count: VetControlCountAggregateOutputType | null
+    _avg: VetControlAvgAggregateOutputType | null
+    _sum: VetControlSumAggregateOutputType | null
+    _min: VetControlMinAggregateOutputType | null
+    _max: VetControlMaxAggregateOutputType | null
+  }
+
+  export type VetControlAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type VetControlSumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type VetControlMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    fecha: Date | null
+    motivo: string | null
+    diagnostico: string | null
+    tratamiento: string | null
+    medicacion: string | null
+    dosis: string | null
+    veterinario: string | null
+    observaciones: string | null
+  }
+
+  export type VetControlMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    fecha: Date | null
+    motivo: string | null
+    diagnostico: string | null
+    tratamiento: string | null
+    medicacion: string | null
+    dosis: string | null
+    veterinario: string | null
+    observaciones: string | null
+  }
+
+  export type VetControlCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    fecha: number
+    motivo: number
+    diagnostico: number
+    tratamiento: number
+    medicacion: number
+    dosis: number
+    veterinario: number
+    observaciones: number
+    _all: number
+  }
+
+
+  export type VetControlAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type VetControlSumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type VetControlMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    motivo?: true
+    diagnostico?: true
+    tratamiento?: true
+    medicacion?: true
+    dosis?: true
+    veterinario?: true
+    observaciones?: true
+  }
+
+  export type VetControlMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    motivo?: true
+    diagnostico?: true
+    tratamiento?: true
+    medicacion?: true
+    dosis?: true
+    veterinario?: true
+    observaciones?: true
+  }
+
+  export type VetControlCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    motivo?: true
+    diagnostico?: true
+    tratamiento?: true
+    medicacion?: true
+    dosis?: true
+    veterinario?: true
+    observaciones?: true
+    _all?: true
+  }
+
+  export type VetControlAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VetControl to aggregate.
+     */
+    where?: VetControlWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VetControls to fetch.
+     */
+    orderBy?: VetControlOrderByWithRelationInput | VetControlOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: VetControlWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VetControls from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VetControls.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned VetControls
+    **/
+    _count?: true | VetControlCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: VetControlAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: VetControlSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: VetControlMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: VetControlMaxAggregateInputType
+  }
+
+  export type GetVetControlAggregateType<T extends VetControlAggregateArgs> = {
+        [P in keyof T & keyof AggregateVetControl]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateVetControl[P]>
+      : GetScalarType<T[P], AggregateVetControl[P]>
+  }
+
+
+
+
+  export type VetControlGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: VetControlWhereInput
+    orderBy?: VetControlOrderByWithAggregationInput | VetControlOrderByWithAggregationInput[]
+    by: VetControlScalarFieldEnum[] | VetControlScalarFieldEnum
+    having?: VetControlScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: VetControlCountAggregateInputType | true
+    _avg?: VetControlAvgAggregateInputType
+    _sum?: VetControlSumAggregateInputType
+    _min?: VetControlMinAggregateInputType
+    _max?: VetControlMaxAggregateInputType
+  }
+
+  export type VetControlGroupByOutputType = {
+    id: number
+    id_perro: number
+    fecha: Date
+    motivo: string
+    diagnostico: string | null
+    tratamiento: string | null
+    medicacion: string | null
+    dosis: string | null
+    veterinario: string | null
+    observaciones: string | null
+    _count: VetControlCountAggregateOutputType | null
+    _avg: VetControlAvgAggregateOutputType | null
+    _sum: VetControlSumAggregateOutputType | null
+    _min: VetControlMinAggregateOutputType | null
+    _max: VetControlMaxAggregateOutputType | null
+  }
+
+  type GetVetControlGroupByPayload<T extends VetControlGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<VetControlGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof VetControlGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], VetControlGroupByOutputType[P]>
+            : GetScalarType<T[P], VetControlGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type VetControlSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    fecha?: boolean
+    motivo?: boolean
+    diagnostico?: boolean
+    tratamiento?: boolean
+    medicacion?: boolean
+    dosis?: boolean
+    veterinario?: boolean
+    observaciones?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["vetControl"]>
+
+
+
+  export type VetControlSelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    fecha?: boolean
+    motivo?: boolean
+    diagnostico?: boolean
+    tratamiento?: boolean
+    medicacion?: boolean
+    dosis?: boolean
+    veterinario?: boolean
+    observaciones?: boolean
+  }
+
+  export type VetControlOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "fecha" | "motivo" | "diagnostico" | "tratamiento" | "medicacion" | "dosis" | "veterinario" | "observaciones", ExtArgs["result"]["vetControl"]>
+  export type VetControlInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $VetControlPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "VetControl"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      fecha: Date
+      motivo: string
+      diagnostico: string | null
+      tratamiento: string | null
+      medicacion: string | null
+      dosis: string | null
+      veterinario: string | null
+      observaciones: string | null
+    }, ExtArgs["result"]["vetControl"]>
+    composites: {}
+  }
+
+  type VetControlGetPayload<S extends boolean | null | undefined | VetControlDefaultArgs> = $Result.GetResult<Prisma.$VetControlPayload, S>
+
+  type VetControlCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<VetControlFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: VetControlCountAggregateInputType | true
+    }
+
+  export interface VetControlDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['VetControl'], meta: { name: 'VetControl' } }
+    /**
+     * Find zero or one VetControl that matches the filter.
+     * @param {VetControlFindUniqueArgs} args - Arguments to find a VetControl
+     * @example
+     * // Get one VetControl
+     * const vetControl = await prisma.vetControl.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends VetControlFindUniqueArgs>(args: SelectSubset<T, VetControlFindUniqueArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one VetControl that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {VetControlFindUniqueOrThrowArgs} args - Arguments to find a VetControl
+     * @example
+     * // Get one VetControl
+     * const vetControl = await prisma.vetControl.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends VetControlFindUniqueOrThrowArgs>(args: SelectSubset<T, VetControlFindUniqueOrThrowArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VetControl that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlFindFirstArgs} args - Arguments to find a VetControl
+     * @example
+     * // Get one VetControl
+     * const vetControl = await prisma.vetControl.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends VetControlFindFirstArgs>(args?: SelectSubset<T, VetControlFindFirstArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first VetControl that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlFindFirstOrThrowArgs} args - Arguments to find a VetControl
+     * @example
+     * // Get one VetControl
+     * const vetControl = await prisma.vetControl.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends VetControlFindFirstOrThrowArgs>(args?: SelectSubset<T, VetControlFindFirstOrThrowArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more VetControls that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all VetControls
+     * const vetControls = await prisma.vetControl.findMany()
+     * 
+     * // Get first 10 VetControls
+     * const vetControls = await prisma.vetControl.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const vetControlWithIdOnly = await prisma.vetControl.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends VetControlFindManyArgs>(args?: SelectSubset<T, VetControlFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a VetControl.
+     * @param {VetControlCreateArgs} args - Arguments to create a VetControl.
+     * @example
+     * // Create one VetControl
+     * const VetControl = await prisma.vetControl.create({
+     *   data: {
+     *     // ... data to create a VetControl
+     *   }
+     * })
+     * 
+     */
+    create<T extends VetControlCreateArgs>(args: SelectSubset<T, VetControlCreateArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many VetControls.
+     * @param {VetControlCreateManyArgs} args - Arguments to create many VetControls.
+     * @example
+     * // Create many VetControls
+     * const vetControl = await prisma.vetControl.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends VetControlCreateManyArgs>(args?: SelectSubset<T, VetControlCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a VetControl.
+     * @param {VetControlDeleteArgs} args - Arguments to delete one VetControl.
+     * @example
+     * // Delete one VetControl
+     * const VetControl = await prisma.vetControl.delete({
+     *   where: {
+     *     // ... filter to delete one VetControl
+     *   }
+     * })
+     * 
+     */
+    delete<T extends VetControlDeleteArgs>(args: SelectSubset<T, VetControlDeleteArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one VetControl.
+     * @param {VetControlUpdateArgs} args - Arguments to update one VetControl.
+     * @example
+     * // Update one VetControl
+     * const vetControl = await prisma.vetControl.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends VetControlUpdateArgs>(args: SelectSubset<T, VetControlUpdateArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more VetControls.
+     * @param {VetControlDeleteManyArgs} args - Arguments to filter VetControls to delete.
+     * @example
+     * // Delete a few VetControls
+     * const { count } = await prisma.vetControl.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends VetControlDeleteManyArgs>(args?: SelectSubset<T, VetControlDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more VetControls.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many VetControls
+     * const vetControl = await prisma.vetControl.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends VetControlUpdateManyArgs>(args: SelectSubset<T, VetControlUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one VetControl.
+     * @param {VetControlUpsertArgs} args - Arguments to update or create a VetControl.
+     * @example
+     * // Update or create a VetControl
+     * const vetControl = await prisma.vetControl.upsert({
+     *   create: {
+     *     // ... data to create a VetControl
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the VetControl we want to update
+     *   }
+     * })
+     */
+    upsert<T extends VetControlUpsertArgs>(args: SelectSubset<T, VetControlUpsertArgs<ExtArgs>>): Prisma__VetControlClient<$Result.GetResult<Prisma.$VetControlPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of VetControls.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlCountArgs} args - Arguments to filter VetControls to count.
+     * @example
+     * // Count the number of VetControls
+     * const count = await prisma.vetControl.count({
+     *   where: {
+     *     // ... the filter for the VetControls we want to count
+     *   }
+     * })
+    **/
+    count<T extends VetControlCountArgs>(
+      args?: Subset<T, VetControlCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], VetControlCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a VetControl.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends VetControlAggregateArgs>(args: Subset<T, VetControlAggregateArgs>): Prisma.PrismaPromise<GetVetControlAggregateType<T>>
+
+    /**
+     * Group by VetControl.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {VetControlGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends VetControlGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: VetControlGroupByArgs['orderBy'] }
+        : { orderBy?: VetControlGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, VetControlGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetVetControlGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the VetControl model
+   */
+  readonly fields: VetControlFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for VetControl.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__VetControlClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the VetControl model
+   */
+  interface VetControlFieldRefs {
+    readonly id: FieldRef<"VetControl", 'Int'>
+    readonly id_perro: FieldRef<"VetControl", 'Int'>
+    readonly fecha: FieldRef<"VetControl", 'DateTime'>
+    readonly motivo: FieldRef<"VetControl", 'String'>
+    readonly diagnostico: FieldRef<"VetControl", 'String'>
+    readonly tratamiento: FieldRef<"VetControl", 'String'>
+    readonly medicacion: FieldRef<"VetControl", 'String'>
+    readonly dosis: FieldRef<"VetControl", 'String'>
+    readonly veterinario: FieldRef<"VetControl", 'String'>
+    readonly observaciones: FieldRef<"VetControl", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * VetControl findUnique
+   */
+  export type VetControlFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * Filter, which VetControl to fetch.
+     */
+    where: VetControlWhereUniqueInput
+  }
+
+  /**
+   * VetControl findUniqueOrThrow
+   */
+  export type VetControlFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * Filter, which VetControl to fetch.
+     */
+    where: VetControlWhereUniqueInput
+  }
+
+  /**
+   * VetControl findFirst
+   */
+  export type VetControlFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * Filter, which VetControl to fetch.
+     */
+    where?: VetControlWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VetControls to fetch.
+     */
+    orderBy?: VetControlOrderByWithRelationInput | VetControlOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VetControls.
+     */
+    cursor?: VetControlWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VetControls from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VetControls.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VetControls.
+     */
+    distinct?: VetControlScalarFieldEnum | VetControlScalarFieldEnum[]
+  }
+
+  /**
+   * VetControl findFirstOrThrow
+   */
+  export type VetControlFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * Filter, which VetControl to fetch.
+     */
+    where?: VetControlWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VetControls to fetch.
+     */
+    orderBy?: VetControlOrderByWithRelationInput | VetControlOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for VetControls.
+     */
+    cursor?: VetControlWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VetControls from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VetControls.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of VetControls.
+     */
+    distinct?: VetControlScalarFieldEnum | VetControlScalarFieldEnum[]
+  }
+
+  /**
+   * VetControl findMany
+   */
+  export type VetControlFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * Filter, which VetControls to fetch.
+     */
+    where?: VetControlWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of VetControls to fetch.
+     */
+    orderBy?: VetControlOrderByWithRelationInput | VetControlOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing VetControls.
+     */
+    cursor?: VetControlWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` VetControls from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` VetControls.
+     */
+    skip?: number
+    distinct?: VetControlScalarFieldEnum | VetControlScalarFieldEnum[]
+  }
+
+  /**
+   * VetControl create
+   */
+  export type VetControlCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * The data needed to create a VetControl.
+     */
+    data: XOR<VetControlCreateInput, VetControlUncheckedCreateInput>
+  }
+
+  /**
+   * VetControl createMany
+   */
+  export type VetControlCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many VetControls.
+     */
+    data: VetControlCreateManyInput | VetControlCreateManyInput[]
+  }
+
+  /**
+   * VetControl update
+   */
+  export type VetControlUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * The data needed to update a VetControl.
+     */
+    data: XOR<VetControlUpdateInput, VetControlUncheckedUpdateInput>
+    /**
+     * Choose, which VetControl to update.
+     */
+    where: VetControlWhereUniqueInput
+  }
+
+  /**
+   * VetControl updateMany
+   */
+  export type VetControlUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update VetControls.
+     */
+    data: XOR<VetControlUpdateManyMutationInput, VetControlUncheckedUpdateManyInput>
+    /**
+     * Filter which VetControls to update
+     */
+    where?: VetControlWhereInput
+    /**
+     * Limit how many VetControls to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * VetControl upsert
+   */
+  export type VetControlUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * The filter to search for the VetControl to update in case it exists.
+     */
+    where: VetControlWhereUniqueInput
+    /**
+     * In case the VetControl found by the `where` argument doesn't exist, create a new VetControl with this data.
+     */
+    create: XOR<VetControlCreateInput, VetControlUncheckedCreateInput>
+    /**
+     * In case the VetControl was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<VetControlUpdateInput, VetControlUncheckedUpdateInput>
+  }
+
+  /**
+   * VetControl delete
+   */
+  export type VetControlDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+    /**
+     * Filter which VetControl to delete.
+     */
+    where: VetControlWhereUniqueInput
+  }
+
+  /**
+   * VetControl deleteMany
+   */
+  export type VetControlDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which VetControls to delete
+     */
+    where?: VetControlWhereInput
+    /**
+     * Limit how many VetControls to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * VetControl without action
+   */
+  export type VetControlDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the VetControl
+     */
+    select?: VetControlSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the VetControl
+     */
+    omit?: VetControlOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VetControlInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Feeding
+   */
+
+  export type AggregateFeeding = {
+    _count: FeedingCountAggregateOutputType | null
+    _avg: FeedingAvgAggregateOutputType | null
+    _sum: FeedingSumAggregateOutputType | null
+    _min: FeedingMinAggregateOutputType | null
+    _max: FeedingMaxAggregateOutputType | null
+  }
+
+  export type FeedingAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type FeedingSumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type FeedingMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    tipo_alimento: string | null
+    marca: string | null
+    cantidad_diaria: string | null
+    horario: string | null
+    suplementos: string | null
+    fecha_inicio: Date | null
+  }
+
+  export type FeedingMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    tipo_alimento: string | null
+    marca: string | null
+    cantidad_diaria: string | null
+    horario: string | null
+    suplementos: string | null
+    fecha_inicio: Date | null
+  }
+
+  export type FeedingCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    tipo_alimento: number
+    marca: number
+    cantidad_diaria: number
+    horario: number
+    suplementos: number
+    fecha_inicio: number
+    _all: number
+  }
+
+
+  export type FeedingAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type FeedingSumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type FeedingMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    tipo_alimento?: true
+    marca?: true
+    cantidad_diaria?: true
+    horario?: true
+    suplementos?: true
+    fecha_inicio?: true
+  }
+
+  export type FeedingMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    tipo_alimento?: true
+    marca?: true
+    cantidad_diaria?: true
+    horario?: true
+    suplementos?: true
+    fecha_inicio?: true
+  }
+
+  export type FeedingCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    tipo_alimento?: true
+    marca?: true
+    cantidad_diaria?: true
+    horario?: true
+    suplementos?: true
+    fecha_inicio?: true
+    _all?: true
+  }
+
+  export type FeedingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Feeding to aggregate.
+     */
+    where?: FeedingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Feedings to fetch.
+     */
+    orderBy?: FeedingOrderByWithRelationInput | FeedingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FeedingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Feedings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Feedings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Feedings
+    **/
+    _count?: true | FeedingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FeedingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FeedingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FeedingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FeedingMaxAggregateInputType
+  }
+
+  export type GetFeedingAggregateType<T extends FeedingAggregateArgs> = {
+        [P in keyof T & keyof AggregateFeeding]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFeeding[P]>
+      : GetScalarType<T[P], AggregateFeeding[P]>
+  }
+
+
+
+
+  export type FeedingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FeedingWhereInput
+    orderBy?: FeedingOrderByWithAggregationInput | FeedingOrderByWithAggregationInput[]
+    by: FeedingScalarFieldEnum[] | FeedingScalarFieldEnum
+    having?: FeedingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FeedingCountAggregateInputType | true
+    _avg?: FeedingAvgAggregateInputType
+    _sum?: FeedingSumAggregateInputType
+    _min?: FeedingMinAggregateInputType
+    _max?: FeedingMaxAggregateInputType
+  }
+
+  export type FeedingGroupByOutputType = {
+    id: number
+    id_perro: number
+    tipo_alimento: string
+    marca: string | null
+    cantidad_diaria: string | null
+    horario: string | null
+    suplementos: string | null
+    fecha_inicio: Date | null
+    _count: FeedingCountAggregateOutputType | null
+    _avg: FeedingAvgAggregateOutputType | null
+    _sum: FeedingSumAggregateOutputType | null
+    _min: FeedingMinAggregateOutputType | null
+    _max: FeedingMaxAggregateOutputType | null
+  }
+
+  type GetFeedingGroupByPayload<T extends FeedingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FeedingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FeedingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FeedingGroupByOutputType[P]>
+            : GetScalarType<T[P], FeedingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FeedingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    tipo_alimento?: boolean
+    marca?: boolean
+    cantidad_diaria?: boolean
+    horario?: boolean
+    suplementos?: boolean
+    fecha_inicio?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["feeding"]>
+
+
+
+  export type FeedingSelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    tipo_alimento?: boolean
+    marca?: boolean
+    cantidad_diaria?: boolean
+    horario?: boolean
+    suplementos?: boolean
+    fecha_inicio?: boolean
+  }
+
+  export type FeedingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "tipo_alimento" | "marca" | "cantidad_diaria" | "horario" | "suplementos" | "fecha_inicio", ExtArgs["result"]["feeding"]>
+  export type FeedingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $FeedingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Feeding"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      tipo_alimento: string
+      marca: string | null
+      cantidad_diaria: string | null
+      horario: string | null
+      suplementos: string | null
+      fecha_inicio: Date | null
+    }, ExtArgs["result"]["feeding"]>
+    composites: {}
+  }
+
+  type FeedingGetPayload<S extends boolean | null | undefined | FeedingDefaultArgs> = $Result.GetResult<Prisma.$FeedingPayload, S>
+
+  type FeedingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FeedingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FeedingCountAggregateInputType | true
+    }
+
+  export interface FeedingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Feeding'], meta: { name: 'Feeding' } }
+    /**
+     * Find zero or one Feeding that matches the filter.
+     * @param {FeedingFindUniqueArgs} args - Arguments to find a Feeding
+     * @example
+     * // Get one Feeding
+     * const feeding = await prisma.feeding.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FeedingFindUniqueArgs>(args: SelectSubset<T, FeedingFindUniqueArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Feeding that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FeedingFindUniqueOrThrowArgs} args - Arguments to find a Feeding
+     * @example
+     * // Get one Feeding
+     * const feeding = await prisma.feeding.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FeedingFindUniqueOrThrowArgs>(args: SelectSubset<T, FeedingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Feeding that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingFindFirstArgs} args - Arguments to find a Feeding
+     * @example
+     * // Get one Feeding
+     * const feeding = await prisma.feeding.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FeedingFindFirstArgs>(args?: SelectSubset<T, FeedingFindFirstArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Feeding that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingFindFirstOrThrowArgs} args - Arguments to find a Feeding
+     * @example
+     * // Get one Feeding
+     * const feeding = await prisma.feeding.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FeedingFindFirstOrThrowArgs>(args?: SelectSubset<T, FeedingFindFirstOrThrowArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Feedings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Feedings
+     * const feedings = await prisma.feeding.findMany()
+     * 
+     * // Get first 10 Feedings
+     * const feedings = await prisma.feeding.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const feedingWithIdOnly = await prisma.feeding.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FeedingFindManyArgs>(args?: SelectSubset<T, FeedingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Feeding.
+     * @param {FeedingCreateArgs} args - Arguments to create a Feeding.
+     * @example
+     * // Create one Feeding
+     * const Feeding = await prisma.feeding.create({
+     *   data: {
+     *     // ... data to create a Feeding
+     *   }
+     * })
+     * 
+     */
+    create<T extends FeedingCreateArgs>(args: SelectSubset<T, FeedingCreateArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Feedings.
+     * @param {FeedingCreateManyArgs} args - Arguments to create many Feedings.
+     * @example
+     * // Create many Feedings
+     * const feeding = await prisma.feeding.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FeedingCreateManyArgs>(args?: SelectSubset<T, FeedingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Feeding.
+     * @param {FeedingDeleteArgs} args - Arguments to delete one Feeding.
+     * @example
+     * // Delete one Feeding
+     * const Feeding = await prisma.feeding.delete({
+     *   where: {
+     *     // ... filter to delete one Feeding
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FeedingDeleteArgs>(args: SelectSubset<T, FeedingDeleteArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Feeding.
+     * @param {FeedingUpdateArgs} args - Arguments to update one Feeding.
+     * @example
+     * // Update one Feeding
+     * const feeding = await prisma.feeding.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FeedingUpdateArgs>(args: SelectSubset<T, FeedingUpdateArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Feedings.
+     * @param {FeedingDeleteManyArgs} args - Arguments to filter Feedings to delete.
+     * @example
+     * // Delete a few Feedings
+     * const { count } = await prisma.feeding.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FeedingDeleteManyArgs>(args?: SelectSubset<T, FeedingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Feedings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Feedings
+     * const feeding = await prisma.feeding.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FeedingUpdateManyArgs>(args: SelectSubset<T, FeedingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Feeding.
+     * @param {FeedingUpsertArgs} args - Arguments to update or create a Feeding.
+     * @example
+     * // Update or create a Feeding
+     * const feeding = await prisma.feeding.upsert({
+     *   create: {
+     *     // ... data to create a Feeding
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Feeding we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FeedingUpsertArgs>(args: SelectSubset<T, FeedingUpsertArgs<ExtArgs>>): Prisma__FeedingClient<$Result.GetResult<Prisma.$FeedingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Feedings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingCountArgs} args - Arguments to filter Feedings to count.
+     * @example
+     * // Count the number of Feedings
+     * const count = await prisma.feeding.count({
+     *   where: {
+     *     // ... the filter for the Feedings we want to count
+     *   }
+     * })
+    **/
+    count<T extends FeedingCountArgs>(
+      args?: Subset<T, FeedingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FeedingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Feeding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FeedingAggregateArgs>(args: Subset<T, FeedingAggregateArgs>): Prisma.PrismaPromise<GetFeedingAggregateType<T>>
+
+    /**
+     * Group by Feeding.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FeedingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FeedingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FeedingGroupByArgs['orderBy'] }
+        : { orderBy?: FeedingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FeedingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFeedingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Feeding model
+   */
+  readonly fields: FeedingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Feeding.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FeedingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Feeding model
+   */
+  interface FeedingFieldRefs {
+    readonly id: FieldRef<"Feeding", 'Int'>
+    readonly id_perro: FieldRef<"Feeding", 'Int'>
+    readonly tipo_alimento: FieldRef<"Feeding", 'String'>
+    readonly marca: FieldRef<"Feeding", 'String'>
+    readonly cantidad_diaria: FieldRef<"Feeding", 'String'>
+    readonly horario: FieldRef<"Feeding", 'String'>
+    readonly suplementos: FieldRef<"Feeding", 'String'>
+    readonly fecha_inicio: FieldRef<"Feeding", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Feeding findUnique
+   */
+  export type FeedingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * Filter, which Feeding to fetch.
+     */
+    where: FeedingWhereUniqueInput
+  }
+
+  /**
+   * Feeding findUniqueOrThrow
+   */
+  export type FeedingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * Filter, which Feeding to fetch.
+     */
+    where: FeedingWhereUniqueInput
+  }
+
+  /**
+   * Feeding findFirst
+   */
+  export type FeedingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * Filter, which Feeding to fetch.
+     */
+    where?: FeedingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Feedings to fetch.
+     */
+    orderBy?: FeedingOrderByWithRelationInput | FeedingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Feedings.
+     */
+    cursor?: FeedingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Feedings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Feedings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Feedings.
+     */
+    distinct?: FeedingScalarFieldEnum | FeedingScalarFieldEnum[]
+  }
+
+  /**
+   * Feeding findFirstOrThrow
+   */
+  export type FeedingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * Filter, which Feeding to fetch.
+     */
+    where?: FeedingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Feedings to fetch.
+     */
+    orderBy?: FeedingOrderByWithRelationInput | FeedingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Feedings.
+     */
+    cursor?: FeedingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Feedings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Feedings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Feedings.
+     */
+    distinct?: FeedingScalarFieldEnum | FeedingScalarFieldEnum[]
+  }
+
+  /**
+   * Feeding findMany
+   */
+  export type FeedingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * Filter, which Feedings to fetch.
+     */
+    where?: FeedingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Feedings to fetch.
+     */
+    orderBy?: FeedingOrderByWithRelationInput | FeedingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Feedings.
+     */
+    cursor?: FeedingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Feedings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Feedings.
+     */
+    skip?: number
+    distinct?: FeedingScalarFieldEnum | FeedingScalarFieldEnum[]
+  }
+
+  /**
+   * Feeding create
+   */
+  export type FeedingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Feeding.
+     */
+    data: XOR<FeedingCreateInput, FeedingUncheckedCreateInput>
+  }
+
+  /**
+   * Feeding createMany
+   */
+  export type FeedingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Feedings.
+     */
+    data: FeedingCreateManyInput | FeedingCreateManyInput[]
+  }
+
+  /**
+   * Feeding update
+   */
+  export type FeedingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Feeding.
+     */
+    data: XOR<FeedingUpdateInput, FeedingUncheckedUpdateInput>
+    /**
+     * Choose, which Feeding to update.
+     */
+    where: FeedingWhereUniqueInput
+  }
+
+  /**
+   * Feeding updateMany
+   */
+  export type FeedingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Feedings.
+     */
+    data: XOR<FeedingUpdateManyMutationInput, FeedingUncheckedUpdateManyInput>
+    /**
+     * Filter which Feedings to update
+     */
+    where?: FeedingWhereInput
+    /**
+     * Limit how many Feedings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Feeding upsert
+   */
+  export type FeedingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Feeding to update in case it exists.
+     */
+    where: FeedingWhereUniqueInput
+    /**
+     * In case the Feeding found by the `where` argument doesn't exist, create a new Feeding with this data.
+     */
+    create: XOR<FeedingCreateInput, FeedingUncheckedCreateInput>
+    /**
+     * In case the Feeding was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FeedingUpdateInput, FeedingUncheckedUpdateInput>
+  }
+
+  /**
+   * Feeding delete
+   */
+  export type FeedingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+    /**
+     * Filter which Feeding to delete.
+     */
+    where: FeedingWhereUniqueInput
+  }
+
+  /**
+   * Feeding deleteMany
+   */
+  export type FeedingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Feedings to delete
+     */
+    where?: FeedingWhereInput
+    /**
+     * Limit how many Feedings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Feeding without action
+   */
+  export type FeedingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Feeding
+     */
+    select?: FeedingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Feeding
+     */
+    omit?: FeedingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FeedingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Training
+   */
+
+  export type AggregateTraining = {
+    _count: TrainingCountAggregateOutputType | null
+    _avg: TrainingAvgAggregateOutputType | null
+    _sum: TrainingSumAggregateOutputType | null
+    _min: TrainingMinAggregateOutputType | null
+    _max: TrainingMaxAggregateOutputType | null
+  }
+
+  export type TrainingAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type TrainingSumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type TrainingMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    tipo: string | null
+    nivel: string | null
+    fecha: Date | null
+    instructor: string | null
+    evaluacion: string | null
+    observaciones: string | null
+  }
+
+  export type TrainingMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    tipo: string | null
+    nivel: string | null
+    fecha: Date | null
+    instructor: string | null
+    evaluacion: string | null
+    observaciones: string | null
+  }
+
+  export type TrainingCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    tipo: number
+    nivel: number
+    fecha: number
+    instructor: number
+    evaluacion: number
+    observaciones: number
+    _all: number
+  }
+
+
+  export type TrainingAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type TrainingSumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type TrainingMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    tipo?: true
+    nivel?: true
+    fecha?: true
+    instructor?: true
+    evaluacion?: true
+    observaciones?: true
+  }
+
+  export type TrainingMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    tipo?: true
+    nivel?: true
+    fecha?: true
+    instructor?: true
+    evaluacion?: true
+    observaciones?: true
+  }
+
+  export type TrainingCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    tipo?: true
+    nivel?: true
+    fecha?: true
+    instructor?: true
+    evaluacion?: true
+    observaciones?: true
+    _all?: true
+  }
+
+  export type TrainingAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Training to aggregate.
+     */
+    where?: TrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Trainings to fetch.
+     */
+    orderBy?: TrainingOrderByWithRelationInput | TrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Trainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Trainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Trainings
+    **/
+    _count?: true | TrainingCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TrainingAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TrainingSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TrainingMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TrainingMaxAggregateInputType
+  }
+
+  export type GetTrainingAggregateType<T extends TrainingAggregateArgs> = {
+        [P in keyof T & keyof AggregateTraining]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTraining[P]>
+      : GetScalarType<T[P], AggregateTraining[P]>
+  }
+
+
+
+
+  export type TrainingGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TrainingWhereInput
+    orderBy?: TrainingOrderByWithAggregationInput | TrainingOrderByWithAggregationInput[]
+    by: TrainingScalarFieldEnum[] | TrainingScalarFieldEnum
+    having?: TrainingScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TrainingCountAggregateInputType | true
+    _avg?: TrainingAvgAggregateInputType
+    _sum?: TrainingSumAggregateInputType
+    _min?: TrainingMinAggregateInputType
+    _max?: TrainingMaxAggregateInputType
+  }
+
+  export type TrainingGroupByOutputType = {
+    id: number
+    id_perro: number
+    tipo: string
+    nivel: string | null
+    fecha: Date
+    instructor: string | null
+    evaluacion: string | null
+    observaciones: string | null
+    _count: TrainingCountAggregateOutputType | null
+    _avg: TrainingAvgAggregateOutputType | null
+    _sum: TrainingSumAggregateOutputType | null
+    _min: TrainingMinAggregateOutputType | null
+    _max: TrainingMaxAggregateOutputType | null
+  }
+
+  type GetTrainingGroupByPayload<T extends TrainingGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TrainingGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TrainingGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TrainingGroupByOutputType[P]>
+            : GetScalarType<T[P], TrainingGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TrainingSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    tipo?: boolean
+    nivel?: boolean
+    fecha?: boolean
+    instructor?: boolean
+    evaluacion?: boolean
+    observaciones?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["training"]>
+
+
+
+  export type TrainingSelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    tipo?: boolean
+    nivel?: boolean
+    fecha?: boolean
+    instructor?: boolean
+    evaluacion?: boolean
+    observaciones?: boolean
+  }
+
+  export type TrainingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "tipo" | "nivel" | "fecha" | "instructor" | "evaluacion" | "observaciones", ExtArgs["result"]["training"]>
+  export type TrainingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $TrainingPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Training"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      tipo: string
+      nivel: string | null
+      fecha: Date
+      instructor: string | null
+      evaluacion: string | null
+      observaciones: string | null
+    }, ExtArgs["result"]["training"]>
+    composites: {}
+  }
+
+  type TrainingGetPayload<S extends boolean | null | undefined | TrainingDefaultArgs> = $Result.GetResult<Prisma.$TrainingPayload, S>
+
+  type TrainingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TrainingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TrainingCountAggregateInputType | true
+    }
+
+  export interface TrainingDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Training'], meta: { name: 'Training' } }
+    /**
+     * Find zero or one Training that matches the filter.
+     * @param {TrainingFindUniqueArgs} args - Arguments to find a Training
+     * @example
+     * // Get one Training
+     * const training = await prisma.training.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TrainingFindUniqueArgs>(args: SelectSubset<T, TrainingFindUniqueArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Training that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TrainingFindUniqueOrThrowArgs} args - Arguments to find a Training
+     * @example
+     * // Get one Training
+     * const training = await prisma.training.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TrainingFindUniqueOrThrowArgs>(args: SelectSubset<T, TrainingFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Training that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingFindFirstArgs} args - Arguments to find a Training
+     * @example
+     * // Get one Training
+     * const training = await prisma.training.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TrainingFindFirstArgs>(args?: SelectSubset<T, TrainingFindFirstArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Training that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingFindFirstOrThrowArgs} args - Arguments to find a Training
+     * @example
+     * // Get one Training
+     * const training = await prisma.training.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TrainingFindFirstOrThrowArgs>(args?: SelectSubset<T, TrainingFindFirstOrThrowArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Trainings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Trainings
+     * const trainings = await prisma.training.findMany()
+     * 
+     * // Get first 10 Trainings
+     * const trainings = await prisma.training.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const trainingWithIdOnly = await prisma.training.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TrainingFindManyArgs>(args?: SelectSubset<T, TrainingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Training.
+     * @param {TrainingCreateArgs} args - Arguments to create a Training.
+     * @example
+     * // Create one Training
+     * const Training = await prisma.training.create({
+     *   data: {
+     *     // ... data to create a Training
+     *   }
+     * })
+     * 
+     */
+    create<T extends TrainingCreateArgs>(args: SelectSubset<T, TrainingCreateArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Trainings.
+     * @param {TrainingCreateManyArgs} args - Arguments to create many Trainings.
+     * @example
+     * // Create many Trainings
+     * const training = await prisma.training.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TrainingCreateManyArgs>(args?: SelectSubset<T, TrainingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Training.
+     * @param {TrainingDeleteArgs} args - Arguments to delete one Training.
+     * @example
+     * // Delete one Training
+     * const Training = await prisma.training.delete({
+     *   where: {
+     *     // ... filter to delete one Training
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TrainingDeleteArgs>(args: SelectSubset<T, TrainingDeleteArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Training.
+     * @param {TrainingUpdateArgs} args - Arguments to update one Training.
+     * @example
+     * // Update one Training
+     * const training = await prisma.training.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TrainingUpdateArgs>(args: SelectSubset<T, TrainingUpdateArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Trainings.
+     * @param {TrainingDeleteManyArgs} args - Arguments to filter Trainings to delete.
+     * @example
+     * // Delete a few Trainings
+     * const { count } = await prisma.training.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TrainingDeleteManyArgs>(args?: SelectSubset<T, TrainingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Trainings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Trainings
+     * const training = await prisma.training.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TrainingUpdateManyArgs>(args: SelectSubset<T, TrainingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Training.
+     * @param {TrainingUpsertArgs} args - Arguments to update or create a Training.
+     * @example
+     * // Update or create a Training
+     * const training = await prisma.training.upsert({
+     *   create: {
+     *     // ... data to create a Training
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Training we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TrainingUpsertArgs>(args: SelectSubset<T, TrainingUpsertArgs<ExtArgs>>): Prisma__TrainingClient<$Result.GetResult<Prisma.$TrainingPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Trainings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingCountArgs} args - Arguments to filter Trainings to count.
+     * @example
+     * // Count the number of Trainings
+     * const count = await prisma.training.count({
+     *   where: {
+     *     // ... the filter for the Trainings we want to count
+     *   }
+     * })
+    **/
+    count<T extends TrainingCountArgs>(
+      args?: Subset<T, TrainingCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TrainingCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Training.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TrainingAggregateArgs>(args: Subset<T, TrainingAggregateArgs>): Prisma.PrismaPromise<GetTrainingAggregateType<T>>
+
+    /**
+     * Group by Training.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TrainingGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TrainingGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TrainingGroupByArgs['orderBy'] }
+        : { orderBy?: TrainingGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TrainingGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTrainingGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Training model
+   */
+  readonly fields: TrainingFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Training.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TrainingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Training model
+   */
+  interface TrainingFieldRefs {
+    readonly id: FieldRef<"Training", 'Int'>
+    readonly id_perro: FieldRef<"Training", 'Int'>
+    readonly tipo: FieldRef<"Training", 'String'>
+    readonly nivel: FieldRef<"Training", 'String'>
+    readonly fecha: FieldRef<"Training", 'DateTime'>
+    readonly instructor: FieldRef<"Training", 'String'>
+    readonly evaluacion: FieldRef<"Training", 'String'>
+    readonly observaciones: FieldRef<"Training", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Training findUnique
+   */
+  export type TrainingFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which Training to fetch.
+     */
+    where: TrainingWhereUniqueInput
+  }
+
+  /**
+   * Training findUniqueOrThrow
+   */
+  export type TrainingFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which Training to fetch.
+     */
+    where: TrainingWhereUniqueInput
+  }
+
+  /**
+   * Training findFirst
+   */
+  export type TrainingFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which Training to fetch.
+     */
+    where?: TrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Trainings to fetch.
+     */
+    orderBy?: TrainingOrderByWithRelationInput | TrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Trainings.
+     */
+    cursor?: TrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Trainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Trainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Trainings.
+     */
+    distinct?: TrainingScalarFieldEnum | TrainingScalarFieldEnum[]
+  }
+
+  /**
+   * Training findFirstOrThrow
+   */
+  export type TrainingFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which Training to fetch.
+     */
+    where?: TrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Trainings to fetch.
+     */
+    orderBy?: TrainingOrderByWithRelationInput | TrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Trainings.
+     */
+    cursor?: TrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Trainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Trainings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Trainings.
+     */
+    distinct?: TrainingScalarFieldEnum | TrainingScalarFieldEnum[]
+  }
+
+  /**
+   * Training findMany
+   */
+  export type TrainingFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * Filter, which Trainings to fetch.
+     */
+    where?: TrainingWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Trainings to fetch.
+     */
+    orderBy?: TrainingOrderByWithRelationInput | TrainingOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Trainings.
+     */
+    cursor?: TrainingWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Trainings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Trainings.
+     */
+    skip?: number
+    distinct?: TrainingScalarFieldEnum | TrainingScalarFieldEnum[]
+  }
+
+  /**
+   * Training create
+   */
+  export type TrainingCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Training.
+     */
+    data: XOR<TrainingCreateInput, TrainingUncheckedCreateInput>
+  }
+
+  /**
+   * Training createMany
+   */
+  export type TrainingCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Trainings.
+     */
+    data: TrainingCreateManyInput | TrainingCreateManyInput[]
+  }
+
+  /**
+   * Training update
+   */
+  export type TrainingUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Training.
+     */
+    data: XOR<TrainingUpdateInput, TrainingUncheckedUpdateInput>
+    /**
+     * Choose, which Training to update.
+     */
+    where: TrainingWhereUniqueInput
+  }
+
+  /**
+   * Training updateMany
+   */
+  export type TrainingUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Trainings.
+     */
+    data: XOR<TrainingUpdateManyMutationInput, TrainingUncheckedUpdateManyInput>
+    /**
+     * Filter which Trainings to update
+     */
+    where?: TrainingWhereInput
+    /**
+     * Limit how many Trainings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Training upsert
+   */
+  export type TrainingUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Training to update in case it exists.
+     */
+    where: TrainingWhereUniqueInput
+    /**
+     * In case the Training found by the `where` argument doesn't exist, create a new Training with this data.
+     */
+    create: XOR<TrainingCreateInput, TrainingUncheckedCreateInput>
+    /**
+     * In case the Training was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TrainingUpdateInput, TrainingUncheckedUpdateInput>
+  }
+
+  /**
+   * Training delete
+   */
+  export type TrainingDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+    /**
+     * Filter which Training to delete.
+     */
+    where: TrainingWhereUniqueInput
+  }
+
+  /**
+   * Training deleteMany
+   */
+  export type TrainingDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Trainings to delete
+     */
+    where?: TrainingWhereInput
+    /**
+     * Limit how many Trainings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Training without action
+   */
+  export type TrainingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Training
+     */
+    select?: TrainingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Training
+     */
+    omit?: TrainingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TrainingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Assignment
+   */
+
+  export type AggregateAssignment = {
+    _count: AssignmentCountAggregateOutputType | null
+    _avg: AssignmentAvgAggregateOutputType | null
+    _sum: AssignmentSumAggregateOutputType | null
+    _min: AssignmentMinAggregateOutputType | null
+    _max: AssignmentMaxAggregateOutputType | null
+  }
+
+  export type AssignmentAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type AssignmentSumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type AssignmentMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    guia: string | null
+    fecha_inicio: Date | null
+    fecha_fin: Date | null
+    turno: string | null
+    observaciones: string | null
+  }
+
+  export type AssignmentMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    guia: string | null
+    fecha_inicio: Date | null
+    fecha_fin: Date | null
+    turno: string | null
+    observaciones: string | null
+  }
+
+  export type AssignmentCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    guia: number
+    fecha_inicio: number
+    fecha_fin: number
+    turno: number
+    observaciones: number
+    _all: number
+  }
+
+
+  export type AssignmentAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type AssignmentSumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type AssignmentMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    guia?: true
+    fecha_inicio?: true
+    fecha_fin?: true
+    turno?: true
+    observaciones?: true
+  }
+
+  export type AssignmentMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    guia?: true
+    fecha_inicio?: true
+    fecha_fin?: true
+    turno?: true
+    observaciones?: true
+  }
+
+  export type AssignmentCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    guia?: true
+    fecha_inicio?: true
+    fecha_fin?: true
+    turno?: true
+    observaciones?: true
+    _all?: true
+  }
+
+  export type AssignmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Assignment to aggregate.
+     */
+    where?: AssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assignments to fetch.
+     */
+    orderBy?: AssignmentOrderByWithRelationInput | AssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Assignments
+    **/
+    _count?: true | AssignmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AssignmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AssignmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AssignmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AssignmentMaxAggregateInputType
+  }
+
+  export type GetAssignmentAggregateType<T extends AssignmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateAssignment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAssignment[P]>
+      : GetScalarType<T[P], AggregateAssignment[P]>
+  }
+
+
+
+
+  export type AssignmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AssignmentWhereInput
+    orderBy?: AssignmentOrderByWithAggregationInput | AssignmentOrderByWithAggregationInput[]
+    by: AssignmentScalarFieldEnum[] | AssignmentScalarFieldEnum
+    having?: AssignmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AssignmentCountAggregateInputType | true
+    _avg?: AssignmentAvgAggregateInputType
+    _sum?: AssignmentSumAggregateInputType
+    _min?: AssignmentMinAggregateInputType
+    _max?: AssignmentMaxAggregateInputType
+  }
+
+  export type AssignmentGroupByOutputType = {
+    id: number
+    id_perro: number
+    guia: string
+    fecha_inicio: Date
+    fecha_fin: Date | null
+    turno: string | null
+    observaciones: string | null
+    _count: AssignmentCountAggregateOutputType | null
+    _avg: AssignmentAvgAggregateOutputType | null
+    _sum: AssignmentSumAggregateOutputType | null
+    _min: AssignmentMinAggregateOutputType | null
+    _max: AssignmentMaxAggregateOutputType | null
+  }
+
+  type GetAssignmentGroupByPayload<T extends AssignmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AssignmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AssignmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AssignmentGroupByOutputType[P]>
+            : GetScalarType<T[P], AssignmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AssignmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    guia?: boolean
+    fecha_inicio?: boolean
+    fecha_fin?: boolean
+    turno?: boolean
+    observaciones?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["assignment"]>
+
+
+
+  export type AssignmentSelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    guia?: boolean
+    fecha_inicio?: boolean
+    fecha_fin?: boolean
+    turno?: boolean
+    observaciones?: boolean
+  }
+
+  export type AssignmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "guia" | "fecha_inicio" | "fecha_fin" | "turno" | "observaciones", ExtArgs["result"]["assignment"]>
+  export type AssignmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $AssignmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Assignment"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      guia: string
+      fecha_inicio: Date
+      fecha_fin: Date | null
+      turno: string | null
+      observaciones: string | null
+    }, ExtArgs["result"]["assignment"]>
+    composites: {}
+  }
+
+  type AssignmentGetPayload<S extends boolean | null | undefined | AssignmentDefaultArgs> = $Result.GetResult<Prisma.$AssignmentPayload, S>
+
+  type AssignmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AssignmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AssignmentCountAggregateInputType | true
+    }
+
+  export interface AssignmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Assignment'], meta: { name: 'Assignment' } }
+    /**
+     * Find zero or one Assignment that matches the filter.
+     * @param {AssignmentFindUniqueArgs} args - Arguments to find a Assignment
+     * @example
+     * // Get one Assignment
+     * const assignment = await prisma.assignment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AssignmentFindUniqueArgs>(args: SelectSubset<T, AssignmentFindUniqueArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Assignment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AssignmentFindUniqueOrThrowArgs} args - Arguments to find a Assignment
+     * @example
+     * // Get one Assignment
+     * const assignment = await prisma.assignment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AssignmentFindUniqueOrThrowArgs>(args: SelectSubset<T, AssignmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Assignment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentFindFirstArgs} args - Arguments to find a Assignment
+     * @example
+     * // Get one Assignment
+     * const assignment = await prisma.assignment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AssignmentFindFirstArgs>(args?: SelectSubset<T, AssignmentFindFirstArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Assignment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentFindFirstOrThrowArgs} args - Arguments to find a Assignment
+     * @example
+     * // Get one Assignment
+     * const assignment = await prisma.assignment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AssignmentFindFirstOrThrowArgs>(args?: SelectSubset<T, AssignmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Assignments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Assignments
+     * const assignments = await prisma.assignment.findMany()
+     * 
+     * // Get first 10 Assignments
+     * const assignments = await prisma.assignment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const assignmentWithIdOnly = await prisma.assignment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AssignmentFindManyArgs>(args?: SelectSubset<T, AssignmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Assignment.
+     * @param {AssignmentCreateArgs} args - Arguments to create a Assignment.
+     * @example
+     * // Create one Assignment
+     * const Assignment = await prisma.assignment.create({
+     *   data: {
+     *     // ... data to create a Assignment
+     *   }
+     * })
+     * 
+     */
+    create<T extends AssignmentCreateArgs>(args: SelectSubset<T, AssignmentCreateArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Assignments.
+     * @param {AssignmentCreateManyArgs} args - Arguments to create many Assignments.
+     * @example
+     * // Create many Assignments
+     * const assignment = await prisma.assignment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AssignmentCreateManyArgs>(args?: SelectSubset<T, AssignmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Assignment.
+     * @param {AssignmentDeleteArgs} args - Arguments to delete one Assignment.
+     * @example
+     * // Delete one Assignment
+     * const Assignment = await prisma.assignment.delete({
+     *   where: {
+     *     // ... filter to delete one Assignment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AssignmentDeleteArgs>(args: SelectSubset<T, AssignmentDeleteArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Assignment.
+     * @param {AssignmentUpdateArgs} args - Arguments to update one Assignment.
+     * @example
+     * // Update one Assignment
+     * const assignment = await prisma.assignment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AssignmentUpdateArgs>(args: SelectSubset<T, AssignmentUpdateArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Assignments.
+     * @param {AssignmentDeleteManyArgs} args - Arguments to filter Assignments to delete.
+     * @example
+     * // Delete a few Assignments
+     * const { count } = await prisma.assignment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AssignmentDeleteManyArgs>(args?: SelectSubset<T, AssignmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Assignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Assignments
+     * const assignment = await prisma.assignment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AssignmentUpdateManyArgs>(args: SelectSubset<T, AssignmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Assignment.
+     * @param {AssignmentUpsertArgs} args - Arguments to update or create a Assignment.
+     * @example
+     * // Update or create a Assignment
+     * const assignment = await prisma.assignment.upsert({
+     *   create: {
+     *     // ... data to create a Assignment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Assignment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AssignmentUpsertArgs>(args: SelectSubset<T, AssignmentUpsertArgs<ExtArgs>>): Prisma__AssignmentClient<$Result.GetResult<Prisma.$AssignmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Assignments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentCountArgs} args - Arguments to filter Assignments to count.
+     * @example
+     * // Count the number of Assignments
+     * const count = await prisma.assignment.count({
+     *   where: {
+     *     // ... the filter for the Assignments we want to count
+     *   }
+     * })
+    **/
+    count<T extends AssignmentCountArgs>(
+      args?: Subset<T, AssignmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AssignmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Assignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AssignmentAggregateArgs>(args: Subset<T, AssignmentAggregateArgs>): Prisma.PrismaPromise<GetAssignmentAggregateType<T>>
+
+    /**
+     * Group by Assignment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AssignmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AssignmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AssignmentGroupByArgs['orderBy'] }
+        : { orderBy?: AssignmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AssignmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAssignmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Assignment model
+   */
+  readonly fields: AssignmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Assignment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AssignmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Assignment model
+   */
+  interface AssignmentFieldRefs {
+    readonly id: FieldRef<"Assignment", 'Int'>
+    readonly id_perro: FieldRef<"Assignment", 'Int'>
+    readonly guia: FieldRef<"Assignment", 'String'>
+    readonly fecha_inicio: FieldRef<"Assignment", 'DateTime'>
+    readonly fecha_fin: FieldRef<"Assignment", 'DateTime'>
+    readonly turno: FieldRef<"Assignment", 'String'>
+    readonly observaciones: FieldRef<"Assignment", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Assignment findUnique
+   */
+  export type AssignmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assignment to fetch.
+     */
+    where: AssignmentWhereUniqueInput
+  }
+
+  /**
+   * Assignment findUniqueOrThrow
+   */
+  export type AssignmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assignment to fetch.
+     */
+    where: AssignmentWhereUniqueInput
+  }
+
+  /**
+   * Assignment findFirst
+   */
+  export type AssignmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assignment to fetch.
+     */
+    where?: AssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assignments to fetch.
+     */
+    orderBy?: AssignmentOrderByWithRelationInput | AssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Assignments.
+     */
+    cursor?: AssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assignments.
+     */
+    distinct?: AssignmentScalarFieldEnum | AssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Assignment findFirstOrThrow
+   */
+  export type AssignmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assignment to fetch.
+     */
+    where?: AssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assignments to fetch.
+     */
+    orderBy?: AssignmentOrderByWithRelationInput | AssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Assignments.
+     */
+    cursor?: AssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assignments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Assignments.
+     */
+    distinct?: AssignmentScalarFieldEnum | AssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Assignment findMany
+   */
+  export type AssignmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * Filter, which Assignments to fetch.
+     */
+    where?: AssignmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Assignments to fetch.
+     */
+    orderBy?: AssignmentOrderByWithRelationInput | AssignmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Assignments.
+     */
+    cursor?: AssignmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Assignments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Assignments.
+     */
+    skip?: number
+    distinct?: AssignmentScalarFieldEnum | AssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * Assignment create
+   */
+  export type AssignmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Assignment.
+     */
+    data: XOR<AssignmentCreateInput, AssignmentUncheckedCreateInput>
+  }
+
+  /**
+   * Assignment createMany
+   */
+  export type AssignmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Assignments.
+     */
+    data: AssignmentCreateManyInput | AssignmentCreateManyInput[]
+  }
+
+  /**
+   * Assignment update
+   */
+  export type AssignmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Assignment.
+     */
+    data: XOR<AssignmentUpdateInput, AssignmentUncheckedUpdateInput>
+    /**
+     * Choose, which Assignment to update.
+     */
+    where: AssignmentWhereUniqueInput
+  }
+
+  /**
+   * Assignment updateMany
+   */
+  export type AssignmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Assignments.
+     */
+    data: XOR<AssignmentUpdateManyMutationInput, AssignmentUncheckedUpdateManyInput>
+    /**
+     * Filter which Assignments to update
+     */
+    where?: AssignmentWhereInput
+    /**
+     * Limit how many Assignments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Assignment upsert
+   */
+  export type AssignmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Assignment to update in case it exists.
+     */
+    where: AssignmentWhereUniqueInput
+    /**
+     * In case the Assignment found by the `where` argument doesn't exist, create a new Assignment with this data.
+     */
+    create: XOR<AssignmentCreateInput, AssignmentUncheckedCreateInput>
+    /**
+     * In case the Assignment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AssignmentUpdateInput, AssignmentUncheckedUpdateInput>
+  }
+
+  /**
+   * Assignment delete
+   */
+  export type AssignmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+    /**
+     * Filter which Assignment to delete.
+     */
+    where: AssignmentWhereUniqueInput
+  }
+
+  /**
+   * Assignment deleteMany
+   */
+  export type AssignmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Assignments to delete
+     */
+    where?: AssignmentWhereInput
+    /**
+     * Limit how many Assignments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Assignment without action
+   */
+  export type AssignmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Assignment
+     */
+    select?: AssignmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Assignment
+     */
+    omit?: AssignmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AssignmentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model History
+   */
+
+  export type AggregateHistory = {
+    _count: HistoryCountAggregateOutputType | null
+    _avg: HistoryAvgAggregateOutputType | null
+    _sum: HistorySumAggregateOutputType | null
+    _min: HistoryMinAggregateOutputType | null
+    _max: HistoryMaxAggregateOutputType | null
+  }
+
+  export type HistoryAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type HistorySumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type HistoryMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    fecha: Date | null
+    tipo_evento: string | null
+    descripcion: string | null
+    responsable: string | null
+  }
+
+  export type HistoryMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    fecha: Date | null
+    tipo_evento: string | null
+    descripcion: string | null
+    responsable: string | null
+  }
+
+  export type HistoryCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    fecha: number
+    tipo_evento: number
+    descripcion: number
+    responsable: number
+    _all: number
+  }
+
+
+  export type HistoryAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type HistorySumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type HistoryMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    tipo_evento?: true
+    descripcion?: true
+    responsable?: true
+  }
+
+  export type HistoryMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    tipo_evento?: true
+    descripcion?: true
+    responsable?: true
+  }
+
+  export type HistoryCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    tipo_evento?: true
+    descripcion?: true
+    responsable?: true
+    _all?: true
+  }
+
+  export type HistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which History to aggregate.
+     */
+    where?: HistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Histories to fetch.
+     */
+    orderBy?: HistoryOrderByWithRelationInput | HistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Histories
+    **/
+    _count?: true | HistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HistoryMaxAggregateInputType
+  }
+
+  export type GetHistoryAggregateType<T extends HistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHistory[P]>
+      : GetScalarType<T[P], AggregateHistory[P]>
+  }
+
+
+
+
+  export type HistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HistoryWhereInput
+    orderBy?: HistoryOrderByWithAggregationInput | HistoryOrderByWithAggregationInput[]
+    by: HistoryScalarFieldEnum[] | HistoryScalarFieldEnum
+    having?: HistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HistoryCountAggregateInputType | true
+    _avg?: HistoryAvgAggregateInputType
+    _sum?: HistorySumAggregateInputType
+    _min?: HistoryMinAggregateInputType
+    _max?: HistoryMaxAggregateInputType
+  }
+
+  export type HistoryGroupByOutputType = {
+    id: number
+    id_perro: number
+    fecha: Date
+    tipo_evento: string
+    descripcion: string
+    responsable: string | null
+    _count: HistoryCountAggregateOutputType | null
+    _avg: HistoryAvgAggregateOutputType | null
+    _sum: HistorySumAggregateOutputType | null
+    _min: HistoryMinAggregateOutputType | null
+    _max: HistoryMaxAggregateOutputType | null
+  }
+
+  type GetHistoryGroupByPayload<T extends HistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], HistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    fecha?: boolean
+    tipo_evento?: boolean
+    descripcion?: boolean
+    responsable?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["history"]>
+
+
+
+  export type HistorySelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    fecha?: boolean
+    tipo_evento?: boolean
+    descripcion?: boolean
+    responsable?: boolean
+  }
+
+  export type HistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "fecha" | "tipo_evento" | "descripcion" | "responsable", ExtArgs["result"]["history"]>
+  export type HistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $HistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "History"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      fecha: Date
+      tipo_evento: string
+      descripcion: string
+      responsable: string | null
+    }, ExtArgs["result"]["history"]>
+    composites: {}
+  }
+
+  type HistoryGetPayload<S extends boolean | null | undefined | HistoryDefaultArgs> = $Result.GetResult<Prisma.$HistoryPayload, S>
+
+  type HistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HistoryCountAggregateInputType | true
+    }
+
+  export interface HistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['History'], meta: { name: 'History' } }
+    /**
+     * Find zero or one History that matches the filter.
+     * @param {HistoryFindUniqueArgs} args - Arguments to find a History
+     * @example
+     * // Get one History
+     * const history = await prisma.history.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HistoryFindUniqueArgs>(args: SelectSubset<T, HistoryFindUniqueArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one History that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HistoryFindUniqueOrThrowArgs} args - Arguments to find a History
+     * @example
+     * // Get one History
+     * const history = await prisma.history.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, HistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first History that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryFindFirstArgs} args - Arguments to find a History
+     * @example
+     * // Get one History
+     * const history = await prisma.history.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HistoryFindFirstArgs>(args?: SelectSubset<T, HistoryFindFirstArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first History that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryFindFirstOrThrowArgs} args - Arguments to find a History
+     * @example
+     * // Get one History
+     * const history = await prisma.history.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, HistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Histories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Histories
+     * const histories = await prisma.history.findMany()
+     * 
+     * // Get first 10 Histories
+     * const histories = await prisma.history.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const historyWithIdOnly = await prisma.history.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HistoryFindManyArgs>(args?: SelectSubset<T, HistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a History.
+     * @param {HistoryCreateArgs} args - Arguments to create a History.
+     * @example
+     * // Create one History
+     * const History = await prisma.history.create({
+     *   data: {
+     *     // ... data to create a History
+     *   }
+     * })
+     * 
+     */
+    create<T extends HistoryCreateArgs>(args: SelectSubset<T, HistoryCreateArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Histories.
+     * @param {HistoryCreateManyArgs} args - Arguments to create many Histories.
+     * @example
+     * // Create many Histories
+     * const history = await prisma.history.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HistoryCreateManyArgs>(args?: SelectSubset<T, HistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a History.
+     * @param {HistoryDeleteArgs} args - Arguments to delete one History.
+     * @example
+     * // Delete one History
+     * const History = await prisma.history.delete({
+     *   where: {
+     *     // ... filter to delete one History
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HistoryDeleteArgs>(args: SelectSubset<T, HistoryDeleteArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one History.
+     * @param {HistoryUpdateArgs} args - Arguments to update one History.
+     * @example
+     * // Update one History
+     * const history = await prisma.history.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HistoryUpdateArgs>(args: SelectSubset<T, HistoryUpdateArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Histories.
+     * @param {HistoryDeleteManyArgs} args - Arguments to filter Histories to delete.
+     * @example
+     * // Delete a few Histories
+     * const { count } = await prisma.history.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HistoryDeleteManyArgs>(args?: SelectSubset<T, HistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Histories
+     * const history = await prisma.history.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HistoryUpdateManyArgs>(args: SelectSubset<T, HistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one History.
+     * @param {HistoryUpsertArgs} args - Arguments to update or create a History.
+     * @example
+     * // Update or create a History
+     * const history = await prisma.history.upsert({
+     *   create: {
+     *     // ... data to create a History
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the History we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HistoryUpsertArgs>(args: SelectSubset<T, HistoryUpsertArgs<ExtArgs>>): Prisma__HistoryClient<$Result.GetResult<Prisma.$HistoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Histories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryCountArgs} args - Arguments to filter Histories to count.
+     * @example
+     * // Count the number of Histories
+     * const count = await prisma.history.count({
+     *   where: {
+     *     // ... the filter for the Histories we want to count
+     *   }
+     * })
+    **/
+    count<T extends HistoryCountArgs>(
+      args?: Subset<T, HistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a History.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HistoryAggregateArgs>(args: Subset<T, HistoryAggregateArgs>): Prisma.PrismaPromise<GetHistoryAggregateType<T>>
+
+    /**
+     * Group by History.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HistoryGroupByArgs['orderBy'] }
+        : { orderBy?: HistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the History model
+   */
+  readonly fields: HistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for History.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the History model
+   */
+  interface HistoryFieldRefs {
+    readonly id: FieldRef<"History", 'Int'>
+    readonly id_perro: FieldRef<"History", 'Int'>
+    readonly fecha: FieldRef<"History", 'DateTime'>
+    readonly tipo_evento: FieldRef<"History", 'String'>
+    readonly descripcion: FieldRef<"History", 'String'>
+    readonly responsable: FieldRef<"History", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * History findUnique
+   */
+  export type HistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which History to fetch.
+     */
+    where: HistoryWhereUniqueInput
+  }
+
+  /**
+   * History findUniqueOrThrow
+   */
+  export type HistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which History to fetch.
+     */
+    where: HistoryWhereUniqueInput
+  }
+
+  /**
+   * History findFirst
+   */
+  export type HistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which History to fetch.
+     */
+    where?: HistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Histories to fetch.
+     */
+    orderBy?: HistoryOrderByWithRelationInput | HistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Histories.
+     */
+    cursor?: HistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Histories.
+     */
+    distinct?: HistoryScalarFieldEnum | HistoryScalarFieldEnum[]
+  }
+
+  /**
+   * History findFirstOrThrow
+   */
+  export type HistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which History to fetch.
+     */
+    where?: HistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Histories to fetch.
+     */
+    orderBy?: HistoryOrderByWithRelationInput | HistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Histories.
+     */
+    cursor?: HistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Histories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Histories.
+     */
+    distinct?: HistoryScalarFieldEnum | HistoryScalarFieldEnum[]
+  }
+
+  /**
+   * History findMany
+   */
+  export type HistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which Histories to fetch.
+     */
+    where?: HistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Histories to fetch.
+     */
+    orderBy?: HistoryOrderByWithRelationInput | HistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Histories.
+     */
+    cursor?: HistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Histories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Histories.
+     */
+    skip?: number
+    distinct?: HistoryScalarFieldEnum | HistoryScalarFieldEnum[]
+  }
+
+  /**
+   * History create
+   */
+  export type HistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a History.
+     */
+    data: XOR<HistoryCreateInput, HistoryUncheckedCreateInput>
+  }
+
+  /**
+   * History createMany
+   */
+  export type HistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Histories.
+     */
+    data: HistoryCreateManyInput | HistoryCreateManyInput[]
+  }
+
+  /**
+   * History update
+   */
+  export type HistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a History.
+     */
+    data: XOR<HistoryUpdateInput, HistoryUncheckedUpdateInput>
+    /**
+     * Choose, which History to update.
+     */
+    where: HistoryWhereUniqueInput
+  }
+
+  /**
+   * History updateMany
+   */
+  export type HistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Histories.
+     */
+    data: XOR<HistoryUpdateManyMutationInput, HistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which Histories to update
+     */
+    where?: HistoryWhereInput
+    /**
+     * Limit how many Histories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * History upsert
+   */
+  export type HistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the History to update in case it exists.
+     */
+    where: HistoryWhereUniqueInput
+    /**
+     * In case the History found by the `where` argument doesn't exist, create a new History with this data.
+     */
+    create: XOR<HistoryCreateInput, HistoryUncheckedCreateInput>
+    /**
+     * In case the History was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HistoryUpdateInput, HistoryUncheckedUpdateInput>
+  }
+
+  /**
+   * History delete
+   */
+  export type HistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+    /**
+     * Filter which History to delete.
+     */
+    where: HistoryWhereUniqueInput
+  }
+
+  /**
+   * History deleteMany
+   */
+  export type HistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Histories to delete
+     */
+    where?: HistoryWhereInput
+    /**
+     * Limit how many Histories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * History without action
+   */
+  export type HistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the History
+     */
+    select?: HistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the History
+     */
+    omit?: HistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HistoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Incident
+   */
+
+  export type AggregateIncident = {
+    _count: IncidentCountAggregateOutputType | null
+    _avg: IncidentAvgAggregateOutputType | null
+    _sum: IncidentSumAggregateOutputType | null
+    _min: IncidentMinAggregateOutputType | null
+    _max: IncidentMaxAggregateOutputType | null
+  }
+
+  export type IncidentAvgAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type IncidentSumAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+  }
+
+  export type IncidentMinAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    fecha: Date | null
+    tipo: string | null
+    descripcion: string | null
+    gravedad: string | null
+    acciones_tomadas: string | null
+  }
+
+  export type IncidentMaxAggregateOutputType = {
+    id: number | null
+    id_perro: number | null
+    fecha: Date | null
+    tipo: string | null
+    descripcion: string | null
+    gravedad: string | null
+    acciones_tomadas: string | null
+  }
+
+  export type IncidentCountAggregateOutputType = {
+    id: number
+    id_perro: number
+    fecha: number
+    tipo: number
+    descripcion: number
+    gravedad: number
+    acciones_tomadas: number
+    _all: number
+  }
+
+
+  export type IncidentAvgAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type IncidentSumAggregateInputType = {
+    id?: true
+    id_perro?: true
+  }
+
+  export type IncidentMinAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    tipo?: true
+    descripcion?: true
+    gravedad?: true
+    acciones_tomadas?: true
+  }
+
+  export type IncidentMaxAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    tipo?: true
+    descripcion?: true
+    gravedad?: true
+    acciones_tomadas?: true
+  }
+
+  export type IncidentCountAggregateInputType = {
+    id?: true
+    id_perro?: true
+    fecha?: true
+    tipo?: true
+    descripcion?: true
+    gravedad?: true
+    acciones_tomadas?: true
+    _all?: true
+  }
+
+  export type IncidentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Incident to aggregate.
+     */
+    where?: IncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Incidents to fetch.
+     */
+    orderBy?: IncidentOrderByWithRelationInput | IncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Incidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Incidents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Incidents
+    **/
+    _count?: true | IncidentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: IncidentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: IncidentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IncidentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IncidentMaxAggregateInputType
+  }
+
+  export type GetIncidentAggregateType<T extends IncidentAggregateArgs> = {
+        [P in keyof T & keyof AggregateIncident]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIncident[P]>
+      : GetScalarType<T[P], AggregateIncident[P]>
+  }
+
+
+
+
+  export type IncidentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IncidentWhereInput
+    orderBy?: IncidentOrderByWithAggregationInput | IncidentOrderByWithAggregationInput[]
+    by: IncidentScalarFieldEnum[] | IncidentScalarFieldEnum
+    having?: IncidentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IncidentCountAggregateInputType | true
+    _avg?: IncidentAvgAggregateInputType
+    _sum?: IncidentSumAggregateInputType
+    _min?: IncidentMinAggregateInputType
+    _max?: IncidentMaxAggregateInputType
+  }
+
+  export type IncidentGroupByOutputType = {
+    id: number
+    id_perro: number
+    fecha: Date
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas: string | null
+    _count: IncidentCountAggregateOutputType | null
+    _avg: IncidentAvgAggregateOutputType | null
+    _sum: IncidentSumAggregateOutputType | null
+    _min: IncidentMinAggregateOutputType | null
+    _max: IncidentMaxAggregateOutputType | null
+  }
+
+  type GetIncidentGroupByPayload<T extends IncidentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IncidentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IncidentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IncidentGroupByOutputType[P]>
+            : GetScalarType<T[P], IncidentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IncidentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    id_perro?: boolean
+    fecha?: boolean
+    tipo?: boolean
+    descripcion?: boolean
+    gravedad?: boolean
+    acciones_tomadas?: boolean
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["incident"]>
+
+
+
+  export type IncidentSelectScalar = {
+    id?: boolean
+    id_perro?: boolean
+    fecha?: boolean
+    tipo?: boolean
+    descripcion?: boolean
+    gravedad?: boolean
+    acciones_tomadas?: boolean
+  }
+
+  export type IncidentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "id_perro" | "fecha" | "tipo" | "descripcion" | "gravedad" | "acciones_tomadas", ExtArgs["result"]["incident"]>
+  export type IncidentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dog?: boolean | DogDefaultArgs<ExtArgs>
+  }
+
+  export type $IncidentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Incident"
+    objects: {
+      dog: Prisma.$DogPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      id_perro: number
+      fecha: Date
+      tipo: string
+      descripcion: string
+      gravedad: string
+      acciones_tomadas: string | null
+    }, ExtArgs["result"]["incident"]>
+    composites: {}
+  }
+
+  type IncidentGetPayload<S extends boolean | null | undefined | IncidentDefaultArgs> = $Result.GetResult<Prisma.$IncidentPayload, S>
+
+  type IncidentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IncidentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IncidentCountAggregateInputType | true
+    }
+
+  export interface IncidentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Incident'], meta: { name: 'Incident' } }
+    /**
+     * Find zero or one Incident that matches the filter.
+     * @param {IncidentFindUniqueArgs} args - Arguments to find a Incident
+     * @example
+     * // Get one Incident
+     * const incident = await prisma.incident.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IncidentFindUniqueArgs>(args: SelectSubset<T, IncidentFindUniqueArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Incident that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IncidentFindUniqueOrThrowArgs} args - Arguments to find a Incident
+     * @example
+     * // Get one Incident
+     * const incident = await prisma.incident.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IncidentFindUniqueOrThrowArgs>(args: SelectSubset<T, IncidentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Incident that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentFindFirstArgs} args - Arguments to find a Incident
+     * @example
+     * // Get one Incident
+     * const incident = await prisma.incident.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IncidentFindFirstArgs>(args?: SelectSubset<T, IncidentFindFirstArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Incident that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentFindFirstOrThrowArgs} args - Arguments to find a Incident
+     * @example
+     * // Get one Incident
+     * const incident = await prisma.incident.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IncidentFindFirstOrThrowArgs>(args?: SelectSubset<T, IncidentFindFirstOrThrowArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Incidents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Incidents
+     * const incidents = await prisma.incident.findMany()
+     * 
+     * // Get first 10 Incidents
+     * const incidents = await prisma.incident.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const incidentWithIdOnly = await prisma.incident.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IncidentFindManyArgs>(args?: SelectSubset<T, IncidentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Incident.
+     * @param {IncidentCreateArgs} args - Arguments to create a Incident.
+     * @example
+     * // Create one Incident
+     * const Incident = await prisma.incident.create({
+     *   data: {
+     *     // ... data to create a Incident
+     *   }
+     * })
+     * 
+     */
+    create<T extends IncidentCreateArgs>(args: SelectSubset<T, IncidentCreateArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Incidents.
+     * @param {IncidentCreateManyArgs} args - Arguments to create many Incidents.
+     * @example
+     * // Create many Incidents
+     * const incident = await prisma.incident.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IncidentCreateManyArgs>(args?: SelectSubset<T, IncidentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Incident.
+     * @param {IncidentDeleteArgs} args - Arguments to delete one Incident.
+     * @example
+     * // Delete one Incident
+     * const Incident = await prisma.incident.delete({
+     *   where: {
+     *     // ... filter to delete one Incident
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IncidentDeleteArgs>(args: SelectSubset<T, IncidentDeleteArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Incident.
+     * @param {IncidentUpdateArgs} args - Arguments to update one Incident.
+     * @example
+     * // Update one Incident
+     * const incident = await prisma.incident.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IncidentUpdateArgs>(args: SelectSubset<T, IncidentUpdateArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Incidents.
+     * @param {IncidentDeleteManyArgs} args - Arguments to filter Incidents to delete.
+     * @example
+     * // Delete a few Incidents
+     * const { count } = await prisma.incident.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IncidentDeleteManyArgs>(args?: SelectSubset<T, IncidentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Incidents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Incidents
+     * const incident = await prisma.incident.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IncidentUpdateManyArgs>(args: SelectSubset<T, IncidentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Incident.
+     * @param {IncidentUpsertArgs} args - Arguments to update or create a Incident.
+     * @example
+     * // Update or create a Incident
+     * const incident = await prisma.incident.upsert({
+     *   create: {
+     *     // ... data to create a Incident
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Incident we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IncidentUpsertArgs>(args: SelectSubset<T, IncidentUpsertArgs<ExtArgs>>): Prisma__IncidentClient<$Result.GetResult<Prisma.$IncidentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Incidents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentCountArgs} args - Arguments to filter Incidents to count.
+     * @example
+     * // Count the number of Incidents
+     * const count = await prisma.incident.count({
+     *   where: {
+     *     // ... the filter for the Incidents we want to count
+     *   }
+     * })
+    **/
+    count<T extends IncidentCountArgs>(
+      args?: Subset<T, IncidentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IncidentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Incident.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IncidentAggregateArgs>(args: Subset<T, IncidentAggregateArgs>): Prisma.PrismaPromise<GetIncidentAggregateType<T>>
+
+    /**
+     * Group by Incident.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IncidentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IncidentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IncidentGroupByArgs['orderBy'] }
+        : { orderBy?: IncidentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IncidentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIncidentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Incident model
+   */
+  readonly fields: IncidentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Incident.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IncidentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dog<T extends DogDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DogDefaultArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Incident model
+   */
+  interface IncidentFieldRefs {
+    readonly id: FieldRef<"Incident", 'Int'>
+    readonly id_perro: FieldRef<"Incident", 'Int'>
+    readonly fecha: FieldRef<"Incident", 'DateTime'>
+    readonly tipo: FieldRef<"Incident", 'String'>
+    readonly descripcion: FieldRef<"Incident", 'String'>
+    readonly gravedad: FieldRef<"Incident", 'String'>
+    readonly acciones_tomadas: FieldRef<"Incident", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Incident findUnique
+   */
+  export type IncidentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which Incident to fetch.
+     */
+    where: IncidentWhereUniqueInput
+  }
+
+  /**
+   * Incident findUniqueOrThrow
+   */
+  export type IncidentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which Incident to fetch.
+     */
+    where: IncidentWhereUniqueInput
+  }
+
+  /**
+   * Incident findFirst
+   */
+  export type IncidentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which Incident to fetch.
+     */
+    where?: IncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Incidents to fetch.
+     */
+    orderBy?: IncidentOrderByWithRelationInput | IncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Incidents.
+     */
+    cursor?: IncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Incidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Incidents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Incidents.
+     */
+    distinct?: IncidentScalarFieldEnum | IncidentScalarFieldEnum[]
+  }
+
+  /**
+   * Incident findFirstOrThrow
+   */
+  export type IncidentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which Incident to fetch.
+     */
+    where?: IncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Incidents to fetch.
+     */
+    orderBy?: IncidentOrderByWithRelationInput | IncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Incidents.
+     */
+    cursor?: IncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Incidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Incidents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Incidents.
+     */
+    distinct?: IncidentScalarFieldEnum | IncidentScalarFieldEnum[]
+  }
+
+  /**
+   * Incident findMany
+   */
+  export type IncidentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * Filter, which Incidents to fetch.
+     */
+    where?: IncidentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Incidents to fetch.
+     */
+    orderBy?: IncidentOrderByWithRelationInput | IncidentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Incidents.
+     */
+    cursor?: IncidentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Incidents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Incidents.
+     */
+    skip?: number
+    distinct?: IncidentScalarFieldEnum | IncidentScalarFieldEnum[]
+  }
+
+  /**
+   * Incident create
+   */
+  export type IncidentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Incident.
+     */
+    data: XOR<IncidentCreateInput, IncidentUncheckedCreateInput>
+  }
+
+  /**
+   * Incident createMany
+   */
+  export type IncidentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Incidents.
+     */
+    data: IncidentCreateManyInput | IncidentCreateManyInput[]
+  }
+
+  /**
+   * Incident update
+   */
+  export type IncidentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Incident.
+     */
+    data: XOR<IncidentUpdateInput, IncidentUncheckedUpdateInput>
+    /**
+     * Choose, which Incident to update.
+     */
+    where: IncidentWhereUniqueInput
+  }
+
+  /**
+   * Incident updateMany
+   */
+  export type IncidentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Incidents.
+     */
+    data: XOR<IncidentUpdateManyMutationInput, IncidentUncheckedUpdateManyInput>
+    /**
+     * Filter which Incidents to update
+     */
+    where?: IncidentWhereInput
+    /**
+     * Limit how many Incidents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Incident upsert
+   */
+  export type IncidentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Incident to update in case it exists.
+     */
+    where: IncidentWhereUniqueInput
+    /**
+     * In case the Incident found by the `where` argument doesn't exist, create a new Incident with this data.
+     */
+    create: XOR<IncidentCreateInput, IncidentUncheckedCreateInput>
+    /**
+     * In case the Incident was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IncidentUpdateInput, IncidentUncheckedUpdateInput>
+  }
+
+  /**
+   * Incident delete
+   */
+  export type IncidentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+    /**
+     * Filter which Incident to delete.
+     */
+    where: IncidentWhereUniqueInput
+  }
+
+  /**
+   * Incident deleteMany
+   */
+  export type IncidentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Incidents to delete
+     */
+    where?: IncidentWhereInput
+    /**
+     * Limit how many Incidents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Incident without action
+   */
+  export type IncidentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Incident
+     */
+    select?: IncidentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Incident
+     */
+    omit?: IncidentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IncidentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model User
+   */
+
+  export type AggregateUser = {
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type UserMinAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    email: string | null
+    password: string | null
+    rol: string | null
+  }
+
+  export type UserMaxAggregateOutputType = {
+    id: number | null
+    nombre: string | null
+    email: string | null
+    password: string | null
+    rol: string | null
+  }
+
+  export type UserCountAggregateOutputType = {
+    id: number
+    nombre: number
+    email: number
+    password: number
+    rol: number
+    _all: number
+  }
+
+
+  export type UserAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    id?: true
+  }
+
+  export type UserMinAggregateInputType = {
+    id?: true
+    nombre?: true
+    email?: true
+    password?: true
+    rol?: true
+  }
+
+  export type UserMaxAggregateInputType = {
+    id?: true
+    nombre?: true
+    email?: true
+    password?: true
+    rol?: true
+  }
+
+  export type UserCountAggregateInputType = {
+    id?: true
+    nombre?: true
+    email?: true
+    password?: true
+    rol?: true
+    _all?: true
+  }
+
+  export type UserAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which User to aggregate.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Users
+    **/
+    _count?: true | UserCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type GetUserAggregateType<T extends UserAggregateArgs> = {
+        [P in keyof T & keyof AggregateUser]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUser[P]>
+      : GetScalarType<T[P], AggregateUser[P]>
+  }
+
+
+
+
+  export type UserGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithAggregationInput | UserOrderByWithAggregationInput[]
+    by: UserScalarFieldEnum[] | UserScalarFieldEnum
+    having?: UserScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
+    _min?: UserMinAggregateInputType
+    _max?: UserMaxAggregateInputType
+  }
+
+  export type UserGroupByOutputType = {
+    id: number
+    nombre: string
+    email: string
+    password: string
+    rol: string
+    _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
+    _min: UserMinAggregateOutputType | null
+    _max: UserMaxAggregateOutputType | null
+  }
+
+  type GetUserGroupByPayload<T extends UserGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserGroupByOutputType[P]>
+            : GetScalarType<T[P], UserGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nombre?: boolean
+    email?: boolean
+    password?: boolean
+    rol?: boolean
+  }, ExtArgs["result"]["user"]>
+
+
+
+  export type UserSelectScalar = {
+    id?: boolean
+    nombre?: boolean
+    email?: boolean
+    password?: boolean
+    rol?: boolean
+  }
+
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "email" | "password" | "rol", ExtArgs["result"]["user"]>
+
+  export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "User"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      nombre: string
+      email: string
+      password: string
+      rol: string
+    }, ExtArgs["result"]["user"]>
+    composites: {}
+  }
+
+  type UserGetPayload<S extends boolean | null | undefined | UserDefaultArgs> = $Result.GetResult<Prisma.$UserPayload, S>
+
+  type UserCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserCountAggregateInputType | true
+    }
+
+  export interface UserDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['User'], meta: { name: 'User' } }
+    /**
+     * Find zero or one User that matches the filter.
+     * @param {UserFindUniqueArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserFindUniqueArgs>(args: SelectSubset<T, UserFindUniqueArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one User that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserFindUniqueOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserFindUniqueOrThrowArgs>(args: SelectSubset<T, UserFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserFindFirstArgs>(args?: SelectSubset<T, UserFindFirstArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first User that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindFirstOrThrowArgs} args - Arguments to find a User
+     * @example
+     * // Get one User
+     * const user = await prisma.user.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserFindFirstOrThrowArgs>(args?: SelectSubset<T, UserFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Users that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Users
+     * const users = await prisma.user.findMany()
+     * 
+     * // Get first 10 Users
+     * const users = await prisma.user.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a User.
+     * @param {UserCreateArgs} args - Arguments to create a User.
+     * @example
+     * // Create one User
+     * const User = await prisma.user.create({
+     *   data: {
+     *     // ... data to create a User
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserCreateArgs>(args: SelectSubset<T, UserCreateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Users.
+     * @param {UserCreateManyArgs} args - Arguments to create many Users.
+     * @example
+     * // Create many Users
+     * const user = await prisma.user.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserCreateManyArgs>(args?: SelectSubset<T, UserCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a User.
+     * @param {UserDeleteArgs} args - Arguments to delete one User.
+     * @example
+     * // Delete one User
+     * const User = await prisma.user.delete({
+     *   where: {
+     *     // ... filter to delete one User
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserDeleteArgs>(args: SelectSubset<T, UserDeleteArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one User.
+     * @param {UserUpdateArgs} args - Arguments to update one User.
+     * @example
+     * // Update one User
+     * const user = await prisma.user.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserUpdateArgs>(args: SelectSubset<T, UserUpdateArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Users.
+     * @param {UserDeleteManyArgs} args - Arguments to filter Users to delete.
+     * @example
+     * // Delete a few Users
+     * const { count } = await prisma.user.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserDeleteManyArgs>(args?: SelectSubset<T, UserDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Users
+     * const user = await prisma.user.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserUpdateManyArgs>(args: SelectSubset<T, UserUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one User.
+     * @param {UserUpsertArgs} args - Arguments to update or create a User.
+     * @example
+     * // Update or create a User
+     * const user = await prisma.user.upsert({
+     *   create: {
+     *     // ... data to create a User
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the User we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserUpsertArgs>(args: SelectSubset<T, UserUpsertArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Users.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserCountArgs} args - Arguments to filter Users to count.
+     * @example
+     * // Count the number of Users
+     * const count = await prisma.user.count({
+     *   where: {
+     *     // ... the filter for the Users we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserCountArgs>(
+      args?: Subset<T, UserCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserAggregateArgs>(args: Subset<T, UserAggregateArgs>): Prisma.PrismaPromise<GetUserAggregateType<T>>
+
+    /**
+     * Group by User.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserGroupByArgs['orderBy'] }
+        : { orderBy?: UserGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the User model
+   */
+  readonly fields: UserFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for User.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the User model
+   */
+  interface UserFieldRefs {
+    readonly id: FieldRef<"User", 'Int'>
+    readonly nombre: FieldRef<"User", 'String'>
+    readonly email: FieldRef<"User", 'String'>
+    readonly password: FieldRef<"User", 'String'>
+    readonly rol: FieldRef<"User", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * User findUnique
+   */
+  export type UserFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findUniqueOrThrow
+   */
+  export type UserFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User findFirst
+   */
+  export type UserFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findFirstOrThrow
+   */
+  export type UserFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which User to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Users.
+     */
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User findMany
+   */
+  export type UserFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter, which Users to fetch.
+     */
+    where?: UserWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Users to fetch.
+     */
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Users.
+     */
+    cursor?: UserWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Users from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Users.
+     */
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
+  }
+
+  /**
+   * User create
+   */
+  export type UserCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data needed to create a User.
+     */
+    data: XOR<UserCreateInput, UserUncheckedCreateInput>
+  }
+
+  /**
+   * User createMany
+   */
+  export type UserCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Users.
+     */
+    data: UserCreateManyInput | UserCreateManyInput[]
+  }
+
+  /**
+   * User update
+   */
+  export type UserUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The data needed to update a User.
+     */
+    data: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+    /**
+     * Choose, which User to update.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User updateMany
+   */
+  export type UserUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Users.
+     */
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyInput>
+    /**
+     * Filter which Users to update
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * User upsert
+   */
+  export type UserUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * The filter to search for the User to update in case it exists.
+     */
+    where: UserWhereUniqueInput
+    /**
+     * In case the User found by the `where` argument doesn't exist, create a new User with this data.
+     */
+    create: XOR<UserCreateInput, UserUncheckedCreateInput>
+    /**
+     * In case the User was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserUpdateInput, UserUncheckedUpdateInput>
+  }
+
+  /**
+   * User delete
+   */
+  export type UserDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Filter which User to delete.
+     */
+    where: UserWhereUniqueInput
+  }
+
+  /**
+   * User deleteMany
+   */
+  export type UserDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Users to delete
+     */
+    where?: UserWhereInput
+    /**
+     * Limit how many Users to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * User without action
+   */
+  export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Enums
+   */
+
+  export const TransactionIsolationLevel: {
+    ReadUncommitted: 'ReadUncommitted',
+    ReadCommitted: 'ReadCommitted',
+    RepeatableRead: 'RepeatableRead',
+    Serializable: 'Serializable',
+    Snapshot: 'Snapshot'
+  };
+
+  export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+  export const DogScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    raza: 'raza',
+    sexo: 'sexo',
+    fecha_nacimiento: 'fecha_nacimiento',
+    color: 'color',
+    senas_particulares: 'senas_particulares',
+    nro_chip: 'nro_chip',
+    estado: 'estado',
+    fecha_ingreso: 'fecha_ingreso',
+    origen: 'origen',
+    observaciones: 'observaciones',
+    foto_url: 'foto_url',
+    deletedAt: 'deletedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DogScalarFieldEnum = (typeof DogScalarFieldEnum)[keyof typeof DogScalarFieldEnum]
+
+
+  export const VaccineScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    vacuna: 'vacuna',
+    fecha_aplicacion: 'fecha_aplicacion',
+    proxima_dosis: 'proxima_dosis',
+    veterinario: 'veterinario',
+    observaciones: 'observaciones',
+    createdAt: 'createdAt'
+  };
+
+  export type VaccineScalarFieldEnum = (typeof VaccineScalarFieldEnum)[keyof typeof VaccineScalarFieldEnum]
+
+
+  export const VetControlScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    fecha: 'fecha',
+    motivo: 'motivo',
+    diagnostico: 'diagnostico',
+    tratamiento: 'tratamiento',
+    medicacion: 'medicacion',
+    dosis: 'dosis',
+    veterinario: 'veterinario',
+    observaciones: 'observaciones'
+  };
+
+  export type VetControlScalarFieldEnum = (typeof VetControlScalarFieldEnum)[keyof typeof VetControlScalarFieldEnum]
+
+
+  export const FeedingScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    tipo_alimento: 'tipo_alimento',
+    marca: 'marca',
+    cantidad_diaria: 'cantidad_diaria',
+    horario: 'horario',
+    suplementos: 'suplementos',
+    fecha_inicio: 'fecha_inicio'
+  };
+
+  export type FeedingScalarFieldEnum = (typeof FeedingScalarFieldEnum)[keyof typeof FeedingScalarFieldEnum]
+
+
+  export const TrainingScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    tipo: 'tipo',
+    nivel: 'nivel',
+    fecha: 'fecha',
+    instructor: 'instructor',
+    evaluacion: 'evaluacion',
+    observaciones: 'observaciones'
+  };
+
+  export type TrainingScalarFieldEnum = (typeof TrainingScalarFieldEnum)[keyof typeof TrainingScalarFieldEnum]
+
+
+  export const AssignmentScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    guia: 'guia',
+    fecha_inicio: 'fecha_inicio',
+    fecha_fin: 'fecha_fin',
+    turno: 'turno',
+    observaciones: 'observaciones'
+  };
+
+  export type AssignmentScalarFieldEnum = (typeof AssignmentScalarFieldEnum)[keyof typeof AssignmentScalarFieldEnum]
+
+
+  export const HistoryScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    fecha: 'fecha',
+    tipo_evento: 'tipo_evento',
+    descripcion: 'descripcion',
+    responsable: 'responsable'
+  };
+
+  export type HistoryScalarFieldEnum = (typeof HistoryScalarFieldEnum)[keyof typeof HistoryScalarFieldEnum]
+
+
+  export const IncidentScalarFieldEnum: {
+    id: 'id',
+    id_perro: 'id_perro',
+    fecha: 'fecha',
+    tipo: 'tipo',
+    descripcion: 'descripcion',
+    gravedad: 'gravedad',
+    acciones_tomadas: 'acciones_tomadas'
+  };
+
+  export type IncidentScalarFieldEnum = (typeof IncidentScalarFieldEnum)[keyof typeof IncidentScalarFieldEnum]
+
+
+  export const UserScalarFieldEnum: {
+    id: 'id',
+    nombre: 'nombre',
+    email: 'email',
+    password: 'password',
+    rol: 'rol'
+  };
+
+  export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+  export const SortOrder: {
+    asc: 'asc',
+    desc: 'desc'
+  };
+
+  export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  /**
+   * Field references
+   */
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+  /**
+   * Deep Input Types
+   */
+
+
+  export type DogWhereInput = {
+    AND?: DogWhereInput | DogWhereInput[]
+    OR?: DogWhereInput[]
+    NOT?: DogWhereInput | DogWhereInput[]
+    id?: IntFilter<"Dog"> | number
+    nombre?: StringFilter<"Dog"> | string
+    raza?: StringNullableFilter<"Dog"> | string | null
+    sexo?: StringFilter<"Dog"> | string
+    fecha_nacimiento?: DateTimeNullableFilter<"Dog"> | Date | string | null
+    color?: StringNullableFilter<"Dog"> | string | null
+    senas_particulares?: StringNullableFilter<"Dog"> | string | null
+    nro_chip?: StringNullableFilter<"Dog"> | string | null
+    estado?: StringFilter<"Dog"> | string
+    fecha_ingreso?: DateTimeNullableFilter<"Dog"> | Date | string | null
+    origen?: StringNullableFilter<"Dog"> | string | null
+    observaciones?: StringNullableFilter<"Dog"> | string | null
+    foto_url?: StringNullableFilter<"Dog"> | string | null
+    deletedAt?: DateTimeNullableFilter<"Dog"> | Date | string | null
+    createdAt?: DateTimeFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeFilter<"Dog"> | Date | string
+    vaccines?: VaccineListRelationFilter
+    vetControls?: VetControlListRelationFilter
+    feedings?: FeedingListRelationFilter
+    trainings?: TrainingListRelationFilter
+    assignments?: AssignmentListRelationFilter
+    history?: HistoryListRelationFilter
+    incidents?: IncidentListRelationFilter
+  }
+
+  export type DogOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    raza?: SortOrderInput | SortOrder
+    sexo?: SortOrder
+    fecha_nacimiento?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    senas_particulares?: SortOrderInput | SortOrder
+    nro_chip?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    fecha_ingreso?: SortOrderInput | SortOrder
+    origen?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    foto_url?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vaccines?: VaccineOrderByRelationAggregateInput
+    vetControls?: VetControlOrderByRelationAggregateInput
+    feedings?: FeedingOrderByRelationAggregateInput
+    trainings?: TrainingOrderByRelationAggregateInput
+    assignments?: AssignmentOrderByRelationAggregateInput
+    history?: HistoryOrderByRelationAggregateInput
+    incidents?: IncidentOrderByRelationAggregateInput
+  }
+
+  export type DogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    nro_chip?: string
+    AND?: DogWhereInput | DogWhereInput[]
+    OR?: DogWhereInput[]
+    NOT?: DogWhereInput | DogWhereInput[]
+    nombre?: StringFilter<"Dog"> | string
+    raza?: StringNullableFilter<"Dog"> | string | null
+    sexo?: StringFilter<"Dog"> | string
+    fecha_nacimiento?: DateTimeNullableFilter<"Dog"> | Date | string | null
+    color?: StringNullableFilter<"Dog"> | string | null
+    senas_particulares?: StringNullableFilter<"Dog"> | string | null
+    estado?: StringFilter<"Dog"> | string
+    fecha_ingreso?: DateTimeNullableFilter<"Dog"> | Date | string | null
+    origen?: StringNullableFilter<"Dog"> | string | null
+    observaciones?: StringNullableFilter<"Dog"> | string | null
+    foto_url?: StringNullableFilter<"Dog"> | string | null
+    deletedAt?: DateTimeNullableFilter<"Dog"> | Date | string | null
+    createdAt?: DateTimeFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeFilter<"Dog"> | Date | string
+    vaccines?: VaccineListRelationFilter
+    vetControls?: VetControlListRelationFilter
+    feedings?: FeedingListRelationFilter
+    trainings?: TrainingListRelationFilter
+    assignments?: AssignmentListRelationFilter
+    history?: HistoryListRelationFilter
+    incidents?: IncidentListRelationFilter
+  }, "id" | "nro_chip">
+
+  export type DogOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    raza?: SortOrderInput | SortOrder
+    sexo?: SortOrder
+    fecha_nacimiento?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    senas_particulares?: SortOrderInput | SortOrder
+    nro_chip?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    fecha_ingreso?: SortOrderInput | SortOrder
+    origen?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    foto_url?: SortOrderInput | SortOrder
+    deletedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DogCountOrderByAggregateInput
+    _avg?: DogAvgOrderByAggregateInput
+    _max?: DogMaxOrderByAggregateInput
+    _min?: DogMinOrderByAggregateInput
+    _sum?: DogSumOrderByAggregateInput
+  }
+
+  export type DogScalarWhereWithAggregatesInput = {
+    AND?: DogScalarWhereWithAggregatesInput | DogScalarWhereWithAggregatesInput[]
+    OR?: DogScalarWhereWithAggregatesInput[]
+    NOT?: DogScalarWhereWithAggregatesInput | DogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Dog"> | number
+    nombre?: StringWithAggregatesFilter<"Dog"> | string
+    raza?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    sexo?: StringWithAggregatesFilter<"Dog"> | string
+    fecha_nacimiento?: DateTimeNullableWithAggregatesFilter<"Dog"> | Date | string | null
+    color?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    senas_particulares?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    nro_chip?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    estado?: StringWithAggregatesFilter<"Dog"> | string
+    fecha_ingreso?: DateTimeNullableWithAggregatesFilter<"Dog"> | Date | string | null
+    origen?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    foto_url?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    deletedAt?: DateTimeNullableWithAggregatesFilter<"Dog"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Dog"> | Date | string
+  }
+
+  export type VaccineWhereInput = {
+    AND?: VaccineWhereInput | VaccineWhereInput[]
+    OR?: VaccineWhereInput[]
+    NOT?: VaccineWhereInput | VaccineWhereInput[]
+    id?: IntFilter<"Vaccine"> | number
+    id_perro?: IntFilter<"Vaccine"> | number
+    vacuna?: StringFilter<"Vaccine"> | string
+    fecha_aplicacion?: DateTimeFilter<"Vaccine"> | Date | string
+    proxima_dosis?: DateTimeNullableFilter<"Vaccine"> | Date | string | null
+    veterinario?: StringNullableFilter<"Vaccine"> | string | null
+    observaciones?: StringNullableFilter<"Vaccine"> | string | null
+    createdAt?: DateTimeFilter<"Vaccine"> | Date | string
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type VaccineOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    vacuna?: SortOrder
+    fecha_aplicacion?: SortOrder
+    proxima_dosis?: SortOrderInput | SortOrder
+    veterinario?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type VaccineWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: VaccineWhereInput | VaccineWhereInput[]
+    OR?: VaccineWhereInput[]
+    NOT?: VaccineWhereInput | VaccineWhereInput[]
+    id_perro?: IntFilter<"Vaccine"> | number
+    vacuna?: StringFilter<"Vaccine"> | string
+    fecha_aplicacion?: DateTimeFilter<"Vaccine"> | Date | string
+    proxima_dosis?: DateTimeNullableFilter<"Vaccine"> | Date | string | null
+    veterinario?: StringNullableFilter<"Vaccine"> | string | null
+    observaciones?: StringNullableFilter<"Vaccine"> | string | null
+    createdAt?: DateTimeFilter<"Vaccine"> | Date | string
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type VaccineOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    vacuna?: SortOrder
+    fecha_aplicacion?: SortOrder
+    proxima_dosis?: SortOrderInput | SortOrder
+    veterinario?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: VaccineCountOrderByAggregateInput
+    _avg?: VaccineAvgOrderByAggregateInput
+    _max?: VaccineMaxOrderByAggregateInput
+    _min?: VaccineMinOrderByAggregateInput
+    _sum?: VaccineSumOrderByAggregateInput
+  }
+
+  export type VaccineScalarWhereWithAggregatesInput = {
+    AND?: VaccineScalarWhereWithAggregatesInput | VaccineScalarWhereWithAggregatesInput[]
+    OR?: VaccineScalarWhereWithAggregatesInput[]
+    NOT?: VaccineScalarWhereWithAggregatesInput | VaccineScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Vaccine"> | number
+    id_perro?: IntWithAggregatesFilter<"Vaccine"> | number
+    vacuna?: StringWithAggregatesFilter<"Vaccine"> | string
+    fecha_aplicacion?: DateTimeWithAggregatesFilter<"Vaccine"> | Date | string
+    proxima_dosis?: DateTimeNullableWithAggregatesFilter<"Vaccine"> | Date | string | null
+    veterinario?: StringNullableWithAggregatesFilter<"Vaccine"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"Vaccine"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Vaccine"> | Date | string
+  }
+
+  export type VetControlWhereInput = {
+    AND?: VetControlWhereInput | VetControlWhereInput[]
+    OR?: VetControlWhereInput[]
+    NOT?: VetControlWhereInput | VetControlWhereInput[]
+    id?: IntFilter<"VetControl"> | number
+    id_perro?: IntFilter<"VetControl"> | number
+    fecha?: DateTimeFilter<"VetControl"> | Date | string
+    motivo?: StringFilter<"VetControl"> | string
+    diagnostico?: StringNullableFilter<"VetControl"> | string | null
+    tratamiento?: StringNullableFilter<"VetControl"> | string | null
+    medicacion?: StringNullableFilter<"VetControl"> | string | null
+    dosis?: StringNullableFilter<"VetControl"> | string | null
+    veterinario?: StringNullableFilter<"VetControl"> | string | null
+    observaciones?: StringNullableFilter<"VetControl"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type VetControlOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    motivo?: SortOrder
+    diagnostico?: SortOrderInput | SortOrder
+    tratamiento?: SortOrderInput | SortOrder
+    medicacion?: SortOrderInput | SortOrder
+    dosis?: SortOrderInput | SortOrder
+    veterinario?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type VetControlWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: VetControlWhereInput | VetControlWhereInput[]
+    OR?: VetControlWhereInput[]
+    NOT?: VetControlWhereInput | VetControlWhereInput[]
+    id_perro?: IntFilter<"VetControl"> | number
+    fecha?: DateTimeFilter<"VetControl"> | Date | string
+    motivo?: StringFilter<"VetControl"> | string
+    diagnostico?: StringNullableFilter<"VetControl"> | string | null
+    tratamiento?: StringNullableFilter<"VetControl"> | string | null
+    medicacion?: StringNullableFilter<"VetControl"> | string | null
+    dosis?: StringNullableFilter<"VetControl"> | string | null
+    veterinario?: StringNullableFilter<"VetControl"> | string | null
+    observaciones?: StringNullableFilter<"VetControl"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type VetControlOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    motivo?: SortOrder
+    diagnostico?: SortOrderInput | SortOrder
+    tratamiento?: SortOrderInput | SortOrder
+    medicacion?: SortOrderInput | SortOrder
+    dosis?: SortOrderInput | SortOrder
+    veterinario?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    _count?: VetControlCountOrderByAggregateInput
+    _avg?: VetControlAvgOrderByAggregateInput
+    _max?: VetControlMaxOrderByAggregateInput
+    _min?: VetControlMinOrderByAggregateInput
+    _sum?: VetControlSumOrderByAggregateInput
+  }
+
+  export type VetControlScalarWhereWithAggregatesInput = {
+    AND?: VetControlScalarWhereWithAggregatesInput | VetControlScalarWhereWithAggregatesInput[]
+    OR?: VetControlScalarWhereWithAggregatesInput[]
+    NOT?: VetControlScalarWhereWithAggregatesInput | VetControlScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"VetControl"> | number
+    id_perro?: IntWithAggregatesFilter<"VetControl"> | number
+    fecha?: DateTimeWithAggregatesFilter<"VetControl"> | Date | string
+    motivo?: StringWithAggregatesFilter<"VetControl"> | string
+    diagnostico?: StringNullableWithAggregatesFilter<"VetControl"> | string | null
+    tratamiento?: StringNullableWithAggregatesFilter<"VetControl"> | string | null
+    medicacion?: StringNullableWithAggregatesFilter<"VetControl"> | string | null
+    dosis?: StringNullableWithAggregatesFilter<"VetControl"> | string | null
+    veterinario?: StringNullableWithAggregatesFilter<"VetControl"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"VetControl"> | string | null
+  }
+
+  export type FeedingWhereInput = {
+    AND?: FeedingWhereInput | FeedingWhereInput[]
+    OR?: FeedingWhereInput[]
+    NOT?: FeedingWhereInput | FeedingWhereInput[]
+    id?: IntFilter<"Feeding"> | number
+    id_perro?: IntFilter<"Feeding"> | number
+    tipo_alimento?: StringFilter<"Feeding"> | string
+    marca?: StringNullableFilter<"Feeding"> | string | null
+    cantidad_diaria?: StringNullableFilter<"Feeding"> | string | null
+    horario?: StringNullableFilter<"Feeding"> | string | null
+    suplementos?: StringNullableFilter<"Feeding"> | string | null
+    fecha_inicio?: DateTimeNullableFilter<"Feeding"> | Date | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type FeedingOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo_alimento?: SortOrder
+    marca?: SortOrderInput | SortOrder
+    cantidad_diaria?: SortOrderInput | SortOrder
+    horario?: SortOrderInput | SortOrder
+    suplementos?: SortOrderInput | SortOrder
+    fecha_inicio?: SortOrderInput | SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type FeedingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: FeedingWhereInput | FeedingWhereInput[]
+    OR?: FeedingWhereInput[]
+    NOT?: FeedingWhereInput | FeedingWhereInput[]
+    id_perro?: IntFilter<"Feeding"> | number
+    tipo_alimento?: StringFilter<"Feeding"> | string
+    marca?: StringNullableFilter<"Feeding"> | string | null
+    cantidad_diaria?: StringNullableFilter<"Feeding"> | string | null
+    horario?: StringNullableFilter<"Feeding"> | string | null
+    suplementos?: StringNullableFilter<"Feeding"> | string | null
+    fecha_inicio?: DateTimeNullableFilter<"Feeding"> | Date | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type FeedingOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo_alimento?: SortOrder
+    marca?: SortOrderInput | SortOrder
+    cantidad_diaria?: SortOrderInput | SortOrder
+    horario?: SortOrderInput | SortOrder
+    suplementos?: SortOrderInput | SortOrder
+    fecha_inicio?: SortOrderInput | SortOrder
+    _count?: FeedingCountOrderByAggregateInput
+    _avg?: FeedingAvgOrderByAggregateInput
+    _max?: FeedingMaxOrderByAggregateInput
+    _min?: FeedingMinOrderByAggregateInput
+    _sum?: FeedingSumOrderByAggregateInput
+  }
+
+  export type FeedingScalarWhereWithAggregatesInput = {
+    AND?: FeedingScalarWhereWithAggregatesInput | FeedingScalarWhereWithAggregatesInput[]
+    OR?: FeedingScalarWhereWithAggregatesInput[]
+    NOT?: FeedingScalarWhereWithAggregatesInput | FeedingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Feeding"> | number
+    id_perro?: IntWithAggregatesFilter<"Feeding"> | number
+    tipo_alimento?: StringWithAggregatesFilter<"Feeding"> | string
+    marca?: StringNullableWithAggregatesFilter<"Feeding"> | string | null
+    cantidad_diaria?: StringNullableWithAggregatesFilter<"Feeding"> | string | null
+    horario?: StringNullableWithAggregatesFilter<"Feeding"> | string | null
+    suplementos?: StringNullableWithAggregatesFilter<"Feeding"> | string | null
+    fecha_inicio?: DateTimeNullableWithAggregatesFilter<"Feeding"> | Date | string | null
+  }
+
+  export type TrainingWhereInput = {
+    AND?: TrainingWhereInput | TrainingWhereInput[]
+    OR?: TrainingWhereInput[]
+    NOT?: TrainingWhereInput | TrainingWhereInput[]
+    id?: IntFilter<"Training"> | number
+    id_perro?: IntFilter<"Training"> | number
+    tipo?: StringFilter<"Training"> | string
+    nivel?: StringNullableFilter<"Training"> | string | null
+    fecha?: DateTimeFilter<"Training"> | Date | string
+    instructor?: StringNullableFilter<"Training"> | string | null
+    evaluacion?: StringNullableFilter<"Training"> | string | null
+    observaciones?: StringNullableFilter<"Training"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type TrainingOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo?: SortOrder
+    nivel?: SortOrderInput | SortOrder
+    fecha?: SortOrder
+    instructor?: SortOrderInput | SortOrder
+    evaluacion?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type TrainingWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: TrainingWhereInput | TrainingWhereInput[]
+    OR?: TrainingWhereInput[]
+    NOT?: TrainingWhereInput | TrainingWhereInput[]
+    id_perro?: IntFilter<"Training"> | number
+    tipo?: StringFilter<"Training"> | string
+    nivel?: StringNullableFilter<"Training"> | string | null
+    fecha?: DateTimeFilter<"Training"> | Date | string
+    instructor?: StringNullableFilter<"Training"> | string | null
+    evaluacion?: StringNullableFilter<"Training"> | string | null
+    observaciones?: StringNullableFilter<"Training"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type TrainingOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo?: SortOrder
+    nivel?: SortOrderInput | SortOrder
+    fecha?: SortOrder
+    instructor?: SortOrderInput | SortOrder
+    evaluacion?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    _count?: TrainingCountOrderByAggregateInput
+    _avg?: TrainingAvgOrderByAggregateInput
+    _max?: TrainingMaxOrderByAggregateInput
+    _min?: TrainingMinOrderByAggregateInput
+    _sum?: TrainingSumOrderByAggregateInput
+  }
+
+  export type TrainingScalarWhereWithAggregatesInput = {
+    AND?: TrainingScalarWhereWithAggregatesInput | TrainingScalarWhereWithAggregatesInput[]
+    OR?: TrainingScalarWhereWithAggregatesInput[]
+    NOT?: TrainingScalarWhereWithAggregatesInput | TrainingScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Training"> | number
+    id_perro?: IntWithAggregatesFilter<"Training"> | number
+    tipo?: StringWithAggregatesFilter<"Training"> | string
+    nivel?: StringNullableWithAggregatesFilter<"Training"> | string | null
+    fecha?: DateTimeWithAggregatesFilter<"Training"> | Date | string
+    instructor?: StringNullableWithAggregatesFilter<"Training"> | string | null
+    evaluacion?: StringNullableWithAggregatesFilter<"Training"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"Training"> | string | null
+  }
+
+  export type AssignmentWhereInput = {
+    AND?: AssignmentWhereInput | AssignmentWhereInput[]
+    OR?: AssignmentWhereInput[]
+    NOT?: AssignmentWhereInput | AssignmentWhereInput[]
+    id?: IntFilter<"Assignment"> | number
+    id_perro?: IntFilter<"Assignment"> | number
+    guia?: StringFilter<"Assignment"> | string
+    fecha_inicio?: DateTimeFilter<"Assignment"> | Date | string
+    fecha_fin?: DateTimeNullableFilter<"Assignment"> | Date | string | null
+    turno?: StringNullableFilter<"Assignment"> | string | null
+    observaciones?: StringNullableFilter<"Assignment"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type AssignmentOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    guia?: SortOrder
+    fecha_inicio?: SortOrder
+    fecha_fin?: SortOrderInput | SortOrder
+    turno?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type AssignmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: AssignmentWhereInput | AssignmentWhereInput[]
+    OR?: AssignmentWhereInput[]
+    NOT?: AssignmentWhereInput | AssignmentWhereInput[]
+    id_perro?: IntFilter<"Assignment"> | number
+    guia?: StringFilter<"Assignment"> | string
+    fecha_inicio?: DateTimeFilter<"Assignment"> | Date | string
+    fecha_fin?: DateTimeNullableFilter<"Assignment"> | Date | string | null
+    turno?: StringNullableFilter<"Assignment"> | string | null
+    observaciones?: StringNullableFilter<"Assignment"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type AssignmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    guia?: SortOrder
+    fecha_inicio?: SortOrder
+    fecha_fin?: SortOrderInput | SortOrder
+    turno?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    _count?: AssignmentCountOrderByAggregateInput
+    _avg?: AssignmentAvgOrderByAggregateInput
+    _max?: AssignmentMaxOrderByAggregateInput
+    _min?: AssignmentMinOrderByAggregateInput
+    _sum?: AssignmentSumOrderByAggregateInput
+  }
+
+  export type AssignmentScalarWhereWithAggregatesInput = {
+    AND?: AssignmentScalarWhereWithAggregatesInput | AssignmentScalarWhereWithAggregatesInput[]
+    OR?: AssignmentScalarWhereWithAggregatesInput[]
+    NOT?: AssignmentScalarWhereWithAggregatesInput | AssignmentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Assignment"> | number
+    id_perro?: IntWithAggregatesFilter<"Assignment"> | number
+    guia?: StringWithAggregatesFilter<"Assignment"> | string
+    fecha_inicio?: DateTimeWithAggregatesFilter<"Assignment"> | Date | string
+    fecha_fin?: DateTimeNullableWithAggregatesFilter<"Assignment"> | Date | string | null
+    turno?: StringNullableWithAggregatesFilter<"Assignment"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"Assignment"> | string | null
+  }
+
+  export type HistoryWhereInput = {
+    AND?: HistoryWhereInput | HistoryWhereInput[]
+    OR?: HistoryWhereInput[]
+    NOT?: HistoryWhereInput | HistoryWhereInput[]
+    id?: IntFilter<"History"> | number
+    id_perro?: IntFilter<"History"> | number
+    fecha?: DateTimeFilter<"History"> | Date | string
+    tipo_evento?: StringFilter<"History"> | string
+    descripcion?: StringFilter<"History"> | string
+    responsable?: StringNullableFilter<"History"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type HistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo_evento?: SortOrder
+    descripcion?: SortOrder
+    responsable?: SortOrderInput | SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type HistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: HistoryWhereInput | HistoryWhereInput[]
+    OR?: HistoryWhereInput[]
+    NOT?: HistoryWhereInput | HistoryWhereInput[]
+    id_perro?: IntFilter<"History"> | number
+    fecha?: DateTimeFilter<"History"> | Date | string
+    tipo_evento?: StringFilter<"History"> | string
+    descripcion?: StringFilter<"History"> | string
+    responsable?: StringNullableFilter<"History"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type HistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo_evento?: SortOrder
+    descripcion?: SortOrder
+    responsable?: SortOrderInput | SortOrder
+    _count?: HistoryCountOrderByAggregateInput
+    _avg?: HistoryAvgOrderByAggregateInput
+    _max?: HistoryMaxOrderByAggregateInput
+    _min?: HistoryMinOrderByAggregateInput
+    _sum?: HistorySumOrderByAggregateInput
+  }
+
+  export type HistoryScalarWhereWithAggregatesInput = {
+    AND?: HistoryScalarWhereWithAggregatesInput | HistoryScalarWhereWithAggregatesInput[]
+    OR?: HistoryScalarWhereWithAggregatesInput[]
+    NOT?: HistoryScalarWhereWithAggregatesInput | HistoryScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"History"> | number
+    id_perro?: IntWithAggregatesFilter<"History"> | number
+    fecha?: DateTimeWithAggregatesFilter<"History"> | Date | string
+    tipo_evento?: StringWithAggregatesFilter<"History"> | string
+    descripcion?: StringWithAggregatesFilter<"History"> | string
+    responsable?: StringNullableWithAggregatesFilter<"History"> | string | null
+  }
+
+  export type IncidentWhereInput = {
+    AND?: IncidentWhereInput | IncidentWhereInput[]
+    OR?: IncidentWhereInput[]
+    NOT?: IncidentWhereInput | IncidentWhereInput[]
+    id?: IntFilter<"Incident"> | number
+    id_perro?: IntFilter<"Incident"> | number
+    fecha?: DateTimeFilter<"Incident"> | Date | string
+    tipo?: StringFilter<"Incident"> | string
+    descripcion?: StringFilter<"Incident"> | string
+    gravedad?: StringFilter<"Incident"> | string
+    acciones_tomadas?: StringNullableFilter<"Incident"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }
+
+  export type IncidentOrderByWithRelationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo?: SortOrder
+    descripcion?: SortOrder
+    gravedad?: SortOrder
+    acciones_tomadas?: SortOrderInput | SortOrder
+    dog?: DogOrderByWithRelationInput
+  }
+
+  export type IncidentWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: IncidentWhereInput | IncidentWhereInput[]
+    OR?: IncidentWhereInput[]
+    NOT?: IncidentWhereInput | IncidentWhereInput[]
+    id_perro?: IntFilter<"Incident"> | number
+    fecha?: DateTimeFilter<"Incident"> | Date | string
+    tipo?: StringFilter<"Incident"> | string
+    descripcion?: StringFilter<"Incident"> | string
+    gravedad?: StringFilter<"Incident"> | string
+    acciones_tomadas?: StringNullableFilter<"Incident"> | string | null
+    dog?: XOR<DogScalarRelationFilter, DogWhereInput>
+  }, "id">
+
+  export type IncidentOrderByWithAggregationInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo?: SortOrder
+    descripcion?: SortOrder
+    gravedad?: SortOrder
+    acciones_tomadas?: SortOrderInput | SortOrder
+    _count?: IncidentCountOrderByAggregateInput
+    _avg?: IncidentAvgOrderByAggregateInput
+    _max?: IncidentMaxOrderByAggregateInput
+    _min?: IncidentMinOrderByAggregateInput
+    _sum?: IncidentSumOrderByAggregateInput
+  }
+
+  export type IncidentScalarWhereWithAggregatesInput = {
+    AND?: IncidentScalarWhereWithAggregatesInput | IncidentScalarWhereWithAggregatesInput[]
+    OR?: IncidentScalarWhereWithAggregatesInput[]
+    NOT?: IncidentScalarWhereWithAggregatesInput | IncidentScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Incident"> | number
+    id_perro?: IntWithAggregatesFilter<"Incident"> | number
+    fecha?: DateTimeWithAggregatesFilter<"Incident"> | Date | string
+    tipo?: StringWithAggregatesFilter<"Incident"> | string
+    descripcion?: StringWithAggregatesFilter<"Incident"> | string
+    gravedad?: StringWithAggregatesFilter<"Incident"> | string
+    acciones_tomadas?: StringNullableWithAggregatesFilter<"Incident"> | string | null
+  }
+
+  export type UserWhereInput = {
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    id?: IntFilter<"User"> | number
+    nombre?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    rol?: StringFilter<"User"> | string
+  }
+
+  export type UserOrderByWithRelationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    rol?: SortOrder
+  }
+
+  export type UserWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    email?: string
+    AND?: UserWhereInput | UserWhereInput[]
+    OR?: UserWhereInput[]
+    NOT?: UserWhereInput | UserWhereInput[]
+    nombre?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    rol?: StringFilter<"User"> | string
+  }, "id" | "email">
+
+  export type UserOrderByWithAggregationInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    rol?: SortOrder
+    _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
+    _max?: UserMaxOrderByAggregateInput
+    _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
+  }
+
+  export type UserScalarWhereWithAggregatesInput = {
+    AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    OR?: UserScalarWhereWithAggregatesInput[]
+    NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"User"> | number
+    nombre?: StringWithAggregatesFilter<"User"> | string
+    email?: StringWithAggregatesFilter<"User"> | string
+    password?: StringWithAggregatesFilter<"User"> | string
+    rol?: StringWithAggregatesFilter<"User"> | string
+  }
+
+  export type DogCreateInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateManyInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DogUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VaccineCreateInput = {
+    vacuna: string
+    fecha_aplicacion: Date | string
+    proxima_dosis?: Date | string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    createdAt?: Date | string
+    dog: DogCreateNestedOneWithoutVaccinesInput
+  }
+
+  export type VaccineUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    vacuna: string
+    fecha_aplicacion: Date | string
+    proxima_dosis?: Date | string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VaccineUpdateInput = {
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dog?: DogUpdateOneRequiredWithoutVaccinesNestedInput
+  }
+
+  export type VaccineUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VaccineCreateManyInput = {
+    id_perro: number
+    vacuna: string
+    fecha_aplicacion: Date | string
+    proxima_dosis?: Date | string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VaccineUpdateManyMutationInput = {
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VaccineUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VetControlCreateInput = {
+    fecha?: Date | string
+    motivo: string
+    diagnostico?: string | null
+    tratamiento?: string | null
+    medicacion?: string | null
+    dosis?: string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    dog: DogCreateNestedOneWithoutVetControlsInput
+  }
+
+  export type VetControlUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    fecha?: Date | string
+    motivo: string
+    diagnostico?: string | null
+    tratamiento?: string | null
+    medicacion?: string | null
+    dosis?: string | null
+    veterinario?: string | null
+    observaciones?: string | null
+  }
+
+  export type VetControlUpdateInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    dog?: DogUpdateOneRequiredWithoutVetControlsNestedInput
+  }
+
+  export type VetControlUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VetControlCreateManyInput = {
+    id_perro: number
+    fecha?: Date | string
+    motivo: string
+    diagnostico?: string | null
+    tratamiento?: string | null
+    medicacion?: string | null
+    dosis?: string | null
+    veterinario?: string | null
+    observaciones?: string | null
+  }
+
+  export type VetControlUpdateManyMutationInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VetControlUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FeedingCreateInput = {
+    tipo_alimento: string
+    marca?: string | null
+    cantidad_diaria?: string | null
+    horario?: string | null
+    suplementos?: string | null
+    fecha_inicio?: Date | string | null
+    dog: DogCreateNestedOneWithoutFeedingsInput
+  }
+
+  export type FeedingUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    tipo_alimento: string
+    marca?: string | null
+    cantidad_diaria?: string | null
+    horario?: string | null
+    suplementos?: string | null
+    fecha_inicio?: Date | string | null
+  }
+
+  export type FeedingUpdateInput = {
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dog?: DogUpdateOneRequiredWithoutFeedingsNestedInput
+  }
+
+  export type FeedingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FeedingCreateManyInput = {
+    id_perro: number
+    tipo_alimento: string
+    marca?: string | null
+    cantidad_diaria?: string | null
+    horario?: string | null
+    suplementos?: string | null
+    fecha_inicio?: Date | string | null
+  }
+
+  export type FeedingUpdateManyMutationInput = {
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FeedingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TrainingCreateInput = {
+    tipo: string
+    nivel?: string | null
+    fecha: Date | string
+    instructor?: string | null
+    evaluacion?: string | null
+    observaciones?: string | null
+    dog: DogCreateNestedOneWithoutTrainingsInput
+  }
+
+  export type TrainingUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    tipo: string
+    nivel?: string | null
+    fecha: Date | string
+    instructor?: string | null
+    evaluacion?: string | null
+    observaciones?: string | null
+  }
+
+  export type TrainingUpdateInput = {
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    dog?: DogUpdateOneRequiredWithoutTrainingsNestedInput
+  }
+
+  export type TrainingUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TrainingCreateManyInput = {
+    id_perro: number
+    tipo: string
+    nivel?: string | null
+    fecha: Date | string
+    instructor?: string | null
+    evaluacion?: string | null
+    observaciones?: string | null
+  }
+
+  export type TrainingUpdateManyMutationInput = {
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TrainingUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssignmentCreateInput = {
+    guia: string
+    fecha_inicio?: Date | string
+    fecha_fin?: Date | string | null
+    turno?: string | null
+    observaciones?: string | null
+    dog: DogCreateNestedOneWithoutAssignmentsInput
+  }
+
+  export type AssignmentUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    guia: string
+    fecha_inicio?: Date | string
+    fecha_fin?: Date | string | null
+    turno?: string | null
+    observaciones?: string | null
+  }
+
+  export type AssignmentUpdateInput = {
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    dog?: DogUpdateOneRequiredWithoutAssignmentsNestedInput
+  }
+
+  export type AssignmentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssignmentCreateManyInput = {
+    id_perro: number
+    guia: string
+    fecha_inicio?: Date | string
+    fecha_fin?: Date | string | null
+    turno?: string | null
+    observaciones?: string | null
+  }
+
+  export type AssignmentUpdateManyMutationInput = {
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssignmentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HistoryCreateInput = {
+    fecha?: Date | string
+    tipo_evento: string
+    descripcion: string
+    responsable?: string | null
+    dog: DogCreateNestedOneWithoutHistoryInput
+  }
+
+  export type HistoryUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    fecha?: Date | string
+    tipo_evento: string
+    descripcion: string
+    responsable?: string | null
+  }
+
+  export type HistoryUpdateInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+    dog?: DogUpdateOneRequiredWithoutHistoryNestedInput
+  }
+
+  export type HistoryUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HistoryCreateManyInput = {
+    id_perro: number
+    fecha?: Date | string
+    tipo_evento: string
+    descripcion: string
+    responsable?: string | null
+  }
+
+  export type HistoryUpdateManyMutationInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HistoryUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IncidentCreateInput = {
+    fecha?: Date | string
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas?: string | null
+    dog: DogCreateNestedOneWithoutIncidentsInput
+  }
+
+  export type IncidentUncheckedCreateInput = {
+    id?: number
+    id_perro: number
+    fecha?: Date | string
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas?: string | null
+  }
+
+  export type IncidentUpdateInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+    dog?: DogUpdateOneRequiredWithoutIncidentsNestedInput
+  }
+
+  export type IncidentUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IncidentCreateManyInput = {
+    id_perro: number
+    fecha?: Date | string
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas?: string | null
+  }
+
+  export type IncidentUpdateManyMutationInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IncidentUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    id_perro?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type UserCreateInput = {
+    nombre: string
+    email: string
+    password: string
+    rol?: string
+  }
+
+  export type UserUncheckedCreateInput = {
+    id?: number
+    nombre: string
+    email: string
+    password: string
+    rol?: string
+  }
+
+  export type UserUpdateInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    rol?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    rol?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserCreateManyInput = {
+    nombre: string
+    email: string
+    password: string
+    rol?: string
+  }
+
+  export type UserUpdateManyMutationInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    rol?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    rol?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type VaccineListRelationFilter = {
+    every?: VaccineWhereInput
+    some?: VaccineWhereInput
+    none?: VaccineWhereInput
+  }
+
+  export type VetControlListRelationFilter = {
+    every?: VetControlWhereInput
+    some?: VetControlWhereInput
+    none?: VetControlWhereInput
+  }
+
+  export type FeedingListRelationFilter = {
+    every?: FeedingWhereInput
+    some?: FeedingWhereInput
+    none?: FeedingWhereInput
+  }
+
+  export type TrainingListRelationFilter = {
+    every?: TrainingWhereInput
+    some?: TrainingWhereInput
+    none?: TrainingWhereInput
+  }
+
+  export type AssignmentListRelationFilter = {
+    every?: AssignmentWhereInput
+    some?: AssignmentWhereInput
+    none?: AssignmentWhereInput
+  }
+
+  export type HistoryListRelationFilter = {
+    every?: HistoryWhereInput
+    some?: HistoryWhereInput
+    none?: HistoryWhereInput
+  }
+
+  export type IncidentListRelationFilter = {
+    every?: IncidentWhereInput
+    some?: IncidentWhereInput
+    none?: IncidentWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type VaccineOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type VetControlOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FeedingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TrainingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AssignmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type HistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IncidentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DogCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    raza?: SortOrder
+    sexo?: SortOrder
+    fecha_nacimiento?: SortOrder
+    color?: SortOrder
+    senas_particulares?: SortOrder
+    nro_chip?: SortOrder
+    estado?: SortOrder
+    fecha_ingreso?: SortOrder
+    origen?: SortOrder
+    observaciones?: SortOrder
+    foto_url?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DogAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type DogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    raza?: SortOrder
+    sexo?: SortOrder
+    fecha_nacimiento?: SortOrder
+    color?: SortOrder
+    senas_particulares?: SortOrder
+    nro_chip?: SortOrder
+    estado?: SortOrder
+    fecha_ingreso?: SortOrder
+    origen?: SortOrder
+    observaciones?: SortOrder
+    foto_url?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DogMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    raza?: SortOrder
+    sexo?: SortOrder
+    fecha_nacimiento?: SortOrder
+    color?: SortOrder
+    senas_particulares?: SortOrder
+    nro_chip?: SortOrder
+    estado?: SortOrder
+    fecha_ingreso?: SortOrder
+    origen?: SortOrder
+    observaciones?: SortOrder
+    foto_url?: SortOrder
+    deletedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DogSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DogScalarRelationFilter = {
+    is?: DogWhereInput
+    isNot?: DogWhereInput
+  }
+
+  export type VaccineCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    vacuna?: SortOrder
+    fecha_aplicacion?: SortOrder
+    proxima_dosis?: SortOrder
+    veterinario?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VaccineAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type VaccineMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    vacuna?: SortOrder
+    fecha_aplicacion?: SortOrder
+    proxima_dosis?: SortOrder
+    veterinario?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VaccineMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    vacuna?: SortOrder
+    fecha_aplicacion?: SortOrder
+    proxima_dosis?: SortOrder
+    veterinario?: SortOrder
+    observaciones?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type VaccineSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type VetControlCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    motivo?: SortOrder
+    diagnostico?: SortOrder
+    tratamiento?: SortOrder
+    medicacion?: SortOrder
+    dosis?: SortOrder
+    veterinario?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type VetControlAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type VetControlMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    motivo?: SortOrder
+    diagnostico?: SortOrder
+    tratamiento?: SortOrder
+    medicacion?: SortOrder
+    dosis?: SortOrder
+    veterinario?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type VetControlMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    motivo?: SortOrder
+    diagnostico?: SortOrder
+    tratamiento?: SortOrder
+    medicacion?: SortOrder
+    dosis?: SortOrder
+    veterinario?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type VetControlSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type FeedingCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo_alimento?: SortOrder
+    marca?: SortOrder
+    cantidad_diaria?: SortOrder
+    horario?: SortOrder
+    suplementos?: SortOrder
+    fecha_inicio?: SortOrder
+  }
+
+  export type FeedingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type FeedingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo_alimento?: SortOrder
+    marca?: SortOrder
+    cantidad_diaria?: SortOrder
+    horario?: SortOrder
+    suplementos?: SortOrder
+    fecha_inicio?: SortOrder
+  }
+
+  export type FeedingMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo_alimento?: SortOrder
+    marca?: SortOrder
+    cantidad_diaria?: SortOrder
+    horario?: SortOrder
+    suplementos?: SortOrder
+    fecha_inicio?: SortOrder
+  }
+
+  export type FeedingSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type TrainingCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo?: SortOrder
+    nivel?: SortOrder
+    fecha?: SortOrder
+    instructor?: SortOrder
+    evaluacion?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type TrainingAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type TrainingMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo?: SortOrder
+    nivel?: SortOrder
+    fecha?: SortOrder
+    instructor?: SortOrder
+    evaluacion?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type TrainingMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    tipo?: SortOrder
+    nivel?: SortOrder
+    fecha?: SortOrder
+    instructor?: SortOrder
+    evaluacion?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type TrainingSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type AssignmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    guia?: SortOrder
+    fecha_inicio?: SortOrder
+    fecha_fin?: SortOrder
+    turno?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type AssignmentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type AssignmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    guia?: SortOrder
+    fecha_inicio?: SortOrder
+    fecha_fin?: SortOrder
+    turno?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type AssignmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    guia?: SortOrder
+    fecha_inicio?: SortOrder
+    fecha_fin?: SortOrder
+    turno?: SortOrder
+    observaciones?: SortOrder
+  }
+
+  export type AssignmentSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type HistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo_evento?: SortOrder
+    descripcion?: SortOrder
+    responsable?: SortOrder
+  }
+
+  export type HistoryAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type HistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo_evento?: SortOrder
+    descripcion?: SortOrder
+    responsable?: SortOrder
+  }
+
+  export type HistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo_evento?: SortOrder
+    descripcion?: SortOrder
+    responsable?: SortOrder
+  }
+
+  export type HistorySumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type IncidentCountOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo?: SortOrder
+    descripcion?: SortOrder
+    gravedad?: SortOrder
+    acciones_tomadas?: SortOrder
+  }
+
+  export type IncidentAvgOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type IncidentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo?: SortOrder
+    descripcion?: SortOrder
+    gravedad?: SortOrder
+    acciones_tomadas?: SortOrder
+  }
+
+  export type IncidentMinOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+    fecha?: SortOrder
+    tipo?: SortOrder
+    descripcion?: SortOrder
+    gravedad?: SortOrder
+    acciones_tomadas?: SortOrder
+  }
+
+  export type IncidentSumOrderByAggregateInput = {
+    id?: SortOrder
+    id_perro?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    rol?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type UserMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    rol?: SortOrder
+  }
+
+  export type UserMinOrderByAggregateInput = {
+    id?: SortOrder
+    nombre?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    rol?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type VaccineCreateNestedManyWithoutDogInput = {
+    create?: XOR<VaccineCreateWithoutDogInput, VaccineUncheckedCreateWithoutDogInput> | VaccineCreateWithoutDogInput[] | VaccineUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VaccineCreateOrConnectWithoutDogInput | VaccineCreateOrConnectWithoutDogInput[]
+    createMany?: VaccineCreateManyDogInputEnvelope
+    connect?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+  }
+
+  export type VetControlCreateNestedManyWithoutDogInput = {
+    create?: XOR<VetControlCreateWithoutDogInput, VetControlUncheckedCreateWithoutDogInput> | VetControlCreateWithoutDogInput[] | VetControlUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VetControlCreateOrConnectWithoutDogInput | VetControlCreateOrConnectWithoutDogInput[]
+    createMany?: VetControlCreateManyDogInputEnvelope
+    connect?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+  }
+
+  export type FeedingCreateNestedManyWithoutDogInput = {
+    create?: XOR<FeedingCreateWithoutDogInput, FeedingUncheckedCreateWithoutDogInput> | FeedingCreateWithoutDogInput[] | FeedingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: FeedingCreateOrConnectWithoutDogInput | FeedingCreateOrConnectWithoutDogInput[]
+    createMany?: FeedingCreateManyDogInputEnvelope
+    connect?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+  }
+
+  export type TrainingCreateNestedManyWithoutDogInput = {
+    create?: XOR<TrainingCreateWithoutDogInput, TrainingUncheckedCreateWithoutDogInput> | TrainingCreateWithoutDogInput[] | TrainingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: TrainingCreateOrConnectWithoutDogInput | TrainingCreateOrConnectWithoutDogInput[]
+    createMany?: TrainingCreateManyDogInputEnvelope
+    connect?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+  }
+
+  export type AssignmentCreateNestedManyWithoutDogInput = {
+    create?: XOR<AssignmentCreateWithoutDogInput, AssignmentUncheckedCreateWithoutDogInput> | AssignmentCreateWithoutDogInput[] | AssignmentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: AssignmentCreateOrConnectWithoutDogInput | AssignmentCreateOrConnectWithoutDogInput[]
+    createMany?: AssignmentCreateManyDogInputEnvelope
+    connect?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+  }
+
+  export type HistoryCreateNestedManyWithoutDogInput = {
+    create?: XOR<HistoryCreateWithoutDogInput, HistoryUncheckedCreateWithoutDogInput> | HistoryCreateWithoutDogInput[] | HistoryUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: HistoryCreateOrConnectWithoutDogInput | HistoryCreateOrConnectWithoutDogInput[]
+    createMany?: HistoryCreateManyDogInputEnvelope
+    connect?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+  }
+
+  export type IncidentCreateNestedManyWithoutDogInput = {
+    create?: XOR<IncidentCreateWithoutDogInput, IncidentUncheckedCreateWithoutDogInput> | IncidentCreateWithoutDogInput[] | IncidentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: IncidentCreateOrConnectWithoutDogInput | IncidentCreateOrConnectWithoutDogInput[]
+    createMany?: IncidentCreateManyDogInputEnvelope
+    connect?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+  }
+
+  export type VaccineUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<VaccineCreateWithoutDogInput, VaccineUncheckedCreateWithoutDogInput> | VaccineCreateWithoutDogInput[] | VaccineUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VaccineCreateOrConnectWithoutDogInput | VaccineCreateOrConnectWithoutDogInput[]
+    createMany?: VaccineCreateManyDogInputEnvelope
+    connect?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+  }
+
+  export type VetControlUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<VetControlCreateWithoutDogInput, VetControlUncheckedCreateWithoutDogInput> | VetControlCreateWithoutDogInput[] | VetControlUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VetControlCreateOrConnectWithoutDogInput | VetControlCreateOrConnectWithoutDogInput[]
+    createMany?: VetControlCreateManyDogInputEnvelope
+    connect?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+  }
+
+  export type FeedingUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<FeedingCreateWithoutDogInput, FeedingUncheckedCreateWithoutDogInput> | FeedingCreateWithoutDogInput[] | FeedingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: FeedingCreateOrConnectWithoutDogInput | FeedingCreateOrConnectWithoutDogInput[]
+    createMany?: FeedingCreateManyDogInputEnvelope
+    connect?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+  }
+
+  export type TrainingUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<TrainingCreateWithoutDogInput, TrainingUncheckedCreateWithoutDogInput> | TrainingCreateWithoutDogInput[] | TrainingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: TrainingCreateOrConnectWithoutDogInput | TrainingCreateOrConnectWithoutDogInput[]
+    createMany?: TrainingCreateManyDogInputEnvelope
+    connect?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+  }
+
+  export type AssignmentUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<AssignmentCreateWithoutDogInput, AssignmentUncheckedCreateWithoutDogInput> | AssignmentCreateWithoutDogInput[] | AssignmentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: AssignmentCreateOrConnectWithoutDogInput | AssignmentCreateOrConnectWithoutDogInput[]
+    createMany?: AssignmentCreateManyDogInputEnvelope
+    connect?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+  }
+
+  export type HistoryUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<HistoryCreateWithoutDogInput, HistoryUncheckedCreateWithoutDogInput> | HistoryCreateWithoutDogInput[] | HistoryUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: HistoryCreateOrConnectWithoutDogInput | HistoryCreateOrConnectWithoutDogInput[]
+    createMany?: HistoryCreateManyDogInputEnvelope
+    connect?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+  }
+
+  export type IncidentUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<IncidentCreateWithoutDogInput, IncidentUncheckedCreateWithoutDogInput> | IncidentCreateWithoutDogInput[] | IncidentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: IncidentCreateOrConnectWithoutDogInput | IncidentCreateOrConnectWithoutDogInput[]
+    createMany?: IncidentCreateManyDogInputEnvelope
+    connect?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type VaccineUpdateManyWithoutDogNestedInput = {
+    create?: XOR<VaccineCreateWithoutDogInput, VaccineUncheckedCreateWithoutDogInput> | VaccineCreateWithoutDogInput[] | VaccineUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VaccineCreateOrConnectWithoutDogInput | VaccineCreateOrConnectWithoutDogInput[]
+    upsert?: VaccineUpsertWithWhereUniqueWithoutDogInput | VaccineUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: VaccineCreateManyDogInputEnvelope
+    set?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    disconnect?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    delete?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    connect?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    update?: VaccineUpdateWithWhereUniqueWithoutDogInput | VaccineUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: VaccineUpdateManyWithWhereWithoutDogInput | VaccineUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: VaccineScalarWhereInput | VaccineScalarWhereInput[]
+  }
+
+  export type VetControlUpdateManyWithoutDogNestedInput = {
+    create?: XOR<VetControlCreateWithoutDogInput, VetControlUncheckedCreateWithoutDogInput> | VetControlCreateWithoutDogInput[] | VetControlUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VetControlCreateOrConnectWithoutDogInput | VetControlCreateOrConnectWithoutDogInput[]
+    upsert?: VetControlUpsertWithWhereUniqueWithoutDogInput | VetControlUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: VetControlCreateManyDogInputEnvelope
+    set?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    disconnect?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    delete?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    connect?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    update?: VetControlUpdateWithWhereUniqueWithoutDogInput | VetControlUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: VetControlUpdateManyWithWhereWithoutDogInput | VetControlUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: VetControlScalarWhereInput | VetControlScalarWhereInput[]
+  }
+
+  export type FeedingUpdateManyWithoutDogNestedInput = {
+    create?: XOR<FeedingCreateWithoutDogInput, FeedingUncheckedCreateWithoutDogInput> | FeedingCreateWithoutDogInput[] | FeedingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: FeedingCreateOrConnectWithoutDogInput | FeedingCreateOrConnectWithoutDogInput[]
+    upsert?: FeedingUpsertWithWhereUniqueWithoutDogInput | FeedingUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: FeedingCreateManyDogInputEnvelope
+    set?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    disconnect?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    delete?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    connect?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    update?: FeedingUpdateWithWhereUniqueWithoutDogInput | FeedingUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: FeedingUpdateManyWithWhereWithoutDogInput | FeedingUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: FeedingScalarWhereInput | FeedingScalarWhereInput[]
+  }
+
+  export type TrainingUpdateManyWithoutDogNestedInput = {
+    create?: XOR<TrainingCreateWithoutDogInput, TrainingUncheckedCreateWithoutDogInput> | TrainingCreateWithoutDogInput[] | TrainingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: TrainingCreateOrConnectWithoutDogInput | TrainingCreateOrConnectWithoutDogInput[]
+    upsert?: TrainingUpsertWithWhereUniqueWithoutDogInput | TrainingUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: TrainingCreateManyDogInputEnvelope
+    set?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    disconnect?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    delete?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    connect?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    update?: TrainingUpdateWithWhereUniqueWithoutDogInput | TrainingUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: TrainingUpdateManyWithWhereWithoutDogInput | TrainingUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: TrainingScalarWhereInput | TrainingScalarWhereInput[]
+  }
+
+  export type AssignmentUpdateManyWithoutDogNestedInput = {
+    create?: XOR<AssignmentCreateWithoutDogInput, AssignmentUncheckedCreateWithoutDogInput> | AssignmentCreateWithoutDogInput[] | AssignmentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: AssignmentCreateOrConnectWithoutDogInput | AssignmentCreateOrConnectWithoutDogInput[]
+    upsert?: AssignmentUpsertWithWhereUniqueWithoutDogInput | AssignmentUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: AssignmentCreateManyDogInputEnvelope
+    set?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    disconnect?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    delete?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    connect?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    update?: AssignmentUpdateWithWhereUniqueWithoutDogInput | AssignmentUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: AssignmentUpdateManyWithWhereWithoutDogInput | AssignmentUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: AssignmentScalarWhereInput | AssignmentScalarWhereInput[]
+  }
+
+  export type HistoryUpdateManyWithoutDogNestedInput = {
+    create?: XOR<HistoryCreateWithoutDogInput, HistoryUncheckedCreateWithoutDogInput> | HistoryCreateWithoutDogInput[] | HistoryUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: HistoryCreateOrConnectWithoutDogInput | HistoryCreateOrConnectWithoutDogInput[]
+    upsert?: HistoryUpsertWithWhereUniqueWithoutDogInput | HistoryUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: HistoryCreateManyDogInputEnvelope
+    set?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    disconnect?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    delete?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    connect?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    update?: HistoryUpdateWithWhereUniqueWithoutDogInput | HistoryUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: HistoryUpdateManyWithWhereWithoutDogInput | HistoryUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: HistoryScalarWhereInput | HistoryScalarWhereInput[]
+  }
+
+  export type IncidentUpdateManyWithoutDogNestedInput = {
+    create?: XOR<IncidentCreateWithoutDogInput, IncidentUncheckedCreateWithoutDogInput> | IncidentCreateWithoutDogInput[] | IncidentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: IncidentCreateOrConnectWithoutDogInput | IncidentCreateOrConnectWithoutDogInput[]
+    upsert?: IncidentUpsertWithWhereUniqueWithoutDogInput | IncidentUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: IncidentCreateManyDogInputEnvelope
+    set?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    disconnect?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    delete?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    connect?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    update?: IncidentUpdateWithWhereUniqueWithoutDogInput | IncidentUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: IncidentUpdateManyWithWhereWithoutDogInput | IncidentUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: IncidentScalarWhereInput | IncidentScalarWhereInput[]
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type VaccineUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<VaccineCreateWithoutDogInput, VaccineUncheckedCreateWithoutDogInput> | VaccineCreateWithoutDogInput[] | VaccineUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VaccineCreateOrConnectWithoutDogInput | VaccineCreateOrConnectWithoutDogInput[]
+    upsert?: VaccineUpsertWithWhereUniqueWithoutDogInput | VaccineUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: VaccineCreateManyDogInputEnvelope
+    set?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    disconnect?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    delete?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    connect?: VaccineWhereUniqueInput | VaccineWhereUniqueInput[]
+    update?: VaccineUpdateWithWhereUniqueWithoutDogInput | VaccineUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: VaccineUpdateManyWithWhereWithoutDogInput | VaccineUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: VaccineScalarWhereInput | VaccineScalarWhereInput[]
+  }
+
+  export type VetControlUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<VetControlCreateWithoutDogInput, VetControlUncheckedCreateWithoutDogInput> | VetControlCreateWithoutDogInput[] | VetControlUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: VetControlCreateOrConnectWithoutDogInput | VetControlCreateOrConnectWithoutDogInput[]
+    upsert?: VetControlUpsertWithWhereUniqueWithoutDogInput | VetControlUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: VetControlCreateManyDogInputEnvelope
+    set?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    disconnect?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    delete?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    connect?: VetControlWhereUniqueInput | VetControlWhereUniqueInput[]
+    update?: VetControlUpdateWithWhereUniqueWithoutDogInput | VetControlUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: VetControlUpdateManyWithWhereWithoutDogInput | VetControlUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: VetControlScalarWhereInput | VetControlScalarWhereInput[]
+  }
+
+  export type FeedingUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<FeedingCreateWithoutDogInput, FeedingUncheckedCreateWithoutDogInput> | FeedingCreateWithoutDogInput[] | FeedingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: FeedingCreateOrConnectWithoutDogInput | FeedingCreateOrConnectWithoutDogInput[]
+    upsert?: FeedingUpsertWithWhereUniqueWithoutDogInput | FeedingUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: FeedingCreateManyDogInputEnvelope
+    set?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    disconnect?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    delete?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    connect?: FeedingWhereUniqueInput | FeedingWhereUniqueInput[]
+    update?: FeedingUpdateWithWhereUniqueWithoutDogInput | FeedingUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: FeedingUpdateManyWithWhereWithoutDogInput | FeedingUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: FeedingScalarWhereInput | FeedingScalarWhereInput[]
+  }
+
+  export type TrainingUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<TrainingCreateWithoutDogInput, TrainingUncheckedCreateWithoutDogInput> | TrainingCreateWithoutDogInput[] | TrainingUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: TrainingCreateOrConnectWithoutDogInput | TrainingCreateOrConnectWithoutDogInput[]
+    upsert?: TrainingUpsertWithWhereUniqueWithoutDogInput | TrainingUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: TrainingCreateManyDogInputEnvelope
+    set?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    disconnect?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    delete?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    connect?: TrainingWhereUniqueInput | TrainingWhereUniqueInput[]
+    update?: TrainingUpdateWithWhereUniqueWithoutDogInput | TrainingUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: TrainingUpdateManyWithWhereWithoutDogInput | TrainingUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: TrainingScalarWhereInput | TrainingScalarWhereInput[]
+  }
+
+  export type AssignmentUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<AssignmentCreateWithoutDogInput, AssignmentUncheckedCreateWithoutDogInput> | AssignmentCreateWithoutDogInput[] | AssignmentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: AssignmentCreateOrConnectWithoutDogInput | AssignmentCreateOrConnectWithoutDogInput[]
+    upsert?: AssignmentUpsertWithWhereUniqueWithoutDogInput | AssignmentUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: AssignmentCreateManyDogInputEnvelope
+    set?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    disconnect?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    delete?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    connect?: AssignmentWhereUniqueInput | AssignmentWhereUniqueInput[]
+    update?: AssignmentUpdateWithWhereUniqueWithoutDogInput | AssignmentUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: AssignmentUpdateManyWithWhereWithoutDogInput | AssignmentUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: AssignmentScalarWhereInput | AssignmentScalarWhereInput[]
+  }
+
+  export type HistoryUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<HistoryCreateWithoutDogInput, HistoryUncheckedCreateWithoutDogInput> | HistoryCreateWithoutDogInput[] | HistoryUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: HistoryCreateOrConnectWithoutDogInput | HistoryCreateOrConnectWithoutDogInput[]
+    upsert?: HistoryUpsertWithWhereUniqueWithoutDogInput | HistoryUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: HistoryCreateManyDogInputEnvelope
+    set?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    disconnect?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    delete?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    connect?: HistoryWhereUniqueInput | HistoryWhereUniqueInput[]
+    update?: HistoryUpdateWithWhereUniqueWithoutDogInput | HistoryUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: HistoryUpdateManyWithWhereWithoutDogInput | HistoryUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: HistoryScalarWhereInput | HistoryScalarWhereInput[]
+  }
+
+  export type IncidentUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<IncidentCreateWithoutDogInput, IncidentUncheckedCreateWithoutDogInput> | IncidentCreateWithoutDogInput[] | IncidentUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: IncidentCreateOrConnectWithoutDogInput | IncidentCreateOrConnectWithoutDogInput[]
+    upsert?: IncidentUpsertWithWhereUniqueWithoutDogInput | IncidentUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: IncidentCreateManyDogInputEnvelope
+    set?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    disconnect?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    delete?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    connect?: IncidentWhereUniqueInput | IncidentWhereUniqueInput[]
+    update?: IncidentUpdateWithWhereUniqueWithoutDogInput | IncidentUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: IncidentUpdateManyWithWhereWithoutDogInput | IncidentUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: IncidentScalarWhereInput | IncidentScalarWhereInput[]
+  }
+
+  export type DogCreateNestedOneWithoutVaccinesInput = {
+    create?: XOR<DogCreateWithoutVaccinesInput, DogUncheckedCreateWithoutVaccinesInput>
+    connectOrCreate?: DogCreateOrConnectWithoutVaccinesInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutVaccinesNestedInput = {
+    create?: XOR<DogCreateWithoutVaccinesInput, DogUncheckedCreateWithoutVaccinesInput>
+    connectOrCreate?: DogCreateOrConnectWithoutVaccinesInput
+    upsert?: DogUpsertWithoutVaccinesInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutVaccinesInput, DogUpdateWithoutVaccinesInput>, DogUncheckedUpdateWithoutVaccinesInput>
+  }
+
+  export type DogCreateNestedOneWithoutVetControlsInput = {
+    create?: XOR<DogCreateWithoutVetControlsInput, DogUncheckedCreateWithoutVetControlsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutVetControlsInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutVetControlsNestedInput = {
+    create?: XOR<DogCreateWithoutVetControlsInput, DogUncheckedCreateWithoutVetControlsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutVetControlsInput
+    upsert?: DogUpsertWithoutVetControlsInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutVetControlsInput, DogUpdateWithoutVetControlsInput>, DogUncheckedUpdateWithoutVetControlsInput>
+  }
+
+  export type DogCreateNestedOneWithoutFeedingsInput = {
+    create?: XOR<DogCreateWithoutFeedingsInput, DogUncheckedCreateWithoutFeedingsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutFeedingsInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutFeedingsNestedInput = {
+    create?: XOR<DogCreateWithoutFeedingsInput, DogUncheckedCreateWithoutFeedingsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutFeedingsInput
+    upsert?: DogUpsertWithoutFeedingsInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutFeedingsInput, DogUpdateWithoutFeedingsInput>, DogUncheckedUpdateWithoutFeedingsInput>
+  }
+
+  export type DogCreateNestedOneWithoutTrainingsInput = {
+    create?: XOR<DogCreateWithoutTrainingsInput, DogUncheckedCreateWithoutTrainingsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutTrainingsInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutTrainingsNestedInput = {
+    create?: XOR<DogCreateWithoutTrainingsInput, DogUncheckedCreateWithoutTrainingsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutTrainingsInput
+    upsert?: DogUpsertWithoutTrainingsInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutTrainingsInput, DogUpdateWithoutTrainingsInput>, DogUncheckedUpdateWithoutTrainingsInput>
+  }
+
+  export type DogCreateNestedOneWithoutAssignmentsInput = {
+    create?: XOR<DogCreateWithoutAssignmentsInput, DogUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutAssignmentsInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutAssignmentsNestedInput = {
+    create?: XOR<DogCreateWithoutAssignmentsInput, DogUncheckedCreateWithoutAssignmentsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutAssignmentsInput
+    upsert?: DogUpsertWithoutAssignmentsInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutAssignmentsInput, DogUpdateWithoutAssignmentsInput>, DogUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type DogCreateNestedOneWithoutHistoryInput = {
+    create?: XOR<DogCreateWithoutHistoryInput, DogUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: DogCreateOrConnectWithoutHistoryInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutHistoryNestedInput = {
+    create?: XOR<DogCreateWithoutHistoryInput, DogUncheckedCreateWithoutHistoryInput>
+    connectOrCreate?: DogCreateOrConnectWithoutHistoryInput
+    upsert?: DogUpsertWithoutHistoryInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutHistoryInput, DogUpdateWithoutHistoryInput>, DogUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type DogCreateNestedOneWithoutIncidentsInput = {
+    create?: XOR<DogCreateWithoutIncidentsInput, DogUncheckedCreateWithoutIncidentsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutIncidentsInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type DogUpdateOneRequiredWithoutIncidentsNestedInput = {
+    create?: XOR<DogCreateWithoutIncidentsInput, DogUncheckedCreateWithoutIncidentsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutIncidentsInput
+    upsert?: DogUpsertWithoutIncidentsInput
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutIncidentsInput, DogUpdateWithoutIncidentsInput>, DogUncheckedUpdateWithoutIncidentsInput>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type VaccineCreateWithoutDogInput = {
+    vacuna: string
+    fecha_aplicacion: Date | string
+    proxima_dosis?: Date | string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VaccineUncheckedCreateWithoutDogInput = {
+    id?: number
+    vacuna: string
+    fecha_aplicacion: Date | string
+    proxima_dosis?: Date | string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VaccineCreateOrConnectWithoutDogInput = {
+    where: VaccineWhereUniqueInput
+    create: XOR<VaccineCreateWithoutDogInput, VaccineUncheckedCreateWithoutDogInput>
+  }
+
+  export type VaccineCreateManyDogInputEnvelope = {
+    data: VaccineCreateManyDogInput | VaccineCreateManyDogInput[]
+  }
+
+  export type VetControlCreateWithoutDogInput = {
+    fecha?: Date | string
+    motivo: string
+    diagnostico?: string | null
+    tratamiento?: string | null
+    medicacion?: string | null
+    dosis?: string | null
+    veterinario?: string | null
+    observaciones?: string | null
+  }
+
+  export type VetControlUncheckedCreateWithoutDogInput = {
+    id?: number
+    fecha?: Date | string
+    motivo: string
+    diagnostico?: string | null
+    tratamiento?: string | null
+    medicacion?: string | null
+    dosis?: string | null
+    veterinario?: string | null
+    observaciones?: string | null
+  }
+
+  export type VetControlCreateOrConnectWithoutDogInput = {
+    where: VetControlWhereUniqueInput
+    create: XOR<VetControlCreateWithoutDogInput, VetControlUncheckedCreateWithoutDogInput>
+  }
+
+  export type VetControlCreateManyDogInputEnvelope = {
+    data: VetControlCreateManyDogInput | VetControlCreateManyDogInput[]
+  }
+
+  export type FeedingCreateWithoutDogInput = {
+    tipo_alimento: string
+    marca?: string | null
+    cantidad_diaria?: string | null
+    horario?: string | null
+    suplementos?: string | null
+    fecha_inicio?: Date | string | null
+  }
+
+  export type FeedingUncheckedCreateWithoutDogInput = {
+    id?: number
+    tipo_alimento: string
+    marca?: string | null
+    cantidad_diaria?: string | null
+    horario?: string | null
+    suplementos?: string | null
+    fecha_inicio?: Date | string | null
+  }
+
+  export type FeedingCreateOrConnectWithoutDogInput = {
+    where: FeedingWhereUniqueInput
+    create: XOR<FeedingCreateWithoutDogInput, FeedingUncheckedCreateWithoutDogInput>
+  }
+
+  export type FeedingCreateManyDogInputEnvelope = {
+    data: FeedingCreateManyDogInput | FeedingCreateManyDogInput[]
+  }
+
+  export type TrainingCreateWithoutDogInput = {
+    tipo: string
+    nivel?: string | null
+    fecha: Date | string
+    instructor?: string | null
+    evaluacion?: string | null
+    observaciones?: string | null
+  }
+
+  export type TrainingUncheckedCreateWithoutDogInput = {
+    id?: number
+    tipo: string
+    nivel?: string | null
+    fecha: Date | string
+    instructor?: string | null
+    evaluacion?: string | null
+    observaciones?: string | null
+  }
+
+  export type TrainingCreateOrConnectWithoutDogInput = {
+    where: TrainingWhereUniqueInput
+    create: XOR<TrainingCreateWithoutDogInput, TrainingUncheckedCreateWithoutDogInput>
+  }
+
+  export type TrainingCreateManyDogInputEnvelope = {
+    data: TrainingCreateManyDogInput | TrainingCreateManyDogInput[]
+  }
+
+  export type AssignmentCreateWithoutDogInput = {
+    guia: string
+    fecha_inicio?: Date | string
+    fecha_fin?: Date | string | null
+    turno?: string | null
+    observaciones?: string | null
+  }
+
+  export type AssignmentUncheckedCreateWithoutDogInput = {
+    id?: number
+    guia: string
+    fecha_inicio?: Date | string
+    fecha_fin?: Date | string | null
+    turno?: string | null
+    observaciones?: string | null
+  }
+
+  export type AssignmentCreateOrConnectWithoutDogInput = {
+    where: AssignmentWhereUniqueInput
+    create: XOR<AssignmentCreateWithoutDogInput, AssignmentUncheckedCreateWithoutDogInput>
+  }
+
+  export type AssignmentCreateManyDogInputEnvelope = {
+    data: AssignmentCreateManyDogInput | AssignmentCreateManyDogInput[]
+  }
+
+  export type HistoryCreateWithoutDogInput = {
+    fecha?: Date | string
+    tipo_evento: string
+    descripcion: string
+    responsable?: string | null
+  }
+
+  export type HistoryUncheckedCreateWithoutDogInput = {
+    id?: number
+    fecha?: Date | string
+    tipo_evento: string
+    descripcion: string
+    responsable?: string | null
+  }
+
+  export type HistoryCreateOrConnectWithoutDogInput = {
+    where: HistoryWhereUniqueInput
+    create: XOR<HistoryCreateWithoutDogInput, HistoryUncheckedCreateWithoutDogInput>
+  }
+
+  export type HistoryCreateManyDogInputEnvelope = {
+    data: HistoryCreateManyDogInput | HistoryCreateManyDogInput[]
+  }
+
+  export type IncidentCreateWithoutDogInput = {
+    fecha?: Date | string
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas?: string | null
+  }
+
+  export type IncidentUncheckedCreateWithoutDogInput = {
+    id?: number
+    fecha?: Date | string
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas?: string | null
+  }
+
+  export type IncidentCreateOrConnectWithoutDogInput = {
+    where: IncidentWhereUniqueInput
+    create: XOR<IncidentCreateWithoutDogInput, IncidentUncheckedCreateWithoutDogInput>
+  }
+
+  export type IncidentCreateManyDogInputEnvelope = {
+    data: IncidentCreateManyDogInput | IncidentCreateManyDogInput[]
+  }
+
+  export type VaccineUpsertWithWhereUniqueWithoutDogInput = {
+    where: VaccineWhereUniqueInput
+    update: XOR<VaccineUpdateWithoutDogInput, VaccineUncheckedUpdateWithoutDogInput>
+    create: XOR<VaccineCreateWithoutDogInput, VaccineUncheckedCreateWithoutDogInput>
+  }
+
+  export type VaccineUpdateWithWhereUniqueWithoutDogInput = {
+    where: VaccineWhereUniqueInput
+    data: XOR<VaccineUpdateWithoutDogInput, VaccineUncheckedUpdateWithoutDogInput>
+  }
+
+  export type VaccineUpdateManyWithWhereWithoutDogInput = {
+    where: VaccineScalarWhereInput
+    data: XOR<VaccineUpdateManyMutationInput, VaccineUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type VaccineScalarWhereInput = {
+    AND?: VaccineScalarWhereInput | VaccineScalarWhereInput[]
+    OR?: VaccineScalarWhereInput[]
+    NOT?: VaccineScalarWhereInput | VaccineScalarWhereInput[]
+    id?: IntFilter<"Vaccine"> | number
+    id_perro?: IntFilter<"Vaccine"> | number
+    vacuna?: StringFilter<"Vaccine"> | string
+    fecha_aplicacion?: DateTimeFilter<"Vaccine"> | Date | string
+    proxima_dosis?: DateTimeNullableFilter<"Vaccine"> | Date | string | null
+    veterinario?: StringNullableFilter<"Vaccine"> | string | null
+    observaciones?: StringNullableFilter<"Vaccine"> | string | null
+    createdAt?: DateTimeFilter<"Vaccine"> | Date | string
+  }
+
+  export type VetControlUpsertWithWhereUniqueWithoutDogInput = {
+    where: VetControlWhereUniqueInput
+    update: XOR<VetControlUpdateWithoutDogInput, VetControlUncheckedUpdateWithoutDogInput>
+    create: XOR<VetControlCreateWithoutDogInput, VetControlUncheckedCreateWithoutDogInput>
+  }
+
+  export type VetControlUpdateWithWhereUniqueWithoutDogInput = {
+    where: VetControlWhereUniqueInput
+    data: XOR<VetControlUpdateWithoutDogInput, VetControlUncheckedUpdateWithoutDogInput>
+  }
+
+  export type VetControlUpdateManyWithWhereWithoutDogInput = {
+    where: VetControlScalarWhereInput
+    data: XOR<VetControlUpdateManyMutationInput, VetControlUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type VetControlScalarWhereInput = {
+    AND?: VetControlScalarWhereInput | VetControlScalarWhereInput[]
+    OR?: VetControlScalarWhereInput[]
+    NOT?: VetControlScalarWhereInput | VetControlScalarWhereInput[]
+    id?: IntFilter<"VetControl"> | number
+    id_perro?: IntFilter<"VetControl"> | number
+    fecha?: DateTimeFilter<"VetControl"> | Date | string
+    motivo?: StringFilter<"VetControl"> | string
+    diagnostico?: StringNullableFilter<"VetControl"> | string | null
+    tratamiento?: StringNullableFilter<"VetControl"> | string | null
+    medicacion?: StringNullableFilter<"VetControl"> | string | null
+    dosis?: StringNullableFilter<"VetControl"> | string | null
+    veterinario?: StringNullableFilter<"VetControl"> | string | null
+    observaciones?: StringNullableFilter<"VetControl"> | string | null
+  }
+
+  export type FeedingUpsertWithWhereUniqueWithoutDogInput = {
+    where: FeedingWhereUniqueInput
+    update: XOR<FeedingUpdateWithoutDogInput, FeedingUncheckedUpdateWithoutDogInput>
+    create: XOR<FeedingCreateWithoutDogInput, FeedingUncheckedCreateWithoutDogInput>
+  }
+
+  export type FeedingUpdateWithWhereUniqueWithoutDogInput = {
+    where: FeedingWhereUniqueInput
+    data: XOR<FeedingUpdateWithoutDogInput, FeedingUncheckedUpdateWithoutDogInput>
+  }
+
+  export type FeedingUpdateManyWithWhereWithoutDogInput = {
+    where: FeedingScalarWhereInput
+    data: XOR<FeedingUpdateManyMutationInput, FeedingUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type FeedingScalarWhereInput = {
+    AND?: FeedingScalarWhereInput | FeedingScalarWhereInput[]
+    OR?: FeedingScalarWhereInput[]
+    NOT?: FeedingScalarWhereInput | FeedingScalarWhereInput[]
+    id?: IntFilter<"Feeding"> | number
+    id_perro?: IntFilter<"Feeding"> | number
+    tipo_alimento?: StringFilter<"Feeding"> | string
+    marca?: StringNullableFilter<"Feeding"> | string | null
+    cantidad_diaria?: StringNullableFilter<"Feeding"> | string | null
+    horario?: StringNullableFilter<"Feeding"> | string | null
+    suplementos?: StringNullableFilter<"Feeding"> | string | null
+    fecha_inicio?: DateTimeNullableFilter<"Feeding"> | Date | string | null
+  }
+
+  export type TrainingUpsertWithWhereUniqueWithoutDogInput = {
+    where: TrainingWhereUniqueInput
+    update: XOR<TrainingUpdateWithoutDogInput, TrainingUncheckedUpdateWithoutDogInput>
+    create: XOR<TrainingCreateWithoutDogInput, TrainingUncheckedCreateWithoutDogInput>
+  }
+
+  export type TrainingUpdateWithWhereUniqueWithoutDogInput = {
+    where: TrainingWhereUniqueInput
+    data: XOR<TrainingUpdateWithoutDogInput, TrainingUncheckedUpdateWithoutDogInput>
+  }
+
+  export type TrainingUpdateManyWithWhereWithoutDogInput = {
+    where: TrainingScalarWhereInput
+    data: XOR<TrainingUpdateManyMutationInput, TrainingUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type TrainingScalarWhereInput = {
+    AND?: TrainingScalarWhereInput | TrainingScalarWhereInput[]
+    OR?: TrainingScalarWhereInput[]
+    NOT?: TrainingScalarWhereInput | TrainingScalarWhereInput[]
+    id?: IntFilter<"Training"> | number
+    id_perro?: IntFilter<"Training"> | number
+    tipo?: StringFilter<"Training"> | string
+    nivel?: StringNullableFilter<"Training"> | string | null
+    fecha?: DateTimeFilter<"Training"> | Date | string
+    instructor?: StringNullableFilter<"Training"> | string | null
+    evaluacion?: StringNullableFilter<"Training"> | string | null
+    observaciones?: StringNullableFilter<"Training"> | string | null
+  }
+
+  export type AssignmentUpsertWithWhereUniqueWithoutDogInput = {
+    where: AssignmentWhereUniqueInput
+    update: XOR<AssignmentUpdateWithoutDogInput, AssignmentUncheckedUpdateWithoutDogInput>
+    create: XOR<AssignmentCreateWithoutDogInput, AssignmentUncheckedCreateWithoutDogInput>
+  }
+
+  export type AssignmentUpdateWithWhereUniqueWithoutDogInput = {
+    where: AssignmentWhereUniqueInput
+    data: XOR<AssignmentUpdateWithoutDogInput, AssignmentUncheckedUpdateWithoutDogInput>
+  }
+
+  export type AssignmentUpdateManyWithWhereWithoutDogInput = {
+    where: AssignmentScalarWhereInput
+    data: XOR<AssignmentUpdateManyMutationInput, AssignmentUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type AssignmentScalarWhereInput = {
+    AND?: AssignmentScalarWhereInput | AssignmentScalarWhereInput[]
+    OR?: AssignmentScalarWhereInput[]
+    NOT?: AssignmentScalarWhereInput | AssignmentScalarWhereInput[]
+    id?: IntFilter<"Assignment"> | number
+    id_perro?: IntFilter<"Assignment"> | number
+    guia?: StringFilter<"Assignment"> | string
+    fecha_inicio?: DateTimeFilter<"Assignment"> | Date | string
+    fecha_fin?: DateTimeNullableFilter<"Assignment"> | Date | string | null
+    turno?: StringNullableFilter<"Assignment"> | string | null
+    observaciones?: StringNullableFilter<"Assignment"> | string | null
+  }
+
+  export type HistoryUpsertWithWhereUniqueWithoutDogInput = {
+    where: HistoryWhereUniqueInput
+    update: XOR<HistoryUpdateWithoutDogInput, HistoryUncheckedUpdateWithoutDogInput>
+    create: XOR<HistoryCreateWithoutDogInput, HistoryUncheckedCreateWithoutDogInput>
+  }
+
+  export type HistoryUpdateWithWhereUniqueWithoutDogInput = {
+    where: HistoryWhereUniqueInput
+    data: XOR<HistoryUpdateWithoutDogInput, HistoryUncheckedUpdateWithoutDogInput>
+  }
+
+  export type HistoryUpdateManyWithWhereWithoutDogInput = {
+    where: HistoryScalarWhereInput
+    data: XOR<HistoryUpdateManyMutationInput, HistoryUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type HistoryScalarWhereInput = {
+    AND?: HistoryScalarWhereInput | HistoryScalarWhereInput[]
+    OR?: HistoryScalarWhereInput[]
+    NOT?: HistoryScalarWhereInput | HistoryScalarWhereInput[]
+    id?: IntFilter<"History"> | number
+    id_perro?: IntFilter<"History"> | number
+    fecha?: DateTimeFilter<"History"> | Date | string
+    tipo_evento?: StringFilter<"History"> | string
+    descripcion?: StringFilter<"History"> | string
+    responsable?: StringNullableFilter<"History"> | string | null
+  }
+
+  export type IncidentUpsertWithWhereUniqueWithoutDogInput = {
+    where: IncidentWhereUniqueInput
+    update: XOR<IncidentUpdateWithoutDogInput, IncidentUncheckedUpdateWithoutDogInput>
+    create: XOR<IncidentCreateWithoutDogInput, IncidentUncheckedCreateWithoutDogInput>
+  }
+
+  export type IncidentUpdateWithWhereUniqueWithoutDogInput = {
+    where: IncidentWhereUniqueInput
+    data: XOR<IncidentUpdateWithoutDogInput, IncidentUncheckedUpdateWithoutDogInput>
+  }
+
+  export type IncidentUpdateManyWithWhereWithoutDogInput = {
+    where: IncidentScalarWhereInput
+    data: XOR<IncidentUpdateManyMutationInput, IncidentUncheckedUpdateManyWithoutDogInput>
+  }
+
+  export type IncidentScalarWhereInput = {
+    AND?: IncidentScalarWhereInput | IncidentScalarWhereInput[]
+    OR?: IncidentScalarWhereInput[]
+    NOT?: IncidentScalarWhereInput | IncidentScalarWhereInput[]
+    id?: IntFilter<"Incident"> | number
+    id_perro?: IntFilter<"Incident"> | number
+    fecha?: DateTimeFilter<"Incident"> | Date | string
+    tipo?: StringFilter<"Incident"> | string
+    descripcion?: StringFilter<"Incident"> | string
+    gravedad?: StringFilter<"Incident"> | string
+    acciones_tomadas?: StringNullableFilter<"Incident"> | string | null
+  }
+
+  export type DogCreateWithoutVaccinesInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutVaccinesInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutVaccinesInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutVaccinesInput, DogUncheckedCreateWithoutVaccinesInput>
+  }
+
+  export type DogUpsertWithoutVaccinesInput = {
+    update: XOR<DogUpdateWithoutVaccinesInput, DogUncheckedUpdateWithoutVaccinesInput>
+    create: XOR<DogCreateWithoutVaccinesInput, DogUncheckedCreateWithoutVaccinesInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutVaccinesInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutVaccinesInput, DogUncheckedUpdateWithoutVaccinesInput>
+  }
+
+  export type DogUpdateWithoutVaccinesInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutVaccinesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateWithoutVetControlsInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutVetControlsInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutVetControlsInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutVetControlsInput, DogUncheckedCreateWithoutVetControlsInput>
+  }
+
+  export type DogUpsertWithoutVetControlsInput = {
+    update: XOR<DogUpdateWithoutVetControlsInput, DogUncheckedUpdateWithoutVetControlsInput>
+    create: XOR<DogCreateWithoutVetControlsInput, DogUncheckedCreateWithoutVetControlsInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutVetControlsInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutVetControlsInput, DogUncheckedUpdateWithoutVetControlsInput>
+  }
+
+  export type DogUpdateWithoutVetControlsInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutVetControlsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateWithoutFeedingsInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutFeedingsInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutFeedingsInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutFeedingsInput, DogUncheckedCreateWithoutFeedingsInput>
+  }
+
+  export type DogUpsertWithoutFeedingsInput = {
+    update: XOR<DogUpdateWithoutFeedingsInput, DogUncheckedUpdateWithoutFeedingsInput>
+    create: XOR<DogCreateWithoutFeedingsInput, DogUncheckedCreateWithoutFeedingsInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutFeedingsInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutFeedingsInput, DogUncheckedUpdateWithoutFeedingsInput>
+  }
+
+  export type DogUpdateWithoutFeedingsInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutFeedingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateWithoutTrainingsInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutTrainingsInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutTrainingsInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutTrainingsInput, DogUncheckedCreateWithoutTrainingsInput>
+  }
+
+  export type DogUpsertWithoutTrainingsInput = {
+    update: XOR<DogUpdateWithoutTrainingsInput, DogUncheckedUpdateWithoutTrainingsInput>
+    create: XOR<DogCreateWithoutTrainingsInput, DogUncheckedCreateWithoutTrainingsInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutTrainingsInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutTrainingsInput, DogUncheckedUpdateWithoutTrainingsInput>
+  }
+
+  export type DogUpdateWithoutTrainingsInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutTrainingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateWithoutAssignmentsInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutAssignmentsInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutAssignmentsInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutAssignmentsInput, DogUncheckedCreateWithoutAssignmentsInput>
+  }
+
+  export type DogUpsertWithoutAssignmentsInput = {
+    update: XOR<DogUpdateWithoutAssignmentsInput, DogUncheckedUpdateWithoutAssignmentsInput>
+    create: XOR<DogCreateWithoutAssignmentsInput, DogUncheckedCreateWithoutAssignmentsInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutAssignmentsInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutAssignmentsInput, DogUncheckedUpdateWithoutAssignmentsInput>
+  }
+
+  export type DogUpdateWithoutAssignmentsInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutAssignmentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateWithoutHistoryInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    incidents?: IncidentCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutHistoryInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    incidents?: IncidentUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutHistoryInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutHistoryInput, DogUncheckedCreateWithoutHistoryInput>
+  }
+
+  export type DogUpsertWithoutHistoryInput = {
+    update: XOR<DogUpdateWithoutHistoryInput, DogUncheckedUpdateWithoutHistoryInput>
+    create: XOR<DogCreateWithoutHistoryInput, DogUncheckedCreateWithoutHistoryInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutHistoryInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutHistoryInput, DogUncheckedUpdateWithoutHistoryInput>
+  }
+
+  export type DogUpdateWithoutHistoryInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutHistoryInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    incidents?: IncidentUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogCreateWithoutIncidentsInput = {
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineCreateNestedManyWithoutDogInput
+    vetControls?: VetControlCreateNestedManyWithoutDogInput
+    feedings?: FeedingCreateNestedManyWithoutDogInput
+    trainings?: TrainingCreateNestedManyWithoutDogInput
+    assignments?: AssignmentCreateNestedManyWithoutDogInput
+    history?: HistoryCreateNestedManyWithoutDogInput
+  }
+
+  export type DogUncheckedCreateWithoutIncidentsInput = {
+    id?: number
+    nombre: string
+    raza?: string | null
+    sexo: string
+    fecha_nacimiento?: Date | string | null
+    color?: string | null
+    senas_particulares?: string | null
+    nro_chip?: string | null
+    estado?: string
+    fecha_ingreso?: Date | string | null
+    origen?: string | null
+    observaciones?: string | null
+    foto_url?: string | null
+    deletedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vaccines?: VaccineUncheckedCreateNestedManyWithoutDogInput
+    vetControls?: VetControlUncheckedCreateNestedManyWithoutDogInput
+    feedings?: FeedingUncheckedCreateNestedManyWithoutDogInput
+    trainings?: TrainingUncheckedCreateNestedManyWithoutDogInput
+    assignments?: AssignmentUncheckedCreateNestedManyWithoutDogInput
+    history?: HistoryUncheckedCreateNestedManyWithoutDogInput
+  }
+
+  export type DogCreateOrConnectWithoutIncidentsInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutIncidentsInput, DogUncheckedCreateWithoutIncidentsInput>
+  }
+
+  export type DogUpsertWithoutIncidentsInput = {
+    update: XOR<DogUpdateWithoutIncidentsInput, DogUncheckedUpdateWithoutIncidentsInput>
+    create: XOR<DogCreateWithoutIncidentsInput, DogUncheckedCreateWithoutIncidentsInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutIncidentsInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutIncidentsInput, DogUncheckedUpdateWithoutIncidentsInput>
+  }
+
+  export type DogUpdateWithoutIncidentsInput = {
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUpdateManyWithoutDogNestedInput
+    history?: HistoryUpdateManyWithoutDogNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutIncidentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nombre?: StringFieldUpdateOperationsInput | string
+    raza?: NullableStringFieldUpdateOperationsInput | string | null
+    sexo?: StringFieldUpdateOperationsInput | string
+    fecha_nacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    senas_particulares?: NullableStringFieldUpdateOperationsInput | string | null
+    nro_chip?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fecha_ingreso?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    origen?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    foto_url?: NullableStringFieldUpdateOperationsInput | string | null
+    deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vaccines?: VaccineUncheckedUpdateManyWithoutDogNestedInput
+    vetControls?: VetControlUncheckedUpdateManyWithoutDogNestedInput
+    feedings?: FeedingUncheckedUpdateManyWithoutDogNestedInput
+    trainings?: TrainingUncheckedUpdateManyWithoutDogNestedInput
+    assignments?: AssignmentUncheckedUpdateManyWithoutDogNestedInput
+    history?: HistoryUncheckedUpdateManyWithoutDogNestedInput
+  }
+
+  export type VaccineCreateManyDogInput = {
+    vacuna: string
+    fecha_aplicacion: Date | string
+    proxima_dosis?: Date | string | null
+    veterinario?: string | null
+    observaciones?: string | null
+    createdAt?: Date | string
+  }
+
+  export type VetControlCreateManyDogInput = {
+    fecha?: Date | string
+    motivo: string
+    diagnostico?: string | null
+    tratamiento?: string | null
+    medicacion?: string | null
+    dosis?: string | null
+    veterinario?: string | null
+    observaciones?: string | null
+  }
+
+  export type FeedingCreateManyDogInput = {
+    tipo_alimento: string
+    marca?: string | null
+    cantidad_diaria?: string | null
+    horario?: string | null
+    suplementos?: string | null
+    fecha_inicio?: Date | string | null
+  }
+
+  export type TrainingCreateManyDogInput = {
+    tipo: string
+    nivel?: string | null
+    fecha: Date | string
+    instructor?: string | null
+    evaluacion?: string | null
+    observaciones?: string | null
+  }
+
+  export type AssignmentCreateManyDogInput = {
+    guia: string
+    fecha_inicio?: Date | string
+    fecha_fin?: Date | string | null
+    turno?: string | null
+    observaciones?: string | null
+  }
+
+  export type HistoryCreateManyDogInput = {
+    fecha?: Date | string
+    tipo_evento: string
+    descripcion: string
+    responsable?: string | null
+  }
+
+  export type IncidentCreateManyDogInput = {
+    fecha?: Date | string
+    tipo: string
+    descripcion: string
+    gravedad: string
+    acciones_tomadas?: string | null
+  }
+
+  export type VaccineUpdateWithoutDogInput = {
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VaccineUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VaccineUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    vacuna?: StringFieldUpdateOperationsInput | string
+    fecha_aplicacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    proxima_dosis?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type VetControlUpdateWithoutDogInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VetControlUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type VetControlUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    motivo?: StringFieldUpdateOperationsInput | string
+    diagnostico?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicacion?: NullableStringFieldUpdateOperationsInput | string | null
+    dosis?: NullableStringFieldUpdateOperationsInput | string | null
+    veterinario?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FeedingUpdateWithoutDogInput = {
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FeedingUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type FeedingUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tipo_alimento?: StringFieldUpdateOperationsInput | string
+    marca?: NullableStringFieldUpdateOperationsInput | string | null
+    cantidad_diaria?: NullableStringFieldUpdateOperationsInput | string | null
+    horario?: NullableStringFieldUpdateOperationsInput | string | null
+    suplementos?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha_inicio?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type TrainingUpdateWithoutDogInput = {
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TrainingUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TrainingUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    nivel?: NullableStringFieldUpdateOperationsInput | string | null
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    instructor?: NullableStringFieldUpdateOperationsInput | string | null
+    evaluacion?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssignmentUpdateWithoutDogInput = {
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssignmentUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AssignmentUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    guia?: StringFieldUpdateOperationsInput | string
+    fecha_inicio?: DateTimeFieldUpdateOperationsInput | Date | string
+    fecha_fin?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    turno?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HistoryUpdateWithoutDogInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HistoryUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type HistoryUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo_evento?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    responsable?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IncidentUpdateWithoutDogInput = {
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IncidentUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type IncidentUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    tipo?: StringFieldUpdateOperationsInput | string
+    descripcion?: StringFieldUpdateOperationsInput | string
+    gravedad?: StringFieldUpdateOperationsInput | string
+    acciones_tomadas?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+
+
+  /**
+   * Batch Payload for updateMany & deleteMany & createMany
+   */
+
+  export type BatchPayload = {
+    count: number
+  }
+
+  /**
+   * DMMF
+   */
+  export const dmmf: runtime.BaseDMMF
+}

@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/sqlserver"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = "sqlserver://localhost:1433;database=k9;user=sa;password=1224;trustServerCertificate=true"
+}
+
+model Dog {
+  id                 Int       @id @default(autoincrement())
+  nombre             String
+  raza               String?
+  sexo               String
+  fecha_nacimiento   DateTime?
+  color              String?
+  senas_particulares String?
+  nro_chip           String?   @unique
+  estado             String    @default("activo")
+  fecha_ingreso      DateTime? @default(now())
+  origen             String?
+  observaciones      String?
+  foto_url           String?
+  deletedAt          DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  vaccines    Vaccine[]
+  vetControls VetControl[]
+  feedings    Feeding[]
+  trainings   Training[]
+  assignments Assignment[]
+  history     History[]
+  incidents   Incident[]
+}
+
+model Vaccine {
+  id               Int       @id @default(autoincrement())
+  id_perro         Int
+  vacuna           String
+  fecha_aplicacion DateTime
+  proxima_dosis    DateTime?
+  veterinario      String?
+  observaciones    String?
+  createdAt        DateTime  @default(now())
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model VetControl {
+  id            Int      @id @default(autoincrement())
+  id_perro      Int
+  fecha         DateTime @default(now())
+  motivo        String
+  diagnostico   String?
+  tratamiento   String?
+  medicacion    String?
+  dosis         String?
+  veterinario   String?
+  observaciones String?
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model Feeding {
+  id              Int       @id @default(autoincrement())
+  id_perro        Int
+  tipo_alimento   String
+  marca           String?
+  cantidad_diaria String?
+  horario         String?
+  suplementos     String?
+  fecha_inicio    DateTime?
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model Training {
+  id            Int      @id @default(autoincrement())
+  id_perro      Int
+  tipo          String
+  nivel         String?
+  fecha         DateTime
+  instructor    String?
+  evaluacion    String?
+  observaciones String?
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model Assignment {
+  id            Int       @id @default(autoincrement())
+  id_perro      Int
+  guia          String
+  fecha_inicio  DateTime  @default(now())
+  fecha_fin     DateTime?
+  turno         String?
+  observaciones String?
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model History {
+  id          Int      @id @default(autoincrement())
+  id_perro    Int
+  fecha       DateTime @default(now())
+  tipo_evento String
+  descripcion String
+  responsable String?
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model Incident {
+  id               Int      @id @default(autoincrement())
+  id_perro         Int
+  fecha            DateTime @default(now())
+  tipo             String
+  descripcion      String
+  gravedad         String
+  acciones_tomadas String?
+
+  dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  nombre   String
+  email    String @unique
+  password String
+  rol      String @default("guia")
+}
