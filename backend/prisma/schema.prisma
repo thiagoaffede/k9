@@ -131,4 +131,6 @@ model User {
   email    String @unique
   password String
   rol      String @default("guia") // ENUM: admin, veterinario, instructor, guia
+
+  @@map("User")
 }

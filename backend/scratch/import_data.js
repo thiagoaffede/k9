@@ -32,6 +32,7 @@ async function main() {
   // 2. Importar Usuarios
   console.log(`- Importando Usuarios (${data.users.length})...`);
   for (const user of data.users) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
     await prisma.user.upsert({
       where: { email: user.email },
       update: {},
@@ -39,7 +40,7 @@ async function main() {
         id: user.id,
         nombre: user.nombre,
         email: user.email,
-        password: user.password,
+        password: hashedPassword,
         rol: user.rol
       }
     });
