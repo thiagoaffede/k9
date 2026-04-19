@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import FichaTecnicaPDF from '../components/FichaTecnicaPDF';
 
 const DogProfile = () => {
   const { id } = useParams();
@@ -67,9 +68,9 @@ const DogProfile = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 print:m-0 print:p-0 print:w-full">
-      {/* HEADER PERFIL */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center justify-between print:shadow-none print:border-b-2">
+    <div className="max-w-6xl mx-auto space-y-6 print:m-0 print:p-0 print:w-full print:bg-white print:shadow-none">
+      {/* HEADER PERFIL - OCULTO EN IMPRESION */}
+      <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center justify-between print:hidden">
         <div className="flex items-center space-x-6">
           <img src={photoURL} alt={dog.nombre} className="w-32 h-32 rounded-full object-cover border-4 border-slate-50" />
           <div>
@@ -97,7 +98,7 @@ const DogProfile = () => {
       </div>
 
       {/* TABS NAVEGADOR (Ocualto al imprimir) */}
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden print:border-none print:shadow-none">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden print:hidden">
         <div className="flex border-b border-slate-200 print:hidden">
           <button onClick={() => setActiveTab('resumen')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'resumen' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Resumen</button>
           <button onClick={() => setActiveTab('sanidad')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'sanidad' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Sanidad</button>
@@ -320,7 +321,9 @@ const DogProfile = () => {
           )}
         </div>
       </div>
-
+      
+      {/* COMPONENTE EXCLUSIVO PARA IMPRESION (PDF) */}
+      <FichaTecnicaPDF dog={dog} />
     </div>
   );
 };

@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
 
       {/* SIDEBAR BARRAS LATERAL BLANCA */}
       <aside 
-        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] border-r border-slate-100 transform transition-transform duration-300 ease-out
+        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white flex flex-col shadow-[4px_0_24px_rgba(0,0,0,0.02)] border-r border-slate-100 transform transition-transform duration-300 ease-out print:hidden
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
       >
@@ -106,7 +106,7 @@ const Layout = ({ children }) => {
       {/* MAIN CONTENT AREA */}
       <div className="flex-1 flex flex-col min-w-0 h-screen relative">
         {/* MOBILE HEADER CON HAMBURGUESA BOLD */}
-        <header className="md:hidden bg-white/80 backdrop-blur-md border-b border-slate-100 text-slate-800 p-4 flex items-center justify-between shadow-sm shrink-0 z-30 sticky top-0">
+        <header className="md:hidden bg-white/80 backdrop-blur-md border-b border-slate-100 text-slate-800 p-4 flex items-center justify-between shadow-sm shrink-0 z-30 sticky top-0 print:hidden">
           <div className="flex items-center">
              <button onClick={() => setIsSidebarOpen(true)} className="mr-3 p-2 bg-slate-50 hover:bg-slate-100 rounded-xl transition-colors focus:outline-none">
                <Menu className="w-6 h-6 text-slate-600" />
@@ -119,8 +119,8 @@ const Layout = ({ children }) => {
         </header>
 
         {/* CONTENIDO SCROLLABLE (El Background real es #fafbfc) */}
-        <main className="flex-1 overflow-auto p-4 md:p-10 relative">
-          <div className="max-w-7xl mx-auto">
+        <main className="flex-1 overflow-auto p-4 md:p-10 relative print:p-0 print:overflow-visible">
+          <div className="max-w-7xl mx-auto print:max-w-none">
              {children}
           </div>
         </main>

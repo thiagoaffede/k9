@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://usr-geneva-absorption-casual.trycloudflare.com/api",
+  baseURL: "https://k9-emmo.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
