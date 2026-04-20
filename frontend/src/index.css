@@ -30,3 +30,30 @@ h1, h2, h3, h4, h5, h6, .outfit {
   backdrop-filter: blur(8px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
 }
+
+/* Print Optimization */
+@media print {
+  body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  .print\:block {
+    display: block !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 0;
+  }
+
+  /* Asegura que el contenedor de la ficha ocupe el ancho completo */
+  div {
+    overflow: visible !important;
+  }
+}

@@ -1,4 +1,8 @@
 const prisma = require('../config/db');
+const { PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+const s3Client = require('../config/s3');
+const path = require('path');
+const sharp = require('sharp');
 
 // Helper para crear historial automático
 const addHistoryLog = async (id_perro, tipo_evento, descripcion, responsable) => {
@@ -134,15 +138,47 @@ const uploadPhoto = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
     const id = parseInt(req.params.id);
-    const photoUrl = `/uploads/${req.file.filename}`;
     
+    // Procesar imagen con sharp: Redimensionar y convertir a WebP
+    const optimizedBuffer = await sharp(req.file.buffer)
+      .resize({ width: 1024, withoutEnlargement: true }) // Máximo 1024px de ancho
+      .webp({ quality: 80 }) // Convertir a WebP con calidad 80
+      .toBuffer();
+
+    const fileName = `dogs/${id}-${Date.now()}.webp`;
+    
+    const uploadParams = {
+      Bucket: process.env.S3_BUCKET,
+      Key: fileName,
+      Body: optimizedBuffer,
+      ContentType: 'image/webp',
+    };
+
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    const projectURL = process.env.S3_ENDPOINT.split('.storage')[0]; 
+    const photoUrl = `${projectURL}.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${fileName}`;
+    
+    const currentDog = await prisma.dog.findUnique({ where: { id } });
+    if (currentDog && currentDog.foto_url && currentDog.foto_url.includes(process.env.S3_BUCKET)) {
+      try {
+        const oldKey = currentDog.foto_url.split(`${process.env.S3_BUCKET}/`)[1];
+        await s3Client.send(new DeleteObjectCommand({
+          Bucket: process.env.S3_BUCKET,
+          Key: oldKey
+        }));
+      } catch (err) {
+        console.error("Error al borrar foto antigua:", err.message);
+      }
+    }
+
     await prisma.dog.update({
       where: { id },
       data: { foto_url: photoUrl }
     });
     
-    await addHistoryLog(id, 'FOTO', 'Foto de perfil actualizada', req.user.nombre);
-    res.json({ message: 'Photo uploaded', photoUrl });
+    await addHistoryLog(id, 'FOTO', 'Foto optimizada (WebP) subida a Supabase', req.user.nombre);
+    res.json({ message: 'Photo uploaded and optimized', photoUrl });
   } catch (error) {
     res.status(500).json({ message: 'Error', error: error.message });
   }
@@ -152,9 +188,34 @@ const uploadMedicalDoc = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file' });
     const id_perro = parseInt(req.params.id);
-    const docUrl = `/uploads/${req.file.filename}`;
-    // Archivos médicos los registramos directamente en el historial
-    await addHistoryLog(id_perro, 'DOCUMENTO', `Adjunto médico subido: ${docUrl}`, req.user.nombre);
+    
+    let bufferToUpload = req.file.buffer;
+    let contentType = req.file.mimetype;
+    let fileName = `docs/${id_perro}-${Date.now()}${path.extname(req.file.originalname)}`;
+
+    // Si es una imagen, la optimizamos
+    if (req.file.mimetype.startsWith('image/')) {
+      bufferToUpload = await sharp(req.file.buffer)
+        .resize({ width: 1200, withoutEnlargement: true })
+        .webp({ quality: 80 })
+        .toBuffer();
+      contentType = 'image/webp';
+      fileName = `docs/${id_perro}-${Date.now()}.webp`;
+    }
+    
+    const uploadParams = {
+      Bucket: process.env.S3_BUCKET,
+      Key: fileName,
+      Body: bufferToUpload,
+      ContentType: contentType,
+    };
+
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    const projectURL = process.env.S3_ENDPOINT.split('.storage')[0]; 
+    const docUrl = `${projectURL}.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${fileName}`;
+
+    await addHistoryLog(id_perro, 'DOCUMENTO', `Adjunto médico subido y optimizado: ${docUrl}`, req.user.nombre);
     res.json({ message: 'Documento subido', docUrl });
   } catch (error) {
     res.status(500).json({ message: 'Error', error: error.message });

@@ -12,10 +12,8 @@ const DogProfile = () => {
   const [dog, setDog] = useState(null);
   const [activeTab, setActiveTab] = useState('resumen');
   
-  // States para Formularios
-  const [showForm, setShowForm] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [editDogData, setEditDogData] = useState(null);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   const fetchDog = () => {
     api.get(`/dogs/${id}`).then(res => setDog(res.data)).catch(err => console.error(err));
@@ -27,7 +25,10 @@ const DogProfile = () => {
 
   if (!dog) return <div className="p-8">Cargando perfil...</div>;
 
-  const photoURL = dog.foto_url ? `${BASE_URL}${dog.foto_url}` : 'https://via.placeholder.com/150?text=No+Foto';
+  // Lógica mejorada para photoURL: soporta local (/uploads) y remoto (http...)
+  const photoURL = dog.foto_url 
+    ? (dog.foto_url.startsWith('http') ? dog.foto_url : `${BASE_URL}${dog.foto_url}`)
+    : 'https://via.placeholder.com/150?text=No+Foto';
 
   const handleDeleteDog = async () => {
     if (window.confirm('¿Eliminar registro de este perro? (Soft Delete)')) {
@@ -64,7 +65,49 @@ const DogProfile = () => {
   };
 
   const printRecord = () => {
-    window.print();
+    // Pequeño delay para asegurar que el navegador móvil procese el renderizado del componente oculto
+    setTimeout(() => {
+      window.print();
+    }, 500);
+  };
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formDataFile = new FormData();
+    formDataFile.append('photo', file);
+
+    setUploading(true);
+    try {
+      await api.post(`/dogs/${dog.id}/photo`, formDataFile, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      fetchDog();
+      setShowPhotoModal(false);
+    } catch (err) {
+      console.error(err);
+      alert('Error al subir la foto');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDeletePhoto = async () => {
+    if (window.confirm('¿Eliminar la foto de perfil?')) {
+      try {
+        // Podríamos tener un endpoint específico para borrar, 
+        // o simplemente mandar un update con foto_url null.
+        // En este caso, usaremos el mismo endpoint de update pero con foto_url: null si estuviera implementado,
+        // pero vamos a implementar una lógica simple en el backend si es necesario o enviar null.
+        await api.put(`/dogs/${dog.id}`, { foto_url: null });
+        fetchDog();
+        setShowPhotoModal(false);
+      } catch (err) {
+        console.error(err);
+        alert('Error al eliminar la foto');
+      }
+    }
   };
 
   return (
@@ -72,7 +115,12 @@ const DogProfile = () => {
       {/* HEADER PERFIL - OCULTO EN IMPRESION */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center justify-between print:hidden">
         <div className="flex items-center space-x-6">
-          <img src={photoURL} alt={dog.nombre} className="w-32 h-32 rounded-full object-cover border-4 border-slate-50" />
+          <div className="relative group cursor-pointer" onClick={() => setShowPhotoModal(true)}>
+            <img src={photoURL} alt={dog.nombre} className="w-32 h-32 rounded-full object-cover border-4 border-slate-50 hover:opacity-90 transition-opacity" />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+              <PlusCircle className="text-white w-8 h-8" />
+            </div>
+          </div>
           <div>
             <h1 className="text-3xl font-bold text-slate-900">{dog.nombre}</h1>
             <p className="text-slate-500 font-medium">{dog.raza} • {dog.sexo.toUpperCase()} • Chip: {dog.nro_chip || 'N/A'}</p>
@@ -333,6 +381,48 @@ const DogProfile = () => {
       
       {/* COMPONENTE EXCLUSIVO PARA IMPRESION (PDF) */}
       <FichaTecnicaPDF dog={dog} />
+
+      {/* MODAL DE GESTIÓN DE FOTO */}
+      {showPhotoModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="p-6 text-center border-b border-slate-100">
+              <h3 className="text-xl font-bold text-slate-800">Gestionar Foto de Perfil</h3>
+            </div>
+            
+            <div className="p-8 flex flex-col items-center space-y-6">
+              <img src={photoURL} alt="Preview" className="w-48 h-48 rounded-2xl object-cover shadow-lg border-4 border-slate-50" />
+              
+              <div className="grid grid-cols-1 w-full gap-3">
+                <button 
+                  onClick={() => document.getElementById('photoInput').click()} 
+                  disabled={uploading}
+                  className="flex items-center justify-center px-4 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md active:scale-95 disabled:opacity-50"
+                >
+                  {uploading ? 'Subiendo...' : 'Cambiar Foto'}
+                </button>
+                <input id="photoInput" type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+                
+                {dog.foto_url && (
+                  <button 
+                    onClick={handleDeletePhoto} 
+                    className="flex items-center justify-center px-4 py-3 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-100 transition-all active:scale-95"
+                  >
+                    Eliminar Foto
+                  </button>
+                )}
+                
+                <button 
+                  onClick={() => setShowPhotoModal(false)} 
+                  className="mt-2 px-4 py-3 text-slate-500 font-bold hover:text-slate-700 transition-colors"
+                >
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -3,7 +3,9 @@ import { Shield, Activity, Award, User, Calendar, MapPin, Hash, Info } from 'luc
 import { BASE_URL } from '../services/api';
 
 const FichaTecnicaPDF = ({ dog }) => {
-  const photoURL = dog.foto_url ? `${BASE_URL}${dog.foto_url}` : 'https://via.placeholder.com/150?text=No+Foto';
+  const photoURL = dog.foto_url 
+    ? (dog.foto_url.startsWith('http') ? dog.foto_url : `${BASE_URL}${dog.foto_url}`)
+    : 'https://via.placeholder.com/150?text=No+Foto';
   const today = new Date().toLocaleDateString();
 
   return (
