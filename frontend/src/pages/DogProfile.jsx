@@ -14,6 +14,9 @@ const DogProfile = () => {
   
   const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [editDogData, setEditDogData] = useState(null);
 
   const fetchDog = () => {
     api.get(`/dogs/${id}`).then(res => setDog(res.data)).catch(err => console.error(err));
