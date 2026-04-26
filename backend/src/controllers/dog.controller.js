@@ -227,16 +227,29 @@ const uploadMedicalDoc = async (req, res) => {
 const addAssignment = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
-    const data = req.body;
+    const { guia, turno, fecha_inicio, observaciones } = req.body;
+    
+    // Finalizar asignaciones anteriores activas
     await prisma.assignment.updateMany({
       where: { id_perro, fecha_fin: null },
       data: { fecha_fin: new Date() }
     });
-    const assignment = await prisma.assignment.create({ data: { ...data, id_perro } });
-    await addHistoryLog(id_perro, 'ASIGNACION', `Nueva asignación: Guía ${data.guia}`, req.user.nombre);
+
+    const assignment = await prisma.assignment.create({ 
+      data: { 
+        id_perro,
+        guia,
+        turno,
+        observaciones,
+        fecha_inicio: fecha_inicio ? new Date(fecha_inicio) : new Date() 
+      } 
+    });
+
+    await addHistoryLog(id_perro, 'ASIGNACION', `Nueva asignación: Guía ${guia}`, req.user.nombre);
     res.status(201).json(assignment);
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: error.message });
+    console.error("ERROR EN ADD_ASSIGNMENT:", error);
+    res.status(500).json({ message: 'Error al asignar guía', error: error.message });
   }
 };
 
