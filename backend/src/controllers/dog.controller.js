@@ -281,12 +281,27 @@ const addVetControl = async (req, res) => {
 const addFeeding = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
-    const fecha_inicio = req.body.fecha_inicio ? new Date(req.body.fecha_inicio) : new Date();
-    const feed = await prisma.feeding.create({ data: { ...req.body, fecha_inicio, id_perro } });
-    await addHistoryLog(id_perro, 'ALIMENTACION', `Dieta act.: ${req.body.tipo_alimento}`, req.user.nombre);
+    const { tipo_alimento, marca, cantidad_diaria, horario, suplementos, cambios_dieta, observaciones, fecha_inicio } = req.body;
+    
+    const feed = await prisma.feeding.create({ 
+      data: { 
+        id_perro,
+        tipo_alimento, 
+        marca, 
+        cantidad_diaria, 
+        horario, 
+        suplementos, 
+        cambios_dieta, 
+        observaciones,
+        fecha_inicio: fecha_inicio ? new Date(fecha_inicio) : new Date() 
+      } 
+    });
+
+    await addHistoryLog(id_perro, 'ALIMENTACION', `Dieta act.: ${tipo_alimento}`, req.user.nombre);
     res.status(201).json(feed);
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: error.message });
+    console.error("ERROR EN ADD_FEEDING:", error);
+    res.status(500).json({ message: 'Error al registrar alimentación', error: error.message });
   }
 };
 
