@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api, { BASE_URL } from '../services/api';
-import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit } from 'lucide-react';
+import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit, User, Award, MapPin } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import FichaTecnicaPDF from '../components/FichaTecnicaPDF';
 
