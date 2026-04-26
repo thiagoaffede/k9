@@ -153,6 +153,7 @@ const DogProfile = () => {
         <div className="flex border-b border-slate-200 print:hidden">
           <button onClick={() => setActiveTab('resumen')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'resumen' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Resumen</button>
           <button onClick={() => setActiveTab('sanidad')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'sanidad' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Sanidad</button>
+          <button onClick={() => setActiveTab('alimentacion')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'alimentacion' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Alimentación</button>
           <button onClick={() => setActiveTab('entrenamiento')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'entrenamiento' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Operativo</button>
           <button onClick={() => setActiveTab('historial')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'historial' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Historial Completo</button>
         </div>
@@ -307,6 +308,115 @@ const DogProfile = () => {
                   ) : <p className="text-slate-500 text-sm">No hay controles registrados.</p>}
                 </div>
              </div>
+          )}
+
+          {/* TAB: ALIMENTACIÓN */}
+          {activeTab === 'alimentacion' && (
+            <div className="space-y-8">
+              <div>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-bold flex items-center"><Activity className="w-5 h-5 mr-2 text-orange-500"/> Plan de Alimentación</h3>
+                  {(user?.rol === 'admin' || user?.rol === 'veterinario' || user?.rol === 'guia') && (
+                    <button onClick={() => { setShowForm(showForm === 'feed' ? false : 'feed'); setFormData({}); }} className="text-sm text-blue-600 flex items-center">
+                      <PlusCircle className="w-4 h-4 mr-1"/> Registrar Cambio/Dieta
+                    </button>
+                  )}
+                </div>
+
+                {showForm === 'feed' && (
+                  <form onSubmit={e => handleEntitySubmit(e, 'feedings')} className="bg-white p-6 border rounded-xl shadow-sm mb-6 space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Tipo de Alimento</label>
+                        <input required placeholder="Ej: Balanceado, Barf, etc." className="w-full border rounded p-2 text-sm mt-1" value={formData.tipo_alimento || ''} onChange={e => setFormData({ ...formData, tipo_alimento: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Marca</label>
+                        <input placeholder="Marca del alimento" className="w-full border rounded p-2 text-sm mt-1" value={formData.marca || ''} onChange={e => setFormData({ ...formData, marca: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Cantidad Diaria</label>
+                        <input placeholder="Ej: 500g, 2 tazas" className="w-full border rounded p-2 text-sm mt-1" value={formData.cantidad_diaria || ''} onChange={e => setFormData({ ...formData, cantidad_diaria: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Horarios</label>
+                        <input placeholder="Ej: 08:00, 20:00" className="w-full border rounded p-2 text-sm mt-1" value={formData.horario || ''} onChange={e => setFormData({ ...formData, horario: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Suplementos</label>
+                        <input placeholder="Vitaminas, aceites, etc." className="w-full border rounded p-2 text-sm mt-1" value={formData.suplementos || ''} onChange={e => setFormData({ ...formData, suplementos: e.target.value })} />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Fecha Inicio</label>
+                        <input type="date" className="w-full border rounded p-2 text-sm mt-1" value={formData.fecha_inicio || ''} onChange={e => setFormData({ ...formData, fecha_inicio: e.target.value })} />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase">Cambios de Dieta</label>
+                        <textarea placeholder="Detalle si hay una transición o cambio planeado" className="w-full border rounded p-2 text-sm mt-1" rows="2" value={formData.cambios_dieta || ''} onChange={e => setFormData({ ...formData, cambios_dieta: e.target.value })} />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="text-xs font-bold text-slate-500 uppercase">Observaciones</label>
+                        <textarea placeholder="Cualquier detalle adicional" className="w-full border rounded p-2 text-sm mt-1" rows="2" value={formData.observaciones || ''} onChange={e => setFormData({ ...formData, observaciones: e.target.value })} />
+                      </div>
+                    </div>
+                    <div className="flex justify-end space-x-2 pt-2">
+                      <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                      <button type="submit" className="bg-orange-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-orange-700 transition-colors">Guardar Alimentación</button>
+                    </div>
+                  </form>
+                )}
+
+                {dog.feedings?.length > 0 ? (
+                  <div className="space-y-4">
+                    {dog.feedings.map((f, idx) => (
+                      <div key={f.id} className={`p-5 bg-white border rounded-xl shadow-sm ${idx === 0 ? 'border-orange-200 ring-1 ring-orange-100' : 'border-slate-200'}`}>
+                        <div className="flex justify-between items-start mb-3">
+                          <div>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{f.fecha_inicio ? new Date(f.fecha_inicio).toLocaleDateString() : 'S/F'}</span>
+                            <h4 className="text-lg font-bold text-slate-800">{f.tipo_alimento} - <span className="text-slate-500">{f.marca || 'S/M'}</span></h4>
+                          </div>
+                          {idx === 0 && <span className="bg-orange-100 text-orange-700 text-[10px] font-black px-2 py-1 rounded-full uppercase">Dieta Actual</span>}
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-3">
+                          <div className="bg-slate-50 p-2 rounded">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase">Cantidad</span>
+                            <p className="font-semibold">{f.cantidad_diaria || 'N/R'}</p>
+                          </div>
+                          <div className="bg-slate-50 p-2 rounded">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase">Horarios</span>
+                            <p className="font-semibold">{f.horario || 'N/R'}</p>
+                          </div>
+                          <div className="bg-slate-50 p-2 rounded">
+                            <span className="block text-[10px] font-bold text-slate-400 uppercase">Suplementos</span>
+                            <p className="font-semibold">{f.suplementos || 'Ninguno'}</p>
+                          </div>
+                        </div>
+
+                        {(f.cambios_dieta || f.observaciones) && (
+                          <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
+                            {f.cambios_dieta && (
+                              <div>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Cambios de Dieta</span>
+                                <p className="text-sm text-slate-600 italic">{f.cambios_dieta}</p>
+                              </div>
+                            )}
+                            {f.observaciones && (
+                              <div>
+                                <span className="text-[10px] font-bold text-slate-400 uppercase">Observaciones</span>
+                                <p className="text-sm text-slate-600">{f.observaciones}</p>
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-slate-500 text-sm italic p-4 bg-white border border-dashed rounded-lg text-center">No hay registros de alimentación para este perro.</p>
+                )}
+              </div>
+            </div>
           )}
 
           {/* TAB: Entrenamiento y Operativo */}

@@ -93,6 +93,30 @@ const FichaTecnicaPDF = ({ dog }) => {
             </div>
           </section>
 
+          {/* SECCIÓN ALIMENTACIÓN */}
+          <section>
+            <h3 className="flex items-center text-sm font-black uppercase tracking-widest text-slate-900 mb-4 border-l-4 border-orange-500 pl-3">
+              <Activity className="w-4 h-4 mr-2 text-orange-500" /> Plan de Alimentación
+            </h3>
+            {dog.feedings?.length > 0 ? (
+              <div className="p-3 bg-orange-50/50 rounded-lg border border-orange-100 text-xs">
+                <div className="flex justify-between font-bold mb-2">
+                  <span className="text-orange-900 uppercase">{dog.feedings[0].tipo_alimento} ({dog.feedings[0].marca || 'S/M'})</span>
+                  <span className="text-orange-700">{dog.feedings[0].cantidad_diaria}</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-[10px]">
+                  <p><span className="font-bold text-orange-800 uppercase">Horarios:</span> {dog.feedings[0].horario || 'N/R'}</p>
+                  <p><span className="font-bold text-orange-800 uppercase">Suplementos:</span> {dog.feedings[0].suplementos || 'Ninguno'}</p>
+                </div>
+                {dog.feedings[0].observaciones && (
+                  <p className="mt-2 pt-2 border-t border-orange-100 italic text-slate-600">{dog.feedings[0].observaciones}</p>
+                )}
+              </div>
+            ) : (
+              <p className="text-slate-400 text-xs italic">Sin plan de alimentación registrado.</p>
+            )}
+          </section>
+
           {/* ASIGNACIÓN ACTUAL */}
           <section>
             <h3 className="flex items-center text-sm font-black uppercase tracking-widest text-slate-900 mb-4 border-l-4 border-blue-500 pl-3">

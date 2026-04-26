@@ -72,6 +72,8 @@ model Feeding {
   cantidad_diaria String?
   horario         String?
   suplementos     String?
+  cambios_dieta   String?
+  observaciones   String?
   fecha_inicio    DateTime?
 
   dog Dog @relation(fields: [id_perro], references: [id], onDelete: Cascade)
