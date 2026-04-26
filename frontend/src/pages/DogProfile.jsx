@@ -17,6 +17,11 @@ const DogProfile = () => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({});
   const [editDogData, setEditDogData] = useState(null);
+  const [usersList, setUsersList] = useState([]);
+
+  const fetchUsers = () => {
+    api.get('/users').then(res => setUsersList(res.data)).catch(err => console.error(err));
+  };
 
   const fetchDog = () => {
     api.get(`/dogs/${id}`).then(res => setDog(res.data)).catch(err => console.error(err));
@@ -24,6 +29,7 @@ const DogProfile = () => {
 
   useEffect(() => {
     fetchDog();
+    if (user?.rol === 'admin') fetchUsers();
   }, [id]);
 
   if (!dog) return <div className="p-8">Cargando perfil...</div>;
@@ -155,7 +161,8 @@ const DogProfile = () => {
           <button onClick={() => setActiveTab('sanidad')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'sanidad' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Sanidad</button>
           <button onClick={() => setActiveTab('alimentacion')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'alimentacion' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Alimentación</button>
           <button onClick={() => setActiveTab('entrenamiento')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'entrenamiento' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Operativo</button>
-          <button onClick={() => setActiveTab('historial')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'historial' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Historial Completo</button>
+          <button onClick={() => setActiveTab('incidentes')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'incidentes' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Incidentes</button>
+          <button onClick={() => setActiveTab('historial')} className={`flex-1 py-4 font-medium text-sm transition-colors ${activeTab === 'historial' ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-500'}`}>Auditoría</button>
         </div>
         
         {/* CONTENIDO TABS */}
@@ -339,29 +346,36 @@ const DogProfile = () => {
                         <input placeholder="Ej: 500g, 2 tazas" className="w-full border rounded p-2 text-sm mt-1" value={formData.cantidad_diaria || ''} onChange={e => setFormData({ ...formData, cantidad_diaria: e.target.value })} />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">Horarios</label>
-                        <input placeholder="Ej: 08:00, 20:00" className="w-full border rounded p-2 text-sm mt-1" value={formData.horario || ''} onChange={e => setFormData({ ...formData, horario: e.target.value })} />
+                        <label className="text-xs font-bold text-slate-500 uppercase">Horario / Turno</label>
+                        <select className="w-full border rounded p-2 text-sm mt-1" value={formData.horario || ''} onChange={e => setFormData({ ...formData, horario: e.target.value })}>
+                          <option value="">Seleccionar horario...</option>
+                          <option value="Mañana (08:00)">Mañana (08:00)</option>
+                          <option value="Mediodía (12:00)">Mediodía (12:00)</option>
+                          <option value="Tarde (16:00)">Tarde (16:00)</option>
+                          <option value="Noche (20:00)">Noche (20:00)</option>
+                          <option value="Refuerzo / Extra">Refuerzo / Extra</option>
+                        </select>
                       </div>
                       <div>
                         <label className="text-xs font-bold text-slate-500 uppercase">Suplementos</label>
                         <input placeholder="Vitaminas, aceites, etc." className="w-full border rounded p-2 text-sm mt-1" value={formData.suplementos || ''} onChange={e => setFormData({ ...formData, suplementos: e.target.value })} />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-slate-500 uppercase">Fecha Inicio</label>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Fecha Registro</label>
                         <input type="date" className="w-full border rounded p-2 text-sm mt-1" value={formData.fecha_inicio || ''} onChange={e => setFormData({ ...formData, fecha_inicio: e.target.value })} />
                       </div>
                       <div className="md:col-span-2">
-                        <label className="text-xs font-bold text-slate-500 uppercase">Cambios de Dieta</label>
-                        <textarea placeholder="Detalle si hay una transición o cambio planeado" className="w-full border rounded p-2 text-sm mt-1" rows="2" value={formData.cambios_dieta || ''} onChange={e => setFormData({ ...formData, cambios_dieta: e.target.value })} />
+                        <label className="text-xs font-bold text-slate-500 uppercase">Cambios de Dieta / Notas de Ingesta</label>
+                        <textarea placeholder="Detalle si hubo algún cambio o comportamiento especial al comer" className="w-full border rounded p-2 text-sm mt-1" rows="2" value={formData.cambios_dieta || ''} onChange={e => setFormData({ ...formData, cambios_dieta: e.target.value })} />
                       </div>
                       <div className="md:col-span-2">
-                        <label className="text-xs font-bold text-slate-500 uppercase">Observaciones</label>
-                        <textarea placeholder="Cualquier detalle adicional" className="w-full border rounded p-2 text-sm mt-1" rows="2" value={formData.observaciones || ''} onChange={e => setFormData({ ...formData, observaciones: e.target.value })} />
+                        <label className="text-xs font-bold text-slate-500 uppercase">Observación</label>
+                        <textarea placeholder="Ej: Comió todo, dejó la mitad, etc." className="w-full border rounded p-2 text-sm mt-1" rows="2" value={formData.observaciones || ''} onChange={e => setFormData({ ...formData, observaciones: e.target.value })} />
                       </div>
                     </div>
                     <div className="flex justify-end space-x-2 pt-2">
                       <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
-                      <button type="submit" className="bg-orange-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-orange-700 transition-colors">Guardar Alimentación</button>
+                      <button type="submit" className="bg-orange-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-orange-700 transition-colors">Guardar Registro</button>
                     </div>
                   </form>
                 )}
@@ -375,7 +389,14 @@ const DogProfile = () => {
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{f.fecha_inicio ? new Date(f.fecha_inicio).toLocaleDateString() : 'S/F'}</span>
                             <h4 className="text-lg font-bold text-slate-800">{f.tipo_alimento} - <span className="text-slate-500">{f.marca || 'S/M'}</span></h4>
                           </div>
-                          {idx === 0 && <span className="bg-orange-100 text-orange-700 text-[10px] font-black px-2 py-1 rounded-full uppercase">Dieta Actual</span>}
+                          <div className="flex space-x-2">
+                            {idx === 0 && <span className="bg-orange-100 text-orange-700 text-[10px] font-black px-2 py-1 rounded-full uppercase">Último Registro</span>}
+                            {(user?.rol === 'admin' || user?.rol === 'veterinario') && (
+                              <button onClick={() => deleteSubEntity(`feedings/${f.id}`)} className="text-red-400 hover:text-red-600 transition-colors">
+                                <Trash2 className="w-4 h-4"/>
+                              </button>
+                            )}
+                          </div>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-3">
@@ -454,16 +475,167 @@ const DogProfile = () => {
                 
                 {/* Asignaciones de Guia */}
                 <div>
-                  <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-bold flex items-center">Historial de Guías Asignados</h3>
-                  </div>
-                  {dog.assignments?.length > 0 ? (
-                    <ul className="space-y-3">
-                       {dog.assignments.map(a => <li key={a.id} className="p-3 bg-white border border-slate-200 rounded text-sm">
-                          <strong>{a.guia}</strong> | Desde: {new Date(a.fecha_inicio).toLocaleDateString()} {a.fecha_fin ? `hasta ${new Date(a.fecha_fin).toLocaleDateString()}` : '(Activa)'}
-                       </li>)}
-                    </ul>
-                  ) : <p className="text-slate-500 text-sm">Perro sin asignaciones registradas.</p>}
+                   <div className="flex justify-between items-center mb-4">
+                     <h3 className="text-lg font-bold flex items-center"><User className="w-5 h-5 mr-2 text-blue-500"/> Gestión de Guías</h3>
+                     {user?.rol === 'admin' && <button onClick={() => { setShowForm(showForm==='assign' ? false : 'assign'); setFormData({}); }} className="text-sm text-blue-600 flex"><PlusCircle className="w-4 h-4 mr-1"/> Nueva Asignación</button>}
+                   </div>
+
+                   {showForm === 'assign' && (
+                     <form onSubmit={e => handleEntitySubmit(e, 'assignments')} className="bg-white p-4 border rounded mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                        <div className="md:col-span-1">
+                          <label className="text-xs font-bold text-slate-500 uppercase">Seleccionar Guía</label>
+                          <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.guia || ''} onChange={e => setFormData({ ...formData, guia: e.target.value })}>
+                            <option value="">Seleccionar...</option>
+                            {usersList.filter(u => u.rol === 'guia' || u.rol === 'admin').map(u => (
+                              <option key={u.id} value={u.nombre}>{u.nombre}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-slate-500 uppercase">Turno</label>
+                          <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.turno || ''} onChange={e => setFormData({ ...formData, turno: e.target.value })}>
+                             <option value="">Seleccionar turno...</option>
+                             <option value="Mañana">Mañana</option>
+                             <option value="Tarde">Tarde</option>
+                             <option value="Noche">Noche</option>
+                             <option value="Rotativo">Rotativo</option>
+                             <option value="24x48">24x48</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-slate-500 uppercase">Fecha Asignación</label>
+                          <input type="date" className="w-full border rounded p-2 text-sm mt-1" value={formData.fecha_inicio || ''} onChange={e => setFormData({ ...formData, fecha_inicio: e.target.value })} />
+                        </div>
+                        <div className="md:col-span-3">
+                          <label className="text-xs font-bold text-slate-500 uppercase">Observación</label>
+                          <input placeholder="Motivo de asignación o notas" className="w-full border rounded p-2 text-sm mt-1" value={formData.observaciones || ''} onChange={e => setFormData({ ...formData, observaciones: e.target.value })} />
+                        </div>
+                        <div className="md:col-span-3 flex justify-end space-x-2 mt-2">
+                          <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                          <button type="submit" className="bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold shadow-md hover:bg-blue-700 transition-all">Confirmar Nueva Asignación</button>
+                        </div>
+                     </form>
+                   )}
+
+                   {dog.assignments?.length > 0 ? (
+                    <div className="relative space-y-4 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-slate-200">
+                       {dog.assignments.map((a, idx) => (
+                         <div key={a.id} className="relative flex items-center group">
+                            <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 z-10 shadow-sm ${idx === 0 ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-400'}`}>
+                               <User className="w-4 h-4"/>
+                            </div>
+                            <div className={`ml-4 flex-1 p-4 rounded-xl border transition-all ${idx === 0 ? 'bg-blue-50 border-blue-100 shadow-sm' : 'bg-white border-slate-100'}`}>
+                               <div className="flex justify-between items-start">
+                                  <div>
+                                     <div className="flex items-center space-x-2">
+                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${idx === 0 ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
+                                           {idx === 0 ? 'Actual' : 'Anterior'}
+                                        </span>
+                                        <span className="text-xs text-slate-400 font-bold">{new Date(a.fecha_inicio).toLocaleDateString()} {a.fecha_fin ? `al ${new Date(a.fecha_fin).toLocaleDateString()}` : ''}</span>
+                                     </div>
+                                     <h4 className="text-lg font-bold text-slate-800 mt-1">{a.guia}</h4>
+                                     <p className="text-sm font-medium text-slate-500">Turno: <span className="text-slate-700 font-bold">{a.turno || 'N/R'}</span></p>
+                                     {a.observaciones && <p className="text-xs text-slate-400 italic mt-2 border-t pt-2">"{a.observaciones}"</p>}
+                                  </div>
+                                  {user?.rol === 'admin' && (
+                                     <button onClick={() => deleteSubEntity(`assignments/${a.id}`)} className="text-slate-300 hover:text-red-500 transition-colors p-2">
+                                        <Trash2 className="w-4 h-4"/>
+                                     </button>
+                                  )}
+                               </div>
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                  ) : <p className="p-8 text-center text-slate-500 italic bg-white border border-dashed rounded-xl">No hay historial de asignaciones registrado.</p>}
+                </div>
+             </div>
+          )}
+
+          {/* TAB: INCIDENTES / EVENTOS */}
+          {activeTab === 'incidentes' && (
+             <div className="space-y-8">
+                <div>
+                   <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-lg font-bold flex items-center text-red-600"><Activity className="w-5 h-5 mr-2"/> Registro de Incidentes y Eventos</h3>
+                      <button onClick={() => { setShowForm(showForm==='incident' ? false : 'incident'); setFormData({ gravedad: 'baja' }); }} className="text-sm text-red-600 flex font-bold"><PlusCircle className="w-4 h-4 mr-1"/> Reportar Incidente</button>
+                   </div>
+
+                   {showForm === 'incident' && (
+                     <form onSubmit={e => handleEntitySubmit(e, 'incidents')} className="bg-white p-6 border-2 border-red-100 rounded-2xl shadow-sm mb-6 space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                           <div>
+                              <label className="text-xs font-bold text-slate-500 uppercase">Tipo de Incidente</label>
+                              <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.tipo || ''} onChange={e => setFormData({ ...formData, tipo: e.target.value })}>
+                                 <option value="">Seleccionar tipo...</option>
+                                 <option value="Mordidas">Mordidas</option>
+                                 <option value="Enfermedades importantes">Enfermedades importantes</option>
+                                 <option value="Problemas de conducta">Problemas de conducta</option>
+                                 <option value="Traslados">Traslados</option>
+                                 <option value="Fallecimiento">Fallecimiento</option>
+                                 <option value="Otro">Otro incidente</option>
+                              </select>
+                           </div>
+                           <div>
+                              <label className="text-xs font-bold text-slate-500 uppercase">Gravedad</label>
+                              <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.gravedad || 'baja'} onChange={e => setFormData({ ...formData, gravedad: e.target.value })}>
+                                 <option value="baja">Baja (Preventivo)</option>
+                                 <option value="media">Media (Requiere atención)</option>
+                                 <option value="alta">Alta (Crítico / Urgente)</option>
+                              </select>
+                           </div>
+                           <div>
+                              <label className="text-xs font-bold text-slate-500 uppercase">Fecha del Evento</label>
+                              <input type="date" className="w-full border rounded p-2 text-sm mt-1" value={formData.fecha || ''} onChange={e => setFormData({ ...formData, fecha: e.target.value })} />
+                           </div>
+                           <div className="md:col-span-3">
+                              <label className="text-xs font-bold text-slate-500 uppercase">Descripción detallada</label>
+                              <textarea required placeholder="Describa lo sucedido con el mayor detalle posible..." className="w-full border rounded p-2 text-sm mt-1" rows="3" value={formData.descripcion || ''} onChange={e => setFormData({ ...formData, descripcion: e.target.value })} />
+                           </div>
+                           <div className="md:col-span-3">
+                              <label className="text-xs font-bold text-slate-500 uppercase">Acciones Tomadas</label>
+                              <input placeholder="Medidas correctivas, atención médica, sanciones, etc." className="w-full border rounded p-2 text-sm mt-1" value={formData.acciones_tomadas || ''} onChange={e => setFormData({ ...formData, acciones_tomadas: e.target.value })} />
+                           </div>
+                        </div>
+                        <div className="flex justify-end space-x-2 pt-2">
+                           <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                           <button type="submit" className="bg-red-600 text-white px-6 py-2 rounded-lg text-sm font-black shadow-md hover:bg-red-700 transition-all uppercase">Registrar Evento Crítico</button>
+                        </div>
+                     </form>
+                   )}
+
+                   {dog.incidents?.length > 0 ? (
+                    <div className="space-y-4">
+                       {dog.incidents.map(i => (
+                         <div key={i.id} className={`p-5 bg-white border rounded-2xl shadow-sm relative overflow-hidden group border-l-8 ${i.gravedad === 'alta' ? 'border-l-red-600' : i.gravedad === 'media' ? 'border-l-amber-500' : 'border-l-blue-400'}`}>
+                            <div className="flex justify-between items-start">
+                               <div>
+                                  <div className="flex items-center space-x-3 mb-2">
+                                     <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{new Date(i.fecha).toLocaleDateString()}</span>
+                                     <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${i.gravedad === 'alta' ? 'bg-red-100 text-red-700' : i.gravedad === 'media' ? 'bg-amber-100 text-amber-700' : 'bg-blue-50 text-blue-700'}`}>
+                                        Gravedad: {i.gravedad.toUpperCase()}
+                                     </span>
+                                  </div>
+                                  <h4 className="text-xl font-black text-slate-800 uppercase tracking-tight">{i.tipo}</h4>
+                                  <p className="mt-3 text-slate-600 text-sm leading-relaxed">{i.descripcion}</p>
+                                  
+                                  {i.acciones_tomadas && (
+                                     <div className="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-500">
+                                        <span className="font-bold text-slate-700 uppercase block mb-1">Acciones Tomadas:</span>
+                                        {i.acciones_tomadas}
+                                     </div>
+                                  )}
+                               </div>
+                               {user?.rol === 'admin' && (
+                                 <button onClick={() => deleteSubEntity(`incidents/${i.id}`)} className="text-slate-300 hover:text-red-500 p-2 transition-colors">
+                                    <Trash2 className="w-5 h-5"/>
+                                 </button>
+                               )}
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                  ) : <p className="p-12 text-center text-slate-400 font-medium bg-white border border-dashed rounded-3xl uppercase tracking-widest text-xs">Sin incidentes registrados</p>}
                 </div>
              </div>
           )}

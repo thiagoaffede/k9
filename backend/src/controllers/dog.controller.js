@@ -240,6 +240,16 @@ const addAssignment = async (req, res) => {
   }
 };
 
+const deleteAssignment = async (req, res) => {
+  try {
+    const { aid } = req.params;
+    await prisma.assignment.delete({ where: { id: parseInt(aid) } });
+    res.json({ message: 'Asignación eliminada' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error', error: error.message });
+  }
+};
+
 const addVaccine = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
@@ -317,13 +327,40 @@ const addTraining = async (req, res) => {
   }
 };
 
+const deleteFeeding = async (req, res) => {
+  try {
+    const { id, fid } = req.params;
+    await prisma.feeding.delete({ where: { id: parseInt(fid) } });
+    await addHistoryLog(parseInt(id), 'ALIMENTACION_BORRADA', 'Se eliminó un registro de alimentación', req.user.nombre);
+    res.json({ message: 'Registro de alimentación borrado' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al borrar alimentación', error: error.message });
+  }
+};
+
 const addIncident = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
     const fecha = req.body.fecha ? new Date(req.body.fecha) : new Date();
     const incident = await prisma.incident.create({ data: { ...req.body, fecha, id_perro } });
     await addHistoryLog(id_perro, 'INCIDENTE', `Tipo: ${req.body.tipo}`, req.user.nombre);
+    
+    // Si el incidente es fallecimiento, podríamos opcionalmente cambiar el estado del perro
+    if (req.body.tipo === 'Fallecimiento') {
+      await prisma.dog.update({ where: { id: id_perro }, data: { estado: 'retirado' } });
+    }
+
     res.status(201).json(incident);
+  } catch (error) {
+    res.status(500).json({ message: 'Error', error: error.message });
+  }
+};
+
+const deleteIncident = async (req, res) => {
+  try {
+    const { iid } = req.params;
+    await prisma.incident.delete({ where: { id: parseInt(iid) } });
+    res.json({ message: 'Incidente eliminado' });
   } catch (error) {
     res.status(500).json({ message: 'Error', error: error.message });
   }
@@ -331,5 +368,6 @@ const addIncident = async (req, res) => {
 
 module.exports = {
   getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, uploadMedicalDoc,
-  addAssignment, addVaccine, deleteVaccine, addVetControl, addFeeding, addIncident, addTraining
+  addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, 
+  addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining
 };
