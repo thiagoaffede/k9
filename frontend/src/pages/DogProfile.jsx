@@ -472,10 +472,9 @@ const DogProfile = () => {
                     </ul>
                   ) : <p className="text-slate-500 text-sm">Sin historial de entrenamientos.</p>}
                 </div>
-                
+
                 {/* TAB: OPERATIVO (ENTRENAMIENTO Y ASIGNACIÓN) */}
-          {activeTab === 'entrenamiento' && (
-             <div className="space-y-12">
+                <div className="space-y-12">
                 {/* Asignaciones de Guia */}
                 <section className="bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
                    <div className="flex justify-between items-center mb-6">
@@ -636,6 +635,7 @@ const DogProfile = () => {
                   ) : <p className="p-8 text-center text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200 font-medium">Sin historial de capacitación.</p>}
                 </section>
              </div>
+          </div>
           )}
 
           {/* TAB: INCIDENTES / EVENTOS */}
