@@ -465,7 +465,7 @@ const DogProfile = () => {
 
                   {dog.trainings?.length > 0 ? (
                     <ul className="space-y-3">
-                       {dog.trainings.map(t => <li key={t.id} className="p-4 bg-white border border-slate-200 rounded text-sm shadow-sm">
+                         {dog.trainings.map(t => <li key={t.id} className="p-4 bg-white border border-slate-200 rounded text-sm shadow-sm">
                           <div className="flex justify-between font-bold border-b pb-2 mb-2"><span>{t.tipo}</span> <span className="text-slate-500">{new Date(t.fecha).toLocaleDateString()}</span></div>
                           Nivel: <span className="font-semibold text-slate-800">{t.nivel||'-'}</span> | Evaluación: <span className="italic">{t.evaluacion||'-'}</span>
                        </li>)}
@@ -473,82 +473,168 @@ const DogProfile = () => {
                   ) : <p className="text-slate-500 text-sm">Sin historial de entrenamientos.</p>}
                 </div>
                 
+                {/* TAB: OPERATIVO (ENTRENAMIENTO Y ASIGNACIÓN) */}
+          {activeTab === 'entrenamiento' && (
+             <div className="space-y-12">
                 {/* Asignaciones de Guia */}
-                <div>
-                   <div className="flex justify-between items-center mb-4">
-                     <h3 className="text-lg font-bold flex items-center"><User className="w-5 h-5 mr-2 text-blue-500"/> Gestión de Guías</h3>
-                     {user?.rol === 'admin' && <button onClick={() => { setShowForm(showForm==='assign' ? false : 'assign'); setFormData({}); }} className="text-sm text-blue-600 flex"><PlusCircle className="w-4 h-4 mr-1"/> Nueva Asignación</button>}
+                <section className="bg-slate-50/50 p-6 rounded-3xl border border-slate-100">
+                   <div className="flex justify-between items-center mb-6">
+                     <h3 className="text-xl font-black flex items-center text-slate-800 tracking-tighter uppercase"><User className="w-6 h-6 mr-2 text-blue-500 fill-blue-50"/> Gestión de Guías</h3>
+                     {user?.rol === 'admin' && (
+                        <button onClick={() => { setShowForm(showForm === 'assign' ? false : 'assign'); setFormData({}); }} className="bg-blue-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-md hover:bg-blue-700 transition-all">
+                           <PlusCircle className="w-4 h-4 mr-1"/> Nueva Asignación
+                        </button>
+                     )}
                    </div>
 
                    {showForm === 'assign' && (
-                     <form onSubmit={e => handleEntitySubmit(e, 'assignments')} className="bg-white p-4 border rounded mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                        <div className="md:col-span-1">
-                          <label className="text-xs font-bold text-slate-500 uppercase">Seleccionar Guía</label>
-                          <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.guia || ''} onChange={e => setFormData({ ...formData, guia: e.target.value })}>
-                            <option value="">Seleccionar...</option>
-                            {usersList.filter(u => u.rol === 'guia' || u.rol === 'admin').map(u => (
-                              <option key={u.id} value={u.nombre}>{u.nombre}</option>
-                            ))}
-                          </select>
+                     <form onSubmit={e => handleEntitySubmit(e, 'assignments')} className="bg-white p-6 border-2 border-blue-100 rounded-2xl shadow-xl mb-8 space-y-4 animate-in fade-in slide-in-from-top-4 duration-300">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                           <div>
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Seleccionar Guía</label>
+                              <select required className="w-full border-slate-200 rounded-xl p-3 text-sm mt-1 focus:ring-2 focus:ring-blue-500 outline-none" value={formData.guia || ''} onChange={e => setFormData({ ...formData, guia: e.target.value })}>
+                                 <option value="">Seleccionar...</option>
+                                 {(usersList || []).filter(u => u.rol === 'guia' || u.rol === 'admin').map(u => (
+                                    <option key={u.id} value={u.nombre}>{u.nombre}</option>
+                                 ))}
+                              </select>
+                           </div>
+                           <div>
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Turno de Servicio</label>
+                              <select required className="w-full border-slate-200 rounded-xl p-3 text-sm mt-1 focus:ring-2 focus:ring-blue-500 outline-none" value={formData.turno || ''} onChange={e => setFormData({ ...formData, turno: e.target.value })}>
+                                 <option value="">Seleccionar turno...</option>
+                                 <option value="Mañana">Mañana</option>
+                                 <option value="Tarde">Tarde</option>
+                                 <option value="Noche">Noche</option>
+                                 <option value="Rotativo">Rotativo</option>
+                                 <option value="24x48">24x48</option>
+                              </select>
+                           </div>
+                           <div>
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Fecha de Alta en Servicio</label>
+                              <input type="date" className="w-full border-slate-200 rounded-xl p-3 text-sm mt-1 focus:ring-2 focus:ring-blue-500 outline-none" value={formData.fecha_inicio || ''} onChange={e => setFormData({ ...formData, fecha_inicio: e.target.value })} />
+                           </div>
+                           <div className="md:col-span-3">
+                              <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Observaciones / Motivo</label>
+                              <input placeholder="Ej: Refuerzo temporada, reemplazo por licencia..." className="w-full border-slate-200 rounded-xl p-3 text-sm mt-1 focus:ring-2 focus:ring-blue-500 outline-none" value={formData.observaciones || ''} onChange={e => setFormData({ ...formData, observaciones: e.target.value })} />
+                           </div>
                         </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-500 uppercase">Turno</label>
-                          <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.turno || ''} onChange={e => setFormData({ ...formData, turno: e.target.value })}>
-                             <option value="">Seleccionar turno...</option>
-                             <option value="Mañana">Mañana</option>
-                             <option value="Tarde">Tarde</option>
-                             <option value="Noche">Noche</option>
-                             <option value="Rotativo">Rotativo</option>
-                             <option value="24x48">24x48</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="text-xs font-bold text-slate-500 uppercase">Fecha Asignación</label>
-                          <input type="date" className="w-full border rounded p-2 text-sm mt-1" value={formData.fecha_inicio || ''} onChange={e => setFormData({ ...formData, fecha_inicio: e.target.value })} />
-                        </div>
-                        <div className="md:col-span-3">
-                          <label className="text-xs font-bold text-slate-500 uppercase">Observación</label>
-                          <input placeholder="Motivo de asignación o notas" className="w-full border rounded p-2 text-sm mt-1" value={formData.observaciones || ''} onChange={e => setFormData({ ...formData, observaciones: e.target.value })} />
-                        </div>
-                        <div className="md:col-span-3 flex justify-end space-x-2 mt-2">
-                          <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
-                          <button type="submit" className="bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold shadow-md hover:bg-blue-700 transition-all">Confirmar Nueva Asignación</button>
+                        <div className="flex justify-end space-x-3 pt-4">
+                           <button type="button" onClick={() => setShowForm(false)} className="px-6 py-3 text-slate-500 font-bold rounded-xl hover:bg-slate-100 transition-colors">Cancelar</button>
+                           <button type="submit" className="bg-blue-600 text-white px-8 py-3 rounded-xl font-black shadow-lg hover:bg-blue-700 hover:-translate-y-0.5 transition-all active:translate-y-0">Confirmar Operativo</button>
                         </div>
                      </form>
                    )}
 
-                   {dog.assignments?.length > 0 ? (
-                    <div className="relative space-y-4 before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-slate-200">
-                       {dog.assignments.map((a, idx) => (
-                         <div key={a.id} className="relative flex items-center group">
-                            <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 z-10 shadow-sm ${idx === 0 ? 'bg-blue-500 text-white' : 'bg-slate-100 text-slate-400'}`}>
-                               <User className="w-4 h-4"/>
-                            </div>
-                            <div className={`ml-4 flex-1 p-4 rounded-xl border transition-all ${idx === 0 ? 'bg-blue-50 border-blue-100 shadow-sm' : 'bg-white border-slate-100'}`}>
-                               <div className="flex justify-between items-start">
-                                  <div>
-                                     <div className="flex items-center space-x-2">
-                                        <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded ${idx === 0 ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-500'}`}>
-                                           {idx === 0 ? 'Actual' : 'Anterior'}
-                                        </span>
-                                        <span className="text-xs text-slate-400 font-bold">{new Date(a.fecha_inicio).toLocaleDateString()} {a.fecha_fin ? `al ${new Date(a.fecha_fin).toLocaleDateString()}` : ''}</span>
+                   <div className="space-y-4">
+                     {dog.assignments?.length > 0 ? (
+                       <div className="relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-blue-200 before:to-slate-100">
+                          {dog.assignments.map((a, idx) => (
+                            <div key={a.id} className="relative flex items-start mb-6 last:mb-0">
+                               <div className={`flex items-center justify-center w-10 h-10 rounded-full border-4 border-white shrink-0 z-10 shadow-md ${idx === 0 ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-400'}`}>
+                                  {idx === 0 ? <Activity className="w-4 h-4 animate-pulse"/> : <User className="w-4 h-4"/>}
+                               </div>
+                               <div className={`ml-6 flex-1 p-5 rounded-2xl border transition-all ${idx === 0 ? 'bg-white border-blue-200 shadow-xl ring-1 ring-blue-50' : 'bg-white/60 border-slate-100 grayscale-[0.5]'}`}>
+                                  <div className="flex justify-between items-start">
+                                     <div className="space-y-1">
+                                        <div className="flex items-center space-x-3">
+                                           <span className={`text-[9px] font-black uppercase px-2 py-1 rounded-md ${idx === 0 ? 'bg-blue-600 text-white' : 'bg-slate-400 text-white'}`}>
+                                              {idx === 0 ? 'Activo en Servicio' : 'Histórico'}
+                                           </span>
+                                           <span className="text-xs text-slate-400 font-bold bg-slate-50 px-2 py-1 rounded-md">
+                                              {new Date(a.fecha_inicio).toLocaleDateString()} {a.fecha_fin ? `al ${new Date(a.fecha_fin).toLocaleDateString()}` : '— Presente'}
+                                           </span>
+                                        </div>
+                                        <h4 className="text-xl font-black text-slate-800">{a.guia}</h4>
+                                        <p className="text-sm font-bold text-slate-500 flex items-center">
+                                           <MapPin className="w-3 h-3 mr-1 text-blue-400"/> Turno: <span className="text-blue-600 ml-1">{a.turno || 'Sin especificar'}</span>
+                                        </p>
+                                        {a.observaciones && <p className="text-xs text-slate-400 italic mt-3 bg-slate-50 p-2 rounded-lg border-l-4 border-slate-200">"{a.observaciones}"</p>}
                                      </div>
-                                     <h4 className="text-lg font-bold text-slate-800 mt-1">{a.guia}</h4>
-                                     <p className="text-sm font-medium text-slate-500">Turno: <span className="text-slate-700 font-bold">{a.turno || 'N/R'}</span></p>
-                                     {a.observaciones && <p className="text-xs text-slate-400 italic mt-2 border-t pt-2">"{a.observaciones}"</p>}
+                                     {user?.rol === 'admin' && (
+                                        <button onClick={() => deleteSubEntity(`assignments/${a.id}`)} className="text-slate-300 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50">
+                                           <Trash2 className="w-5 h-5"/>
+                                        </button>
+                                     )}
                                   </div>
-                                  {user?.rol === 'admin' && (
-                                     <button onClick={() => deleteSubEntity(`assignments/${a.id}`)} className="text-slate-300 hover:text-red-500 transition-colors p-2">
-                                        <Trash2 className="w-4 h-4"/>
-                                     </button>
-                                  )}
                                </div>
                             </div>
+                          ))}
+                       </div>
+                     ) : (
+                       <div className="text-center py-12 bg-white border-2 border-dashed border-slate-200 rounded-3xl">
+                          <User className="w-12 h-12 text-slate-200 mx-auto mb-3"/>
+                          <p className="text-slate-400 font-bold uppercase tracking-widest text-xs">Sin guías asignados</p>
+                       </div>
+                     )}
+                   </div>
+                </section>
+
+                {/* Entrenamiento / Capacitación */}
+                <section>
+                   <div className="flex justify-between items-center mb-6">
+                     <h3 className="text-xl font-black flex items-center text-slate-800 tracking-tighter uppercase"><Award className="w-6 h-6 mr-2 text-indigo-500 fill-indigo-50"/> Historial de Capacitación</h3>
+                     {user?.rol === 'admin' && (
+                        <button onClick={() => { setShowForm(showForm === 'training' ? false : 'training'); setFormData({}); }} className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-md hover:bg-indigo-700 transition-all">
+                           <PlusCircle className="w-4 h-4 mr-1"/> Registrar Nivel
+                        </button>
+                     )}
+                   </div>
+
+                   {showForm === 'training' && (
+                     <form onSubmit={e => handleEntitySubmit(e, 'trainings')} className="bg-white p-6 border-2 border-indigo-100 rounded-2xl shadow-xl mb-8 space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                           <div>
+                              <label className="text-xs font-bold text-slate-500 uppercase">Tipo de Entrenamiento</label>
+                              <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.tipo || ''} onChange={e => setFormData({ ...formData, tipo: e.target.value })}>
+                                 <option value="">Seleccionar...</option>
+                                 <option value="Obediencia Básica">Obediencia Básica</option>
+                                 <option value="Detección Narcóticos">Detección Narcóticos</option>
+                                 <option value="Detección Explosivos">Detección Explosivos</option>
+                                 <option value="Búsqueda y Rescate">Búsqueda y Rescate</option>
+                                 <option value="Intervención / Guardia">Intervención / Guardia</option>
+                              </select>
+                           </div>
+                           <div>
+                              <label className="text-xs font-bold text-slate-500 uppercase">Nivel Alcanzado</label>
+                              <select required className="w-full border rounded p-2 text-sm mt-1" value={formData.nivel || ''} onChange={e => setFormData({ ...formData, nivel: e.target.value })}>
+                                 <option value="">Seleccionar...</option>
+                                 <option value="Inicial">Inicial</option>
+                                 <option value="En Formación">En Formación</option>
+                                 <option value="Operativo">Operativo</option>
+                                 <option value="Avanzado">Avanzado</option>
+                                 <option value="Experto">Experto</option>
+                              </select>
+                           </div>
+                           <div className="md:col-span-2">
+                              <label className="text-xs font-bold text-slate-500 uppercase">Evaluación / Notas</label>
+                              <textarea required placeholder="Detalle los avances o deficiencias observadas..." className="w-full border rounded p-2 text-sm mt-1" rows="3" value={formData.evaluacion || ''} onChange={e => setFormData({ ...formData, evaluacion: e.target.value })} />
+                           </div>
+                        </div>
+                        <div className="flex justify-end space-x-2 pt-2">
+                           <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
+                           <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded text-sm font-bold shadow-sm hover:bg-indigo-700 transition-colors">Guardar Progreso</button>
+                        </div>
+                     </form>
+                   )}
+
+                   {dog.trainings?.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                       {dog.trainings.map(t => (
+                         <div key={t.id} className="p-5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                            <div className="flex justify-between items-start mb-3">
+                               <div>
+                                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">{new Date(t.fecha).toLocaleDateString()}</span>
+                                  <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight leading-none mt-1">{t.tipo}</h4>
+                               </div>
+                               <span className="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Nivel: {t.nivel}</span>
+                            </div>
+                            <p className="text-sm text-slate-600 italic leading-relaxed">"{t.evaluacion}"</p>
                          </div>
                        ))}
                     </div>
-                  ) : <p className="p-8 text-center text-slate-500 italic bg-white border border-dashed rounded-xl">No hay historial de asignaciones registrado.</p>}
-                </div>
+                  ) : <p className="p-8 text-center text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200 font-medium">Sin historial de capacitación.</p>}
+                </section>
              </div>
           )}
 
