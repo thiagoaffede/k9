@@ -4,6 +4,7 @@ import api, { BASE_URL } from '../services/api';
 import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit, User, Award, MapPin } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import FichaTecnicaPDF from '../components/FichaTecnicaPDF';
+import { fmtFecha, hoyISO } from '../utils/fecha';
 
 const TIPOS_VACUNA = {
   vacuna: { label: 'Vacuna', badge: 'bg-emerald-100 text-emerald-700' },
@@ -234,7 +235,7 @@ const DogProfile = () => {
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div><span className="text-slate-500">Origen:</span> <p className="font-semibold">{dog.origen || 'No registrado'}</p></div>
                     <div><span className="text-slate-500">Color:</span> <p className="font-semibold">{dog.color || 'No registrado'}</p></div>
-                    <div><span className="text-slate-500">Fecha Nacimiento:</span> <p className="font-semibold">{dog.fecha_nacimiento ? new Date(dog.fecha_nacimiento).toLocaleDateString() : 'No registrado'}</p></div>
+                    <div><span className="text-slate-500">Fecha Nacimiento:</span> <p className="font-semibold">{dog.fecha_nacimiento ? fmtFecha(dog.fecha_nacimiento) : 'No registrado'}</p></div>
                     <div className="col-span-2"><span className="text-slate-500">Observaciones Generales:</span> <p className="p-3 bg-white mt-1 border border-slate-200 rounded">{dog.observaciones || 'No hay observaciones'}</p></div>
                     
                     <div className="col-span-2 mt-4">
@@ -242,7 +243,7 @@ const DogProfile = () => {
                       {dog.assignments?.length > 0 ? (
                         <div className="p-4 bg-blue-50 border border-blue-100 rounded-lg">
                           <p className="font-bold text-blue-800">Guía: {dog.assignments[0].guia}</p>
-                          <p className="text-sm text-blue-600">Desde: {new Date(dog.assignments[0].fecha_inicio).toLocaleDateString()} | Turno: {dog.assignments[0].turno}</p>
+                          <p className="text-sm text-blue-600">Desde: {fmtFecha(dog.assignments[0].fecha_inicio)} | Turno: {dog.assignments[0].turno}</p>
                         </div>
                       ) : <p className="text-slate-500">Sin guía asignado actualmente.</p>}
                     </div>
@@ -302,7 +303,7 @@ const DogProfile = () => {
                            <li key={v.id} className="p-3 bg-white border border-slate-200 rounded flex justify-between items-center text-sm">
                               <div>
                                  <span className={`inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded mr-2 ${cfg.badge}`}>{cfg.label}</span>
-                                 <span className="font-bold">{v.vacuna}</span> - {new Date(v.fecha_aplicacion).toLocaleDateString()} (Próxima: {v.proxima_dosis ? new Date(v.proxima_dosis).toLocaleDateString() : 'N/A'})
+                                 <span className="font-bold">{v.vacuna}</span> - {fmtFecha(v.fecha_aplicacion)} (Próxima: {v.proxima_dosis ? fmtFecha(v.proxima_dosis) : 'N/A'})
                                  {v.veterinario && <span className="text-slate-400"> · Vet: {v.veterinario}</span>}
                               </div>
                               {(user?.rol === 'admin' || user?.rol === 'veterinario') && <button onClick={() => deleteSubEntity(`vaccines/${v.id}`)} title="Eliminar registro" className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="w-4 h-4"/></button>}
@@ -323,6 +324,10 @@ const DogProfile = () => {
                   {showForm === 'ctrl' && (
                     <form onSubmit={e => handleEntitySubmit(e, 'vetcontrols')} className="bg-white p-4 border rounded mb-4">
                        <input required placeholder="Motivo del control" className="w-full border rounded p-2 text-sm mb-2" value={formData.motivo||''} onChange={e=>setFormData({...formData, motivo: e.target.value})} />
+                       <div className="mb-2">
+                         <label className="text-xs text-slate-500">Fecha del control</label>
+                         <input required type="date" className="w-full border rounded p-2 text-sm" value={formData.fecha||hoyISO()} onChange={e=>setFormData({...formData, fecha: e.target.value})} />
+                       </div>
                        <input placeholder="Tratamiento/Medicación" className="w-full border rounded p-2 text-sm mb-2" value={formData.tratamiento||''} onChange={e=>setFormData({...formData, tratamiento: e.target.value})} />
                        <div className="flex justify-end space-x-2 mt-2">
                          <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
@@ -334,7 +339,7 @@ const DogProfile = () => {
                   {dog.vetControls?.length > 0 ? (
                     <ul className="space-y-2">
                        {dog.vetControls.map(c => <li key={c.id} className="p-3 bg-white border border-slate-200 rounded text-sm">
-                          <span className="font-bold">{c.motivo}</span> - {new Date(c.fecha).toLocaleDateString()} | Vet: {c.veterinario} <br/> <span className="text-slate-500 italic">{c.tratamiento}</span>
+                          <span className="font-bold">{c.motivo}</span> - {fmtFecha(c.fecha)} | Vet: {c.veterinario} <br/> <span className="text-slate-500 italic">{c.tratamiento}</span>
                        </li>)}
                     </ul>
                   ) : <p className="text-slate-500 text-sm">No hay controles registrados.</p>}
@@ -411,7 +416,7 @@ const DogProfile = () => {
                       <div key={f.id} className={`p-5 bg-white border rounded-xl shadow-sm ${idx === 0 ? 'border-orange-200 ring-1 ring-orange-100' : 'border-slate-200'}`}>
                         <div className="flex justify-between items-start mb-3">
                           <div>
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{f.fecha_inicio ? new Date(f.fecha_inicio).toLocaleDateString() : 'S/F'}</span>
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{f.fecha_inicio ? fmtFecha(f.fecha_inicio) : 'S/F'}</span>
                             <h4 className="text-lg font-bold text-slate-800">{f.tipo_alimento} - <span className="text-slate-500">{f.marca || 'S/M'}</span></h4>
                           </div>
                           <div className="flex space-x-2">
@@ -477,8 +482,9 @@ const DogProfile = () => {
                   {showForm === 'train' && (
                     <form onSubmit={e => handleEntitySubmit(e, 'trainings')} className="bg-white p-4 border rounded mb-4">
                        <div className="flex gap-2 mb-2">
-                         <input required placeholder="Tipo (Ej: Detección)" className="w-1/2 border rounded p-2 text-sm" value={formData.tipo||''} onChange={e=>setFormData({...formData, tipo: e.target.value})} />
-                         <input placeholder="Nivel" className="w-1/2 border rounded p-2 text-sm" value={formData.nivel||''} onChange={e=>setFormData({...formData, nivel: e.target.value})} />
+                         <input required placeholder="Tipo (Ej: Detección)" className="w-1/3 border rounded p-2 text-sm" value={formData.tipo||''} onChange={e=>setFormData({...formData, tipo: e.target.value})} />
+                         <input placeholder="Nivel" className="w-1/3 border rounded p-2 text-sm" value={formData.nivel||''} onChange={e=>setFormData({...formData, nivel: e.target.value})} />
+                         <input required type="date" title="Fecha del entrenamiento" className="w-1/3 border rounded p-2 text-sm" value={formData.fecha||hoyISO()} onChange={e=>setFormData({...formData, fecha: e.target.value})} />
                        </div>
                        <textarea placeholder="Evaluación / Resultados" className="w-full border rounded p-2 text-sm" value={formData.evaluacion||''} onChange={e=>setFormData({...formData, evaluacion: e.target.value})} />
                        <div className="flex justify-end space-x-2 mt-2">
@@ -490,9 +496,14 @@ const DogProfile = () => {
 
                   {dog.trainings?.length > 0 ? (
                     <ul className="space-y-3">
-                         {dog.trainings.map(t => <li key={t.id} className="p-4 bg-white border border-slate-200 rounded text-sm shadow-sm">
-                          <div className="flex justify-between font-bold border-b pb-2 mb-2"><span>{t.tipo}</span> <span className="text-slate-500">{new Date(t.fecha).toLocaleDateString()}</span></div>
+                         {dog.trainings.map(t => <li key={t.id} className="relative p-4 bg-white border border-slate-200 rounded text-sm shadow-sm">
+                          <div className="flex justify-between font-bold border-b pb-2 mb-2 pr-8"><span>{t.tipo}</span> <span className="text-slate-500">{fmtFecha(t.fecha)}</span></div>
                           Nivel: <span className="font-semibold text-slate-800">{t.nivel||'-'}</span> | Evaluación: <span className="italic">{t.evaluacion||'-'}</span>
+                          {(user?.rol === 'admin' || user?.rol === 'instructor') && (
+                            <button onClick={() => deleteSubEntity(`trainings/${t.id}`)} title="Eliminar registro de entrenamiento" className="absolute top-3 right-3 text-slate-300 hover:text-red-500 transition-colors p-1.5 rounded-full hover:bg-red-50">
+                              <Trash2 className="w-4 h-4"/>
+                            </button>
+                          )}
                        </li>)}
                     </ul>
                   ) : <p className="text-slate-500 text-sm">Sin historial de entrenamientos.</p>}
@@ -566,7 +577,7 @@ const DogProfile = () => {
                                               {idx === 0 ? 'Activo en Servicio' : 'Histórico'}
                                            </span>
                                            <span className="text-xs text-slate-400 font-bold bg-slate-50 px-2 py-1 rounded-md">
-                                              {new Date(a.fecha_inicio).toLocaleDateString()} {a.fecha_fin ? `al ${new Date(a.fecha_fin).toLocaleDateString()}` : '— Presente'}
+                                              {fmtFecha(a.fecha_inicio)} {a.fecha_fin ? `al ${fmtFecha(a.fecha_fin)}` : '— Presente'}
                                            </span>
                                         </div>
                                         <h4 className="text-xl font-black text-slate-800">{a.guia}</h4>
@@ -631,6 +642,10 @@ const DogProfile = () => {
                               </select>
                            </div>
                            <div className="md:col-span-2">
+                              <label className="text-xs font-bold text-slate-500 uppercase">Fecha del Entrenamiento</label>
+                              <input required type="date" className="w-full border rounded p-2 text-sm mt-1" value={formData.fecha || hoyISO()} onChange={e => setFormData({ ...formData, fecha: e.target.value })} />
+                           </div>
+                           <div className="md:col-span-2">
                               <label className="text-xs font-bold text-slate-500 uppercase">Evaluación / Notas</label>
                               <textarea required placeholder="Detalle los avances o deficiencias observadas..." className="w-full border rounded p-2 text-sm mt-1" rows="3" value={formData.evaluacion || ''} onChange={e => setFormData({ ...formData, evaluacion: e.target.value })} />
                            </div>
@@ -657,7 +672,7 @@ const DogProfile = () => {
                              )}
                              <div className="flex justify-between items-start mb-3">
                                 <div>
-                                   <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">{new Date(t.fecha).toLocaleDateString()}</span>
+                                   <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">{fmtFecha(t.fecha)}</span>
                                    <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight leading-none mt-1 pr-8">{t.tipo}</h4>
                                 </div>
                                 <span className="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Nivel: {t.nivel}</span>
@@ -731,7 +746,7 @@ const DogProfile = () => {
                             <div className="flex justify-between items-start">
                                <div>
                                   <div className="flex items-center space-x-3 mb-2">
-                                     <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{new Date(i.fecha).toLocaleDateString()}</span>
+                                     <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">{fmtFecha(i.fecha)}</span>
                                      <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${i.gravedad === 'alta' ? 'bg-red-100 text-red-700' : i.gravedad === 'media' ? 'bg-amber-100 text-amber-700' : 'bg-blue-50 text-blue-700'}`}>
                                         Gravedad: {i.gravedad.toUpperCase()}
                                      </span>

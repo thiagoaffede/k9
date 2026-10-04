@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shield, Activity, Award, User, Calendar, MapPin, Hash, Info, AlertTriangle, Coffee } from 'lucide-react';
 import { BASE_URL } from '../services/api';
+import { fmtFecha } from '../utils/fecha';
 
 const FichaTecnicaPDF = ({ dog }) => {
   const photoURL = dog.foto_url 
@@ -57,7 +58,7 @@ const FichaTecnicaPDF = ({ dog }) => {
               <div className="flex items-center">
                 <Calendar className="w-4 h-4 mr-2 text-slate-400" />
                 <span className="font-bold text-slate-500 mr-2 uppercase text-[10px]">Nacimiento:</span>
-                <span className="font-bold text-slate-800">{dog.fecha_nacimiento ? new Date(dog.fecha_nacimiento).toLocaleDateString() : 'NO REGISTRADA'}</span>
+                <span className="font-bold text-slate-800">{dog.fecha_nacimiento ? fmtFecha(dog.fecha_nacimiento) : 'NO REGISTRADA'}</span>
               </div>
               <div className="flex items-center">
                 <Activity className="w-4 h-4 mr-2 text-slate-400" />
@@ -84,10 +85,10 @@ const FichaTecnicaPDF = ({ dog }) => {
                           {v.tipo === 'antiparasitario' ? '[ANTIPARASITARIO] ' : v.tipo === 'desparasitacion' ? '[DESPARASITACIÓN] ' : ''}
                           {v.vacuna}
                         </span>
-                        <span className="text-emerald-700 whitespace-nowrap">{new Date(v.fecha_aplicacion).toLocaleDateString()}</span>
+                        <span className="text-emerald-700 whitespace-nowrap">{fmtFecha(v.fecha_aplicacion)}</span>
                       </div>
                       {v.proxima_dosis && (
-                        <div className="text-slate-500 mt-0.5">Próxima: {new Date(v.proxima_dosis).toLocaleDateString()}</div>
+                        <div className="text-slate-500 mt-0.5">Próxima: {fmtFecha(v.proxima_dosis)}</div>
                       )}
                     </div>
                   ))}
@@ -123,7 +124,7 @@ const FichaTecnicaPDF = ({ dog }) => {
                   <div key={t.id} className="p-2 bg-indigo-50/30 rounded border border-indigo-100 text-[10px]">
                     <div className="flex justify-between font-bold mb-1">
                       <span className="text-indigo-800 uppercase">{t.tipo}</span>
-                      <span className="text-indigo-400">{new Date(t.fecha).toLocaleDateString()}</span>
+                      <span className="text-indigo-400">{fmtFecha(t.fecha)}</span>
                     </div>
                     <p className="text-slate-500 italic truncate">Nivel: {t.nivel}</p>
                   </div>
@@ -193,7 +194,7 @@ const FichaTecnicaPDF = ({ dog }) => {
                   <div key={i.id} className={`p-4 border rounded-xl ${i.gravedad === 'alta' ? 'bg-red-50 border-red-100' : 'bg-slate-50 border-slate-100'}`}>
                     <div className="flex justify-between items-center mb-1">
                       <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded ${i.gravedad === 'alta' ? 'bg-red-600 text-white' : 'bg-slate-200 text-slate-600'}`}>{i.tipo}</span>
-                      <span className="text-[10px] font-bold text-slate-400">{new Date(i.fecha).toLocaleDateString()}</span>
+                      <span className="text-[10px] font-bold text-slate-400">{fmtFecha(i.fecha)}</span>
                     </div>
                     <p className="text-xs font-bold text-slate-800">{i.descripcion}</p>
                     {i.acciones_tomadas && <p className="text-[10px] text-slate-500 mt-1 italic">Acción: {i.acciones_tomadas}</p>}
