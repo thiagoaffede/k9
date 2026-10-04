@@ -5,6 +5,12 @@ import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit, 
 import { AuthContext } from '../context/AuthContext';
 import FichaTecnicaPDF from '../components/FichaTecnicaPDF';
 
+const TIPOS_VACUNA = {
+  vacuna: { label: 'Vacuna', badge: 'bg-emerald-100 text-emerald-700' },
+  antiparasitario: { label: 'Antiparasitario', badge: 'bg-amber-100 text-amber-700' },
+  desparasitacion: { label: 'Desparasitación', badge: 'bg-violet-100 text-violet-700' }
+};
+
 const DogProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -251,39 +257,58 @@ const DogProfile = () => {
                 {/* Vacunas */}
                 <div>
                   <div className="flex justify-between items-center mb-4">
-                     <h3 className="text-lg font-bold flex items-center"><Activity className="w-5 h-5 mr-2 text-emerald-500"/> Vacunas</h3>
+                     <h3 className="text-lg font-bold flex items-center"><Activity className="w-5 h-5 mr-2 text-emerald-500"/> Vacunas y Antiparasitarios</h3>
                      {(user?.rol === 'admin' || user?.rol === 'veterinario') && <button onClick={() => { setShowForm(showForm==='vac' ? false : 'vac'); setFormData({}); }} className="text-sm text-blue-600 flex"><PlusCircle className="w-4 h-4 mr-1"/> Añadir</button>}
                   </div>
 
                   {showForm === 'vac' && (
-                    <form onSubmit={e => handleEntitySubmit(e, 'vaccines')} className="bg-white p-4 border rounded mb-4 grid grid-cols-1 md:grid-cols-4 gap-2 items-end">
+                    <form onSubmit={e => handleEntitySubmit(e, 'vaccines')} className="bg-white p-4 border rounded mb-4 grid grid-cols-1 md:grid-cols-6 gap-2 items-end">
                        <div className="md:col-span-2">
-                         <label className="text-xs text-slate-500">Vacuna (Nombre)</label>
+                         <label className="text-xs text-slate-500">Tipo de Aplicación</label>
+                         <select required className="w-full border rounded p-2 text-sm" value={formData.tipo||'vacuna'} onChange={e=>setFormData({...formData, tipo: e.target.value})}>
+                           <option value="vacuna">Vacuna</option>
+                           <option value="antiparasitario">Antiparasitario</option>
+                           <option value="desparasitacion">Desparasitación</option>
+                         </select>
+                       </div>
+                       <div className="md:col-span-2">
+                         <label className="text-xs text-slate-500">Nombre / Producto</label>
                          <input required type="text" className="w-full border rounded p-2 text-sm" value={formData.vacuna||''} onChange={e=>setFormData({...formData, vacuna: e.target.value})} />
                        </div>
-                       <div>
+                       <div className="md:col-span-2">
                          <label className="text-xs text-slate-500">Fecha Aplicación</label>
                          <input required type="date" className="w-full border rounded p-2 text-sm" value={formData.fecha_aplicacion||''} onChange={e=>setFormData({...formData, fecha_aplicacion: e.target.value})} />
                        </div>
-                       <div>
+                       <div className="md:col-span-2">
                          <label className="text-xs text-slate-500">Próxima Dosis</label>
                          <input type="date" className="w-full border rounded p-2 text-sm" value={formData.proxima_dosis||''} onChange={e=>setFormData({...formData, proxima_dosis: e.target.value})} />
                        </div>
+                       <div className="md:col-span-4">
+                         <label className="text-xs text-slate-500">Veterinario (Opcional)</label>
+                         <input type="text" className="w-full border rounded p-2 text-sm" value={formData.veterinario||''} onChange={e=>setFormData({...formData, veterinario: e.target.value})} />
+                       </div>
                        <div className="md:col-span-4 flex justify-end space-x-2 mt-2">
                          <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
-                         <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">Guardar Vacuna</button>
+                         <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">Guardar Registro</button>
                        </div>
                     </form>
                   )}
 
                   {dog.vaccines?.length > 0 ? (
                     <ul className="space-y-2">
-                       {dog.vaccines.map(v => (
-                          <li key={v.id} className="p-3 bg-white border border-slate-200 rounded flex justify-between items-center text-sm">
-                             <div><span className="font-bold">{v.vacuna}</span> - {new Date(v.fecha_aplicacion).toLocaleDateString()} (Próxima: {v.proxima_dosis ? new Date(v.proxima_dosis).toLocaleDateString() : 'N/A'})</div>
-                             {(user?.rol === 'admin') && <button onClick={() => deleteSubEntity(`vaccines/${v.id}`)} className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="w-4 h-4"/></button>}
-                          </li>
-                       ))}
+                       {dog.vaccines.map(v => {
+                          const cfg = TIPOS_VACUNA[v.tipo] || TIPOS_VACUNA.vacuna;
+                          return (
+                           <li key={v.id} className="p-3 bg-white border border-slate-200 rounded flex justify-between items-center text-sm">
+                              <div>
+                                 <span className={`inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded mr-2 ${cfg.badge}`}>{cfg.label}</span>
+                                 <span className="font-bold">{v.vacuna}</span> - {new Date(v.fecha_aplicacion).toLocaleDateString()} (Próxima: {v.proxima_dosis ? new Date(v.proxima_dosis).toLocaleDateString() : 'N/A'})
+                                 {v.veterinario && <span className="text-slate-400"> · Vet: {v.veterinario}</span>}
+                              </div>
+                              {(user?.rol === 'admin' || user?.rol === 'veterinario') && <button onClick={() => deleteSubEntity(`vaccines/${v.id}`)} title="Eliminar registro" className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="w-4 h-4"/></button>}
+                           </li>
+                          );
+                       })}
                     </ul>
                   ) : <p className="text-slate-500 text-sm">No hay vacunas registradas.</p>}
                 </div>
@@ -573,11 +598,11 @@ const DogProfile = () => {
                 <section>
                    <div className="flex justify-between items-center mb-6">
                      <h3 className="text-xl font-black flex items-center text-slate-800 tracking-tighter uppercase"><Award className="w-6 h-6 mr-2 text-indigo-500 fill-indigo-50"/> Historial de Capacitación</h3>
-                     {user?.rol === 'admin' && (
-                        <button onClick={() => { setShowForm(showForm === 'training' ? false : 'training'); setFormData({}); }} className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-md hover:bg-indigo-700 transition-all">
-                           <PlusCircle className="w-4 h-4 mr-1"/> Registrar Nivel
-                        </button>
-                     )}
+{(user?.rol === 'admin' || user?.rol === 'instructor') && (
+                         <button onClick={() => { setShowForm(showForm === 'training' ? false : 'training'); setFormData({}); }} className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center shadow-md hover:bg-indigo-700 transition-all">
+                            <PlusCircle className="w-4 h-4 mr-1"/> Registrar Nivel
+                         </button>
+                      )}
                    </div>
 
                    {showForm === 'training' && (
@@ -620,16 +645,25 @@ const DogProfile = () => {
                    {dog.trainings?.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                        {dog.trainings.map(t => (
-                         <div key={t.id} className="p-5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                            <div className="flex justify-between items-start mb-3">
-                               <div>
-                                  <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">{new Date(t.fecha).toLocaleDateString()}</span>
-                                  <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight leading-none mt-1">{t.tipo}</h4>
-                               </div>
-                               <span className="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Nivel: {t.nivel}</span>
-                            </div>
-                            <p className="text-sm text-slate-600 italic leading-relaxed">"{t.evaluacion}"</p>
-                         </div>
+<div key={t.id} className="relative p-5 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md transition-all">
+                             {(user?.rol === 'admin' || user?.rol === 'instructor') && (
+                                <button
+                                   onClick={() => deleteSubEntity(`trainings/${t.id}`)}
+                                   title="Eliminar registro de entrenamiento"
+                                   className="absolute top-3 right-3 text-slate-300 hover:text-red-500 transition-colors p-1.5 rounded-full hover:bg-red-50"
+                                >
+                                   <Trash2 className="w-4 h-4"/>
+                                </button>
+                             )}
+                             <div className="flex justify-between items-start mb-3">
+                                <div>
+                                   <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest">{new Date(t.fecha).toLocaleDateString()}</span>
+                                   <h4 className="text-lg font-black text-slate-800 uppercase tracking-tight leading-none mt-1 pr-8">{t.tipo}</h4>
+                                </div>
+                                <span className="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Nivel: {t.nivel}</span>
+                             </div>
+                             <p className="text-sm text-slate-600 italic leading-relaxed">"{t.evaluacion}"</p>
+                          </div>
                        ))}
                     </div>
                   ) : <p className="p-8 text-center text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200 font-medium">Sin historial de capacitación.</p>}

@@ -2,7 +2,7 @@ const express = require('express');
 const { 
   getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, uploadMedicalDoc, 
   addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, 
-  addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining 
+  addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining, deleteTraining
 } = require('../controllers/dog.controller');
 const { authMiddleware, roleMiddleware } = require('../middlewares/auth.middleware');
 const upload = require('../middlewares/upload.middleware');
@@ -31,5 +31,6 @@ router.delete('/:id/feedings/:fid', roleMiddleware(['admin', 'veterinario']), de
 router.post('/:id/incidents', roleMiddleware(['admin', 'veterinario', 'instructor', 'guia']), addIncident);
 router.delete('/:id/incidents/:iid', roleMiddleware(['admin']), deleteIncident);
 router.post('/:id/trainings', roleMiddleware(['admin', 'instructor']), addTraining);
+router.delete('/:id/trainings/:tid', roleMiddleware(['admin', 'instructor']), deleteTraining);
 
 module.exports = router;

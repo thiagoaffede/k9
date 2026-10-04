@@ -263,17 +263,28 @@ const deleteAssignment = async (req, res) => {
   }
 };
 
+const TIPOS_VACUNA = ['vacuna', 'antiparasitario', 'desparasitacion'];
+
 const addVaccine = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
-    // Asegurarnos que las fechas vengan tipadas correctamente
-    const fecha_aplicacion = new Date(req.body.fecha_aplicacion);
-    const proxima_dosis = req.body.proxima_dosis ? new Date(req.body.proxima_dosis) : null;
+    const { vacuna, proxima_dosis, veterinario, observaciones, tipo } = req.body;
+
+    // Whitelist: ignora campos no permitidos (id, id_perro, createdAt...) y valida el enum
+    const tipoFinal = TIPOS_VACUNA.includes(tipo) ? tipo : 'vacuna';
 
     const vaccine = await prisma.vaccine.create({ 
-      data: { ...req.body, fecha_aplicacion, proxima_dosis, id_perro } 
+      data: {
+        id_perro,
+        vacuna,
+        tipo: tipoFinal,
+        fecha_aplicacion: new Date(req.body.fecha_aplicacion),
+        proxima_dosis: proxima_dosis ? new Date(proxima_dosis) : null,
+        veterinario: veterinario || null,
+        observaciones: observaciones || null
+      }
     });
-    await addHistoryLog(id_perro, 'VACUNA', `Aplicada: ${req.body.vacuna}`, req.user.nombre);
+    await addHistoryLog(id_perro, 'VACUNA', `Aplicada (${tipoFinal}): ${vacuna}`, req.user.nombre);
     res.status(201).json(vaccine);
   } catch (error) {
     res.status(500).json({ message: 'Error', error: error.message });
@@ -340,6 +351,26 @@ const addTraining = async (req, res) => {
   }
 };
 
+const deleteTraining = async (req, res) => {
+  try {
+    const id_perro = parseInt(req.params.id);
+    const tid = parseInt(req.params.tid);
+
+    // Verificar que el entrenamiento pertenezca al perro del URL (evita IDOR)
+    const training = await prisma.training.findFirst({ where: { id: tid, id_perro } });
+    if (!training) {
+      return res.status(404).json({ message: 'Registro de entrenamiento no encontrado' });
+    }
+
+    await prisma.training.delete({ where: { id: tid } });
+    await addHistoryLog(id_perro, 'ENTRENAMIENTO_BORRADO', `Se eliminó: ${training.tipo}`, req.user.nombre);
+    res.json({ message: 'Entrenamiento eliminado' });
+  } catch (error) {
+    console.error("ERROR EN DELETE_TRAINING:", error);
+    res.status(500).json({ message: 'Error al borrar entrenamiento', error: error.message });
+  }
+};
+
 const deleteFeeding = async (req, res) => {
   try {
     const { id, fid } = req.params;
@@ -382,5 +413,5 @@ const deleteIncident = async (req, res) => {
 module.exports = {
   getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, uploadMedicalDoc,
   addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, 
-  addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining
+  addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining, deleteTraining
 };

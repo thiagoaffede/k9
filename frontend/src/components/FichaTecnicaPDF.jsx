@@ -75,16 +75,26 @@ const FichaTecnicaPDF = ({ dog }) => {
               <h3 className="flex items-center text-sm font-black uppercase tracking-widest text-slate-900 mb-4 border-l-4 border-emerald-500 pl-3">
                 <Activity className="w-4 h-4 mr-2 text-emerald-500" /> Sanidad y Vacunación
               </h3>
-              <div className="space-y-2">
-                {dog.vaccines?.slice(0, 4).map(v => (
-                  <div key={v.id} className="p-2 bg-slate-50 rounded border border-slate-100 text-[10px]">
-                    <div className="flex justify-between font-bold">
-                      <span className="uppercase">{v.vacuna}</span>
-                      <span className="text-emerald-700">{new Date(v.fecha_aplicacion).toLocaleDateString()}</span>
+              {dog.vaccines?.length > 0 ? (
+                <div className="space-y-2">
+                  {dog.vaccines.map(v => (
+                    <div key={v.id} className="p-2 bg-slate-50 rounded border border-slate-100 text-[10px]">
+                      <div className="flex justify-between font-bold gap-2">
+                        <span className="uppercase">
+                          {v.tipo === 'antiparasitario' ? '[ANTIPARASITARIO] ' : v.tipo === 'desparasitacion' ? '[DESPARASITACIÓN] ' : ''}
+                          {v.vacuna}
+                        </span>
+                        <span className="text-emerald-700 whitespace-nowrap">{new Date(v.fecha_aplicacion).toLocaleDateString()}</span>
+                      </div>
+                      {v.proxima_dosis && (
+                        <div className="text-slate-500 mt-0.5">Próxima: {new Date(v.proxima_dosis).toLocaleDateString()}</div>
+                      )}
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-slate-400 text-[10px] italic">Sin registros de vacunación.</p>
+              )}
             </section>
 
             {/* ASIGNACIÓN */}
