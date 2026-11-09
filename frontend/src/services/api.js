@@ -28,4 +28,22 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Si el token venció, no dejamos al usuario en una pantalla "logueada" que
+// falla en silencio en cada formulario: limpiamos la sesión y volvemos al login.
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const status = error.response?.status;
+    const url = error.config?.url || '';
+    if (status === 401 && !url.includes('/auth/login')) {
+      localStorage.removeItem('k9_token');
+      localStorage.removeItem('k9_user');
+      if (window.location.pathname !== '/login') {
+        window.location.assign('/login');
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;

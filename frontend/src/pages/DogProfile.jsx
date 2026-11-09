@@ -12,6 +12,10 @@ const TIPOS_VACUNA = {
   desparasitacion: { label: 'Desparasitación', badge: 'bg-violet-100 text-violet-700' }
 };
 
+// Mensaje legible para el usuario a partir del error de axios.
+const mensajeError = (err, fallback) =>
+  err?.response?.data?.message || err?.response?.data?.error || fallback;
+
 const DogProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -48,23 +52,37 @@ const DogProfile = () => {
 
   const handleDeleteDog = async () => {
     if (window.confirm('¿Eliminar registro de este perro? (Soft Delete)')) {
-      await api.delete(`/dogs/${dog.id}`);
-      navigate('/');
+      try {
+        await api.delete(`/dogs/${dog.id}`);
+        navigate('/');
+      } catch (err) {
+        console.error(err);
+        alert(mensajeError(err, 'No se pudo eliminar el perro'));
+      }
     }
   };
 
   const handleEntitySubmit = async (e, endpoint) => {
     e.preventDefault();
-    await api.post(`/dogs/${dog.id}/${endpoint}`, formData);
-    setShowForm(false);
-    setFormData({});
-    fetchDog();
+    try {
+      await api.post(`/dogs/${dog.id}/${endpoint}`, formData);
+      setShowForm(false);
+      setFormData({});
+      fetchDog();
+    } catch (err) {
+      console.error(err);
+      alert(mensajeError(err, 'No se pudo guardar el registro'));
+    }
   };
 
   const deleteSubEntity = async (endpointId) => {
-    if (window.confirm('¿Borrar registro?')) {
+    if (!window.confirm('¿Borrar registro?')) return;
+    try {
       await api.delete(`/dogs/${dog.id}/${endpointId}`);
       fetchDog();
+    } catch (err) {
+      console.error(err);
+      alert(mensajeError(err, 'No se pudo borrar el registro'));
     }
   };
 
@@ -76,7 +94,7 @@ const DogProfile = () => {
       fetchDog();
     } catch (err) {
       console.error(err);
-      alert('Error actualizando información del perro');
+      alert(mensajeError(err, 'Error actualizando información del perro'));
     }
   };
 
@@ -112,16 +130,12 @@ const DogProfile = () => {
   const handleDeletePhoto = async () => {
     if (window.confirm('¿Eliminar la foto de perfil?')) {
       try {
-        // Podríamos tener un endpoint específico para borrar, 
-        // o simplemente mandar un update con foto_url null.
-        // En este caso, usaremos el mismo endpoint de update pero con foto_url: null si estuviera implementado,
-        // pero vamos a implementar una lógica simple en el backend si es necesario o enviar null.
-        await api.put(`/dogs/${dog.id}`, { foto_url: null });
+        await api.delete(`/dogs/${dog.id}/photo`);
         fetchDog();
         setShowPhotoModal(false);
       } catch (err) {
         console.error(err);
-        alert('Error al eliminar la foto');
+        alert(mensajeError(err, 'Error al eliminar la foto'));
       }
     }
   };
@@ -210,6 +224,10 @@ const DogProfile = () => {
                         <input className="w-full border rounded p-2 mt-1" value={editDogData.origen || ''} onChange={e => setEditDogData({...editDogData, origen: e.target.value})} />
                       </div>
                       <div>
+                        <label className="text-xs font-bold text-slate-500 uppercase">Señas Particulares</label>
+                        <input className="w-full border rounded p-2 mt-1" value={editDogData.senas_particulares || ''} onChange={e => setEditDogData({...editDogData, senas_particulares: e.target.value})} />
+                      </div>
+                      <div>
                         <label className="text-xs font-bold text-slate-500 uppercase">Estado</label>
                         <select className="w-full border rounded p-2 mt-1" value={editDogData.estado} onChange={e => setEditDogData({...editDogData, estado: e.target.value})}>
                           <option value="entrenamiento">Entrenamiento</option>
@@ -235,6 +253,7 @@ const DogProfile = () => {
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div><span className="text-slate-500">Origen:</span> <p className="font-semibold">{dog.origen || 'No registrado'}</p></div>
                     <div><span className="text-slate-500">Color:</span> <p className="font-semibold">{dog.color || 'No registrado'}</p></div>
+                    <div><span className="text-slate-500">Señas Particulares:</span> <p className="font-semibold">{dog.senas_particulares || 'No registrado'}</p></div>
                     <div><span className="text-slate-500">Fecha Nacimiento:</span> <p className="font-semibold">{dog.fecha_nacimiento ? fmtFecha(dog.fecha_nacimiento) : 'No registrado'}</p></div>
                     <div className="col-span-2"><span className="text-slate-500">Observaciones Generales:</span> <p className="p-3 bg-white mt-1 border border-slate-200 rounded">{dog.observaciones || 'No hay observaciones'}</p></div>
                     
@@ -288,6 +307,10 @@ const DogProfile = () => {
                          <label className="text-xs text-slate-500">Veterinario (Opcional)</label>
                          <input type="text" className="w-full border rounded p-2 text-sm" value={formData.veterinario||''} onChange={e=>setFormData({...formData, veterinario: e.target.value})} />
                        </div>
+                       <div className="md:col-span-4">
+                         <label className="text-xs text-slate-500">Observaciones (Opcional)</label>
+                         <input type="text" className="w-full border rounded p-2 text-sm" value={formData.observaciones||''} onChange={e=>setFormData({...formData, observaciones: e.target.value})} />
+                       </div>
                        <div className="md:col-span-4 flex justify-end space-x-2 mt-2">
                          <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
                          <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded text-sm">Guardar Registro</button>
@@ -305,6 +328,7 @@ const DogProfile = () => {
                                  <span className={`inline-block text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded mr-2 ${cfg.badge}`}>{cfg.label}</span>
                                  <span className="font-bold">{v.vacuna}</span> - {fmtFecha(v.fecha_aplicacion)} (Próxima: {v.proxima_dosis ? fmtFecha(v.proxima_dosis) : 'N/A'})
                                  {v.veterinario && <span className="text-slate-400"> · Vet: {v.veterinario}</span>}
+                                 {v.observaciones && <p className="text-slate-400 text-xs mt-1">{v.observaciones}</p>}
                               </div>
                               {(user?.rol === 'admin' || user?.rol === 'veterinario') && <button onClick={() => deleteSubEntity(`vaccines/${v.id}`)} title="Eliminar registro" className="text-red-500 hover:bg-red-50 p-1 rounded"><Trash2 className="w-4 h-4"/></button>}
                            </li>
@@ -322,14 +346,42 @@ const DogProfile = () => {
                   </div>
                   
                   {showForm === 'ctrl' && (
-                    <form onSubmit={e => handleEntitySubmit(e, 'vetcontrols')} className="bg-white p-4 border rounded mb-4">
-                       <input required placeholder="Motivo del control" className="w-full border rounded p-2 text-sm mb-2" value={formData.motivo||''} onChange={e=>setFormData({...formData, motivo: e.target.value})} />
-                       <div className="mb-2">
-                         <label className="text-xs text-slate-500">Fecha del control</label>
-                         <input required type="date" className="w-full border rounded p-2 text-sm" value={formData.fecha||hoyISO()} onChange={e=>setFormData({...formData, fecha: e.target.value})} />
+                    <form onSubmit={e => handleEntitySubmit(e, 'vetcontrols')} className="bg-white p-4 border rounded-xl mb-4 space-y-3">
+                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                         <div>
+                           <label className="text-xs text-slate-500">Motivo del control *</label>
+                           <input required placeholder="Ej: Control anual, cojera..." className="w-full border rounded p-2 text-sm" value={formData.motivo||''} onChange={e=>setFormData({...formData, motivo: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Fecha del control *</label>
+                           <input required type="date" className="w-full border rounded p-2 text-sm" value={formData.fecha||hoyISO()} onChange={e=>setFormData({...formData, fecha: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Veterinario</label>
+                           <input placeholder="Nombre del profesional" className="w-full border rounded p-2 text-sm" value={formData.veterinario||''} onChange={e=>setFormData({...formData, veterinario: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Diagnóstico</label>
+                           <input placeholder="Diagnóstico" className="w-full border rounded p-2 text-sm" value={formData.diagnostico||''} onChange={e=>setFormData({...formData, diagnostico: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Tratamiento</label>
+                           <input placeholder="Tratamiento indicado" className="w-full border rounded p-2 text-sm" value={formData.tratamiento||''} onChange={e=>setFormData({...formData, tratamiento: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Medicación</label>
+                           <input placeholder="Medicamento" className="w-full border rounded p-2 text-sm" value={formData.medicacion||''} onChange={e=>setFormData({...formData, medicacion: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Dosis</label>
+                           <input placeholder="Ej: 1 comprimido cada 12 hs" className="w-full border rounded p-2 text-sm" value={formData.dosis||''} onChange={e=>setFormData({...formData, dosis: e.target.value})} />
+                         </div>
+                         <div>
+                           <label className="text-xs text-slate-500">Observaciones</label>
+                           <input placeholder="Notas adicionales" className="w-full border rounded p-2 text-sm" value={formData.observaciones||''} onChange={e=>setFormData({...formData, observaciones: e.target.value})} />
+                         </div>
                        </div>
-                       <input placeholder="Tratamiento/Medicación" className="w-full border rounded p-2 text-sm mb-2" value={formData.tratamiento||''} onChange={e=>setFormData({...formData, tratamiento: e.target.value})} />
-                       <div className="flex justify-end space-x-2 mt-2">
+                       <div className="flex justify-end space-x-2 pt-2">
                          <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-500 bg-slate-100 rounded text-sm hover:bg-slate-200 transition-colors">Cancelar</button>
                          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded text-sm">Guardar Control</button>
                        </div>
@@ -338,8 +390,23 @@ const DogProfile = () => {
 
                   {dog.vetControls?.length > 0 ? (
                     <ul className="space-y-2">
-                       {dog.vetControls.map(c => <li key={c.id} className="p-3 bg-white border border-slate-200 rounded text-sm">
-                          <span className="font-bold">{c.motivo}</span> - {fmtFecha(c.fecha)} | Vet: {c.veterinario} <br/> <span className="text-slate-500 italic">{c.tratamiento}</span>
+                       {dog.vetControls.map(c => <li key={c.id} className="p-3 bg-white border border-slate-200 rounded text-sm flex justify-between items-start gap-3 group">
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-baseline gap-x-2">
+                              <span className="font-bold">{c.motivo}</span>
+                              <span className="text-slate-400">· {fmtFecha(c.fecha)}</span>
+                              {c.veterinario && <span className="text-slate-400">· Vet: {c.veterinario}</span>}
+                            </div>
+                            {c.diagnostico && <p className="text-slate-600 mt-1"><span className="font-semibold">Diagnóstico:</span> {c.diagnostico}</p>}
+                            {c.tratamiento && <p className="text-slate-500 italic mt-1"><span className="font-semibold not-italic">Tratamiento:</span> {c.tratamiento}</p>}
+                            {(c.medicacion || c.dosis) && <p className="text-slate-500 mt-1"><span className="font-semibold">Medicación:</span> {[c.medicacion, c.dosis].filter(Boolean).join(' · ')}</p>}
+                            {c.observaciones && <p className="text-slate-400 mt-1">{c.observaciones}</p>}
+                          </div>
+                          {(user?.rol === 'admin' || user?.rol === 'veterinario') && (
+                            <button onClick={() => deleteSubEntity(`vetcontrols/${c.id}`)} title="Eliminar control" className="shrink-0 text-slate-300 hover:text-red-500 hover:bg-red-50 p-1.5 rounded-full transition-colors">
+                              <Trash2 className="w-4 h-4"/>
+                            </button>
+                          )}
                        </li>)}
                     </ul>
                   ) : <p className="text-slate-500 text-sm">No hay controles registrados.</p>}
@@ -499,6 +566,7 @@ const DogProfile = () => {
                          {dog.trainings.map(t => <li key={t.id} className="relative p-4 bg-white border border-slate-200 rounded text-sm shadow-sm">
                           <div className="flex justify-between font-bold border-b pb-2 mb-2 pr-8"><span>{t.tipo}</span> <span className="text-slate-500">{fmtFecha(t.fecha)}</span></div>
                           Nivel: <span className="font-semibold text-slate-800">{t.nivel||'-'}</span> | Evaluación: <span className="italic">{t.evaluacion||'-'}</span>
+                          {t.instructor && <span className="text-slate-400"> | Instructor: {t.instructor}</span>}
                           {(user?.rol === 'admin' || user?.rol === 'instructor') && (
                             <button onClick={() => deleteSubEntity(`trainings/${t.id}`)} title="Eliminar registro de entrenamiento" className="absolute top-3 right-3 text-slate-300 hover:text-red-500 transition-colors p-1.5 rounded-full hover:bg-red-50">
                               <Trash2 className="w-4 h-4"/>
@@ -678,6 +746,7 @@ const DogProfile = () => {
                                 <span className="bg-indigo-100 text-indigo-700 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">Nivel: {t.nivel}</span>
                              </div>
                              <p className="text-sm text-slate-600 italic leading-relaxed">"{t.evaluacion}"</p>
+                             {t.instructor && <p className="text-[11px] text-slate-400 mt-2">Instructor: {t.instructor}</p>}
                           </div>
                        ))}
                     </div>

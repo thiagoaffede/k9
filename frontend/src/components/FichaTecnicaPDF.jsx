@@ -61,6 +61,11 @@ const FichaTecnicaPDF = ({ dog }) => {
                 <span className="font-bold text-slate-800">{dog.fecha_nacimiento ? fmtFecha(dog.fecha_nacimiento) : 'NO REGISTRADA'}</span>
               </div>
               <div className="flex items-center">
+                <Info className="w-4 h-4 mr-2 text-slate-400" />
+                <span className="font-bold text-slate-500 mr-2 uppercase text-[10px]">Señas:</span>
+                <span className="font-bold text-slate-800 uppercase tracking-tight">{dog.senas_particulares || 'SIN REGISTRO'}</span>
+              </div>
+              <div className="flex items-center">
                 <Activity className="w-4 h-4 mr-2 text-slate-400" />
                 <span className="font-bold text-slate-500 mr-2 uppercase text-[10px]">Estado:</span>
                 <span className="font-bold text-blue-700 uppercase">{dog.estado}</span>

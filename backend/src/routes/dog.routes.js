@@ -1,7 +1,7 @@
 const express = require('express');
 const { 
-  getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, uploadMedicalDoc, 
-  addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, 
+  getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, deletePhoto, uploadMedicalDoc, 
+  addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, deleteVetControl,
   addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining, deleteTraining
 } = require('../controllers/dog.controller');
 const { authMiddleware, roleMiddleware } = require('../middlewares/auth.middleware');
@@ -18,6 +18,7 @@ router.post('/', roleMiddleware(['admin', 'veterinario', 'instructor']), createD
 router.put('/:id', roleMiddleware(['admin', 'veterinario', 'instructor']), updateDog);
 router.delete('/:id', roleMiddleware(['admin']), deleteDog); // Soft Delete
 router.post('/:id/photo', upload.single('photo'), uploadPhoto);
+router.delete('/:id/photo', deletePhoto);
 router.post('/:id/documents', upload.single('doc'), uploadMedicalDoc);
 
 // Subentities
@@ -26,6 +27,7 @@ router.delete('/:id/assignments/:aid', roleMiddleware(['admin']), deleteAssignme
 router.post('/:id/vaccines', roleMiddleware(['admin', 'veterinario']), addVaccine);
 router.delete('/:id/vaccines/:vid', roleMiddleware(['admin', 'veterinario']), deleteVaccine);
 router.post('/:id/vetcontrols', roleMiddleware(['admin', 'veterinario']), addVetControl);
+router.delete('/:id/vetcontrols/:cid', roleMiddleware(['admin', 'veterinario']), deleteVetControl);
 router.post('/:id/feedings', roleMiddleware(['admin', 'veterinario', 'guia']), addFeeding);
 router.delete('/:id/feedings/:fid', roleMiddleware(['admin', 'veterinario']), deleteFeeding);
 router.post('/:id/incidents', roleMiddleware(['admin', 'veterinario', 'instructor', 'guia']), addIncident);

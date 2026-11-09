@@ -5,8 +5,9 @@ import api from '../services/api';
 const NewDog = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    nombre: '', raza: '', sexo: 'macho', color: '', nro_chip: '',
-    estado: 'entrenamiento', origen: '', observaciones: '', fecha_nacimiento: ''
+    nombre: '', raza: '', sexo: 'macho', color: '', senas_particulares: '',
+    nro_chip: '', estado: 'entrenamiento', origen: '', observaciones: '',
+    fecha_nacimiento: ''
   });
   const [foto, setFoto] = useState(null);
 
@@ -17,19 +18,26 @@ const NewDog = () => {
       const res = await api.post('/dogs', formData);
       const dogId = res.data.id;
 
-      // 2. Subir foto si existe (FormData)
+      // 2. Subir foto si existe (FormData). Si falla, el perro ya quedó creado:
+      // avisamos y llevamos al perfil en vez de mostrar un error genérico que
+      // invite a reintentar y termine duplicando el registro.
       if (foto) {
-        const uploadData = new FormData();
-        uploadData.append('photo', foto);
-        await api.post(`/dogs/${dogId}/photo`, uploadData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        try {
+          const uploadData = new FormData();
+          uploadData.append('photo', foto);
+          await api.post(`/dogs/${dogId}/photo`, uploadData, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+          });
+        } catch (err) {
+          console.error(err);
+          alert('El perro se guardó correctamente, pero la foto no se pudo subir. Podés intentarlo desde su perfil.');
+        }
       }
 
-      navigate('/'); // Volver al dashboard
+      navigate(`/dogs/${dogId}`);
     } catch (err) {
       console.error(err);
-      alert('Error registrando perro');
+      alert(err.response?.data?.message || 'Error registrando perro');
     }
   };
 
@@ -52,6 +60,21 @@ const NewDog = () => {
             <label className="block text-sm font-medium text-slate-700">Raza</label>
             <input type="text" className="mt-1 w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
               value={formData.raza} onChange={e => setFormData({ ...formData, raza: e.target.value })} />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">Color</label>
+            <input type="text" className="mt-1 w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              value={formData.color} onChange={e => setFormData({ ...formData, color: e.target.value })} />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">Señas Particulares</label>
+            <input type="text" className="mt-1 w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              value={formData.senas_particulares} onChange={e => setFormData({ ...formData, senas_particulares: e.target.value })} />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">Origen</label>
+            <input type="text" className="mt-1 w-full p-2 border rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              value={formData.origen} onChange={e => setFormData({ ...formData, origen: e.target.value })} />
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">Sexo</label>

@@ -11,6 +11,20 @@ const addHistoryLog = async (id_perro, tipo_evento, descripcion, responsable) =>
   });
 };
 
+// Helper: valida una fecha recibida del formulario (yyyy-mm-dd o ISO)
+const parseFecha = (valor) => {
+  if (!valor) return null;
+  const fecha = new Date(valor);
+  return isNaN(fecha.getTime()) ? null : fecha;
+};
+
+// Helper: recorta strings opcionales y convierte vacíos en null
+const textoOpcional = (valor) => {
+  if (typeof valor !== 'string') return valor ?? null;
+  const limpio = valor.trim();
+  return limpio === '' ? null : limpio;
+};
+
 const getDogs = async (req, res) => {
   try {
     const { nombre, estado, guia } = req.query;
@@ -66,17 +80,28 @@ const getDogById = async (req, res) => {
 const createDog = async (req, res) => {
   try {
     const data = { ...req.body };
+    if (!data.nombre || String(data.nombre).trim() === '') {
+      return res.status(400).json({ message: 'El nombre del perro es obligatorio' });
+    }
+    if (!data.sexo || String(data.sexo).trim() === '') {
+      return res.status(400).json({ message: 'El sexo del perro es obligatorio' });
+    }
     // Evitar Unique Constraint de Prisma en nro_chip vacio
     if (!data.nro_chip || data.nro_chip.trim() === '') {
       data.nro_chip = null;
     }
     if (data.fecha_nacimiento) {
-      data.fecha_nacimiento = new Date(data.fecha_nacimiento);
+      const fecha = parseFecha(data.fecha_nacimiento);
+      if (!fecha) return res.status(400).json({ message: 'Fecha de nacimiento inválida' });
+      data.fecha_nacimiento = fecha;
     }
     const dog = await prisma.dog.create({ data });
     await addHistoryLog(dog.id, 'CREACION', 'Perro registrado en el sistema', req.user.nombre);
     res.status(201).json(dog);
   } catch (error) {
+    if (error.code === 'P2002') {
+      return res.status(409).json({ message: 'Ya existe un perro registrado con ese número de chip' });
+    }
     res.status(500).json({ message: 'Error creating dog', error: error.message });
   }
 };
@@ -94,8 +119,24 @@ const updateDog = async (req, res) => {
       estado, origen, observaciones 
     };
 
-    if (fecha_nacimiento) {
-      data.fecha_nacimiento = new Date(fecha_nacimiento);
+    // Solo validamos si el cliente manda el campo: permite actualizaciones
+    // parciales (por ejemplo, cambiar únicamente la fecha o la foto).
+    if (nombre !== undefined && (!nombre || String(nombre).trim() === '')) {
+      return res.status(400).json({ message: 'El nombre del perro es obligatorio' });
+    }
+    if (sexo !== undefined && (!sexo || String(sexo).trim() === '')) {
+      return res.status(400).json({ message: 'El sexo del perro es obligatorio' });
+    }
+
+    // Permite limpiar la fecha mandando '' o null; valida formatos inválidos.
+    if (fecha_nacimiento !== undefined) {
+      if (!fecha_nacimiento) {
+        data.fecha_nacimiento = null;
+      } else {
+        const fecha = parseFecha(fecha_nacimiento);
+        if (!fecha) return res.status(400).json({ message: 'Fecha de nacimiento inválida' });
+        data.fecha_nacimiento = fecha;
+      }
     }
 
     // Manejo de nro_chip para evitar Unique Constraint con strings vacíos
@@ -115,6 +156,12 @@ const updateDog = async (req, res) => {
     await addHistoryLog(dog.id, 'MODIFICACION', 'Datos generales del perro actualizados', req.user.nombre);
     res.json(dog);
   } catch (error) {
+    if (error.code === 'P2002') {
+      return res.status(409).json({ message: 'Ya existe otro perro registrado con ese número de chip' });
+    }
+    if (error.code === 'P2025') {
+      return res.status(404).json({ message: 'Perro no encontrado' });
+    }
     res.status(500).json({ message: 'Error updating dog', error: error.message });
   }
 };
@@ -184,6 +231,35 @@ const uploadPhoto = async (req, res) => {
   }
 };
 
+const deletePhoto = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const dog = await prisma.dog.findUnique({ where: { id } });
+    if (!dog) return res.status(404).json({ message: 'Perro no encontrado' });
+
+    // Si la foto está en nuestro bucket, borramos también el archivo remoto.
+    if (dog.foto_url && dog.foto_url.includes(process.env.S3_BUCKET)) {
+      try {
+        const oldKey = dog.foto_url.split(`${process.env.S3_BUCKET}/`)[1];
+        if (oldKey) {
+          await s3Client.send(new DeleteObjectCommand({
+            Bucket: process.env.S3_BUCKET,
+            Key: oldKey
+          }));
+        }
+      } catch (err) {
+        console.error("Error al borrar foto de Supabase:", err.message);
+      }
+    }
+
+    await prisma.dog.update({ where: { id }, data: { foto_url: null } });
+    await addHistoryLog(id, 'FOTO', 'Foto de perfil eliminada', req.user.nombre);
+    res.json({ message: 'Foto eliminada' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar la foto', error: error.message });
+  }
+};
+
 const uploadMedicalDoc = async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ message: 'No file' });
@@ -228,6 +304,13 @@ const addAssignment = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
     const { guia, turno, fecha_inicio, observaciones } = req.body;
+
+    if (!guia || String(guia).trim() === '') {
+      return res.status(400).json({ message: 'Tenés que seleccionar un guía' });
+    }
+
+    const fechaInicio = fecha_inicio ? parseFecha(fecha_inicio) : new Date();
+    if (!fechaInicio) return res.status(400).json({ message: 'Fecha de inicio inválida' });
     
     // Finalizar asignaciones anteriores activas
     await prisma.assignment.updateMany({
@@ -238,10 +321,10 @@ const addAssignment = async (req, res) => {
     const assignment = await prisma.assignment.create({ 
       data: { 
         id_perro,
-        guia,
-        turno,
-        observaciones,
-        fecha_inicio: fecha_inicio ? new Date(fecha_inicio) : new Date() 
+        guia: String(guia).trim(),
+        turno: textoOpcional(turno),
+        observaciones: textoOpcional(observaciones),
+        fecha_inicio: fechaInicio
       } 
     });
 
@@ -270,24 +353,38 @@ const addVaccine = async (req, res) => {
     const id_perro = parseInt(req.params.id);
     const { vacuna, proxima_dosis, veterinario, observaciones, tipo } = req.body;
 
+    if (!vacuna || String(vacuna).trim() === '') {
+      return res.status(400).json({ message: 'El nombre de la vacuna o producto es obligatorio' });
+    }
+
+    const fechaAplicacion = parseFecha(req.body.fecha_aplicacion);
+    if (!fechaAplicacion) {
+      return res.status(400).json({ message: 'La fecha de aplicación es obligatoria' });
+    }
+
+    const fechaProxima = proxima_dosis ? parseFecha(proxima_dosis) : null;
+    if (proxima_dosis && !fechaProxima) {
+      return res.status(400).json({ message: 'La próxima dosis tiene una fecha inválida' });
+    }
+
     // Whitelist: ignora campos no permitidos (id, id_perro, createdAt...) y valida el enum
     const tipoFinal = TIPOS_VACUNA.includes(tipo) ? tipo : 'vacuna';
 
     const vaccine = await prisma.vaccine.create({ 
       data: {
         id_perro,
-        vacuna,
+        vacuna: String(vacuna).trim(),
         tipo: tipoFinal,
-        fecha_aplicacion: new Date(req.body.fecha_aplicacion),
-        proxima_dosis: proxima_dosis ? new Date(proxima_dosis) : null,
-        veterinario: veterinario || null,
-        observaciones: observaciones || null
+        fecha_aplicacion: fechaAplicacion,
+        proxima_dosis: fechaProxima,
+        veterinario: textoOpcional(veterinario),
+        observaciones: textoOpcional(observaciones)
       }
     });
     await addHistoryLog(id_perro, 'VACUNA', `Aplicada (${tipoFinal}): ${vacuna}`, req.user.nombre);
     res.status(201).json(vaccine);
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: error.message });
+    res.status(500).json({ message: 'Error al guardar la vacuna', error: error.message });
   }
 };
 
@@ -303,12 +400,52 @@ const deleteVaccine = async (req, res) => {
 const addVetControl = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
-    const fecha = req.body.fecha ? new Date(req.body.fecha) : new Date();
-    const control = await prisma.vetControl.create({ data: { ...req.body, fecha, id_perro } });
-    await addHistoryLog(id_perro, 'CONTROL_VET', `Motivo: ${req.body.motivo}`, req.user.nombre);
+    const { motivo, fecha, diagnostico, tratamiento, medicacion, dosis, veterinario, observaciones } = req.body;
+
+    if (!motivo || String(motivo).trim() === '') {
+      return res.status(400).json({ message: 'El motivo del control es obligatorio' });
+    }
+
+    const fechaControl = fecha ? parseFecha(fecha) : new Date();
+    if (!fechaControl) return res.status(400).json({ message: 'La fecha del control es inválida' });
+
+    const control = await prisma.vetControl.create({
+      data: {
+        id_perro,
+        motivo: String(motivo).trim(),
+        fecha: fechaControl,
+        diagnostico: textoOpcional(diagnostico),
+        tratamiento: textoOpcional(tratamiento),
+        medicacion: textoOpcional(medicacion),
+        dosis: textoOpcional(dosis),
+        veterinario: textoOpcional(veterinario),
+        observaciones: textoOpcional(observaciones)
+      }
+    });
+    await addHistoryLog(id_perro, 'CONTROL_VET', `Motivo: ${motivo}`, req.user.nombre);
     res.status(201).json(control);
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: error.message });
+    res.status(500).json({ message: 'Error al guardar el control veterinario', error: error.message });
+  }
+};
+
+const deleteVetControl = async (req, res) => {
+  try {
+    const id_perro = parseInt(req.params.id);
+    const cid = parseInt(req.params.cid);
+
+    // Verificar que el control pertenezca al perro del URL (evita IDOR)
+    const control = await prisma.vetControl.findFirst({ where: { id: cid, id_perro } });
+    if (!control) {
+      return res.status(404).json({ message: 'Control veterinario no encontrado' });
+    }
+
+    await prisma.vetControl.delete({ where: { id: cid } });
+    await addHistoryLog(id_perro, 'CONTROL_VET_BORRADO', `Se eliminó control: ${control.motivo}`, req.user.nombre);
+    res.json({ message: 'Control veterinario eliminado' });
+  } catch (error) {
+    console.error("ERROR EN DELETE_VETCONTROL:", error);
+    res.status(500).json({ message: 'Error al borrar el control veterinario', error: error.message });
   }
 };
 
@@ -316,18 +453,25 @@ const addFeeding = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
     const { tipo_alimento, marca, cantidad_diaria, horario, suplementos, cambios_dieta, observaciones, fecha_inicio } = req.body;
-    
+
+    if (!tipo_alimento || String(tipo_alimento).trim() === '') {
+      return res.status(400).json({ message: 'El tipo de alimento es obligatorio' });
+    }
+
+    const fechaInicio = fecha_inicio ? parseFecha(fecha_inicio) : new Date();
+    if (!fechaInicio) return res.status(400).json({ message: 'La fecha de inicio es inválida' });
+
     const feed = await prisma.feeding.create({ 
       data: { 
         id_perro,
-        tipo_alimento, 
-        marca, 
-        cantidad_diaria, 
-        horario, 
-        suplementos, 
-        cambios_dieta, 
-        observaciones,
-        fecha_inicio: fecha_inicio ? new Date(fecha_inicio) : new Date() 
+        tipo_alimento: String(tipo_alimento).trim(),
+        marca: textoOpcional(marca),
+        cantidad_diaria: textoOpcional(cantidad_diaria),
+        horario: textoOpcional(horario),
+        suplementos: textoOpcional(suplementos),
+        cambios_dieta: textoOpcional(cambios_dieta),
+        observaciones: textoOpcional(observaciones),
+        fecha_inicio: fechaInicio
       } 
     });
 
@@ -342,12 +486,30 @@ const addFeeding = async (req, res) => {
 const addTraining = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
-    const fecha = req.body.fecha ? new Date(req.body.fecha) : new Date();
-    const training = await prisma.training.create({ data: { ...req.body, fecha, id_perro } });
-    await addHistoryLog(id_perro, 'ENTRENAMIENTO', `Tipo: ${req.body.tipo}`, req.user.nombre);
+    const { tipo, nivel, fecha, evaluacion, observaciones, instructor } = req.body;
+
+    if (!tipo || String(tipo).trim() === '') {
+      return res.status(400).json({ message: 'El tipo de entrenamiento es obligatorio' });
+    }
+
+    const fechaTraining = fecha ? parseFecha(fecha) : new Date();
+    if (!fechaTraining) return res.status(400).json({ message: 'La fecha del entrenamiento es inválida' });
+
+    const training = await prisma.training.create({
+      data: {
+        id_perro,
+        tipo: String(tipo).trim(),
+        nivel: textoOpcional(nivel),
+        evaluacion: textoOpcional(evaluacion),
+        observaciones: textoOpcional(observaciones),
+        instructor: textoOpcional(instructor) || req.user.nombre || null,
+        fecha: fechaTraining
+      }
+    });
+    await addHistoryLog(id_perro, 'ENTRENAMIENTO', `Tipo: ${tipo}`, req.user.nombre);
     res.status(201).json(training);
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: error.message });
+    res.status(500).json({ message: 'Error al guardar el entrenamiento', error: error.message });
   }
 };
 
@@ -385,18 +547,41 @@ const deleteFeeding = async (req, res) => {
 const addIncident = async (req, res) => {
   try {
     const id_perro = parseInt(req.params.id);
-    const fecha = req.body.fecha ? new Date(req.body.fecha) : new Date();
-    const incident = await prisma.incident.create({ data: { ...req.body, fecha, id_perro } });
-    await addHistoryLog(id_perro, 'INCIDENTE', `Tipo: ${req.body.tipo}`, req.user.nombre);
+    const { tipo, descripcion, gravedad, fecha, acciones_tomadas } = req.body;
+
+    if (!tipo || String(tipo).trim() === '') {
+      return res.status(400).json({ message: 'El tipo de incidente es obligatorio' });
+    }
+    if (!descripcion || String(descripcion).trim() === '') {
+      return res.status(400).json({ message: 'La descripción del incidente es obligatoria' });
+    }
+    if (!gravedad || !['baja', 'media', 'alta'].includes(gravedad)) {
+      return res.status(400).json({ message: 'La gravedad debe ser baja, media o alta' });
+    }
+
+    const fechaIncidente = fecha ? parseFecha(fecha) : new Date();
+    if (!fechaIncidente) return res.status(400).json({ message: 'La fecha del incidente es inválida' });
+
+    const incident = await prisma.incident.create({
+      data: {
+        id_perro,
+        tipo: String(tipo).trim(),
+        descripcion: String(descripcion).trim(),
+        gravedad,
+        acciones_tomadas: textoOpcional(acciones_tomadas),
+        fecha: fechaIncidente
+      }
+    });
+    await addHistoryLog(id_perro, 'INCIDENTE', `Tipo: ${tipo}`, req.user.nombre);
     
     // Si el incidente es fallecimiento, podríamos opcionalmente cambiar el estado del perro
-    if (req.body.tipo === 'Fallecimiento') {
+    if (tipo === 'Fallecimiento') {
       await prisma.dog.update({ where: { id: id_perro }, data: { estado: 'retirado' } });
     }
 
     res.status(201).json(incident);
   } catch (error) {
-    res.status(500).json({ message: 'Error', error: error.message });
+    res.status(500).json({ message: 'Error al guardar el incidente', error: error.message });
   }
 };
 
@@ -411,7 +596,7 @@ const deleteIncident = async (req, res) => {
 };
 
 module.exports = {
-  getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, uploadMedicalDoc,
-  addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, 
+  getDogs, getDogById, createDog, updateDog, deleteDog, uploadPhoto, deletePhoto, uploadMedicalDoc,
+  addAssignment, deleteAssignment, addVaccine, deleteVaccine, addVetControl, deleteVetControl,
   addFeeding, deleteFeeding, addIncident, deleteIncident, addTraining, deleteTraining
 };
