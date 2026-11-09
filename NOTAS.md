@@ -186,3 +186,33 @@ generalmente ya está reflejada en `AGENTS.md`.
   `{ id, id_perro }` (o el 404 convierte un borrado cruzado en una fuga de
   datos). Un `delete` directo por id devuelve 500 (P2025) cuando el registro
   no existe; se responde 404.
+
+### 2026-11-09 — Deploy verificado en producción
+- **Qué:** se pushearon a `master` los commits `89bff28` (formularios +
+  borrado de controles veterinarios) y `8cb61e8` (`AGENTS.md`), y se verificó
+  el deploy con caso control, no con `/health`.
+- **Por qué:** un push a `master` dispara Render (backend) y Vercel
+  (frontend). `router.use(authMiddleware)` devuelve 401 para cualquier path
+  bajo `/api/dogs` aunque la ruta no exista, así que un 401 no prueba nada.
+- **Archivos:** `backend/src/controllers/dog.controller.js`,
+  `backend/src/routes/dog.routes.js`, `frontend/src/pages/DogProfile.jsx`
+  (los del commit `89bff28`).
+- **Verificación:** contra `https://k9-emmo.onrender.com` con credenciales
+  reales (usuario admin temporal creado en la base y logueado por
+  `POST /api/auth/login`, 12/12):
+  - `GET /api/dogs` autenticado → 200 (caso control: el token sirve).
+  - `POST /api/dogs/8/vetcontrols` → 201 con id.
+  - `DELETE .../dogs/17/vetcontrols/<id>` (perro ajeno) → **404**.
+  - `DELETE .../dogs/8/vetcontrols/<id>` → **200**
+    `{"message":"Control veterinario eliminado"}` — ese string no existe en
+    el código viejo: es la huella de que la ruta nueva está live.
+  - Segundo DELETE → 404.
+  - Conteos idénticos antes/después (`vetControl=2`, `history=114`);
+    se borraron las 2 filas de historial y el usuario temporal.
+  Frontend: `https://k9-pink.vercel.app` sirve `assets/index-DTzK61P-.js`,
+  que contiene `Eliminar control`, string que solo existe desde `89bff28`.
+- **Aprendizaje:** el fingerprint tiene que ser un texto **que no exista en la
+  versión anterior**. `/health` y los 401 no distinguen deploy viejo de nuevo;
+  un string único del bundle (frontend) y el mensaje de una ruta nueva
+  (backend, con token real) sí. `seccioncanes.com` no resuelve por DNS, así
+  que el dominio de verificación es `k9-pink.vercel.app`.
