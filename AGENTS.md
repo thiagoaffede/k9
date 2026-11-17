@@ -53,16 +53,25 @@ exit 127).
 | Dónde | Qué | Para qué |
 |---|---|---|
 | `backend/` | `npm run dev` | nodemon, puerto 5000 |
-| `backend/` | `npm start` | producción |
-| `backend/` | `npx prisma generate` | regenerar el cliente tras tocar el schema |
-| `backend/` | `npx prisma migrate status` | ver migraciones pendientes (**siempre con URL directa**) |
+| `backend/` | `npm start` | producción (aplica migraciones antes de arrancar) |
+| `backend/` | `npm run db:generate` | regenerar el cliente tras tocar el schema |
+| `backend/` | `npm run db:status` | ver migraciones pendientes (**siempre con URL directa**) |
+| `backend/` | `npm run db:migrate` | aplicar migraciones pendientes (falla con código 1 si no puede) |
 | `backend/` | `npx prisma migrate dev --name x` | crear migración en local |
 | `frontend/` | `npm run dev` | Vite |
 | `frontend/` | `npm run build` | build |
 | `frontend/` | `npm run lint` | ESLint |
 
-`npm run build` del backend es `prisma generate && prisma migrate deploy`.
-Ojo: en Render ese `migrate deploy` corre contra el pooler.
+Las migraciones se aplican **solas al arrancar** (`scripts/migrate.js` dentro
+de `npm start`), porque Render nunca corre `npm run build`. El script invoca la
+CLI con `node` (el shim de `.bin` no tiene permiso de ejecución en Render) y es
+**no fatal**: si la base está pausada, loguea `[migraciones] FALLARON`, el
+servidor arranca igual y hay que correr `npm run db:migrate` cuando vuelva.
+
+Para crear una migración nueva: `npx prisma migrate dev --name x` en local,
+después `npm run db:migrate` para aplicarla a la base compartida antes del
+push. `prisma migrate status` a través del pooler se cuelga: usá la URL directa
+(la del `backend/.env`).
 
 ## Roles
 
@@ -167,7 +176,8 @@ funcione antes de pedirle a alguien que la configure.
 
 Migraciones en `backend/prisma/migrations/`. La baseline es `0_init`
 (marcada aplicada sin ejecutar). Agregar migraciones siempre con nombre
-descriptivo y `prisma migrate status` antes de deployar.
+descriptivo y `npm run db:status` antes de deployar. Aplicarlas con
+`npm run db:migrate` (o esperar a que las aplique el arranque en Render).
 
 ## Git
 

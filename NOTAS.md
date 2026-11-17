@@ -279,3 +279,41 @@ generalmente ya está reflejada en `AGENTS.md`.
   permiso de ejecución (exit 127). `Unknown argument X` con la columna
   existente en la DB y el mismo payload funcionando en local = cliente
   generado viejo en el servidor. Y `/health` no toca la base.
+
+### 2026-11-17 — Migraciones automáticas al arrancar
+- **Qué:** se agregó `backend/scripts/migrate.js`, que corre `prisma migrate
+  deploy` antes de `node index.js` (o sea, en cada `npm start`, que es lo que
+  ejecuta Render). Es el cierre de la advertencia del deploy anterior: las
+  migraciones ya no dependen de un paso manual ni de cambiar el build command
+  en el dashboard.
+- **Por qué:** Render corre **solo `npm install`** como build, así que
+  `prisma migrate deploy` nunca se ejecutaba. Un cambio de schema quedaba
+  aplicado en el código pero no en la base, y el síntoma era el peor posible:
+  `Unknown argument` en el cliente o una columna inexistente, con 500 genérico
+  en la UI. Colgarlo del arranque es el único punto garantizado (Render siempre
+  corre `npm start`) sin tocar la configuración del servicio.
+- **Archivos:** `backend/scripts/migrate.js`, `backend/package.json`
+  (`start`, `db:migrate`, `db:status`), `AGENTS.md`, `NOTAS.md`.
+- **Decisiones:** el script es **no fatal** a propósito. Si la base está
+  pausada (pasa cada ~7 días en el plan free), loguea
+  `[migraciones] FALLARON` con el motivo y el servidor arranca igual: mejor una
+  app degradada que un servicio caído. Con `--strict` sí devuelve código 1, que
+  es el modo que usa `npm run db:migrate` para uso manual/CI. La CLI se invoca
+  con `node ./node_modules/prisma/build/index.js`, nunca con el binario de
+  `.bin` (Permission denied → exit 127 en Render).
+- **Verificación:**
+  - `npm run db:status` → "Database schema is up to date!" (2 migraciones).
+  - Se creó una migración no-op temporal (`20261117000000_scratch_noop`,
+    `SELECT 1;`), `npm run db:migrate` la aplicó y quedó registrada en
+    `_prisma_migrations`. Después se borró la fila de `_prisma_migrations` y la
+    carpeta; `db:status` volvió a "up to date" con 2 migraciones. Ninguna tabla
+    de negocio tocada.
+  - Camino de falla: con `DATABASE_URL` apuntando a `127.0.0.1:1`, sin strict
+    sale con código **0** y arranca; con `--strict` sale con **1**. Ambos
+    imprimen `P1001` y el mensaje de qué correr.
+  - `npm start` completo en :5099: imprime `[migraciones] OK (2 migrations
+    found)`, levanta el server y `/health` responde `{"status":"ok"}`.
+- **Aprendizaje:** si el host de deploy no corre el build del repo, el arranque
+  es el único hook garantizado. Y una migración automática no puede ser fatal
+  cuando la base puede estar pausada por el proveedor: loguear, arrancar
+  degradado y dejar el comando a mano es mejor que no arrancar.
