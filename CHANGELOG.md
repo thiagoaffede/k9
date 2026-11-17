@@ -2,7 +2,11 @@
 
 Historial de versiones de Sección Canes. Lo mismo que se ve en el login.
 
-## v1.0.0 - 2026-11-17
+## v1.1.0 - 2026-11-16
+
+- Mostrar novedades versionadas en el login
+
+## v1.0.0 - 2026-04-19
 
 - Gestión de perros: alta, edición, foto de perfil y ficha técnica en PDF
 - Sanidad: vacunas, antiparasitarios, desparasitaciones y controles veterinarios
