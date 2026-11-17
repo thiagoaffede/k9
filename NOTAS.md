@@ -222,7 +222,9 @@ generalmente ya está reflejada en `AGENTS.md`.
   proyecto de Supabase estaba pausado: toda la API daba 500. (2) Después de
   reanudarlo, solo `vaccines` seguía fallando con `Unknown argument 'tipo'`:
   el cliente de Prisma que corre en Render está generado con un schema
-  anterior. Se agregó `postinstall: prisma generate` al `backend/package.json`.
+  anterior. La causa: **el build de Render corre solo `npm install`**, no
+  `npm run build`, así que `prisma generate` nunca se ejecutaba. Se agregó
+  `postinstall` invocando la CLI **con `node`**.
 - **Por qué:**
   - **Base pausada.** `POST /api/auth/login` devolvía 500 con
     `FATAL: (ENOTFOUND) tenant/user postgres.sjigbclucixwbqbzabss not found`
@@ -236,11 +238,18 @@ generalmente ya está reflejada en `AGENTS.md`.
     ser baja, media o alta", "El nombre de la vacuna o producto es
     obligatorio"), la columna `tipo` existe en la base
     (`information_schema.columns` la lista) y el mismo payload guarda bien
-    contra esa base desde el backend local. Es la misma trampa del
-    `node_modules` commiteado: el cliente/engine del server quedó viejo.
-    `prisma generate` estaba solo en `build`; si Render reusa el build cache el
-    cliente no se regenera. `postinstall` lo garantiza en cualquier
-    `npm install`.
+    contra esa base desde el backend local. El log de Render lo confirmó:
+    `Running build command 'npm install'` — nunca corre `npm run build`, que es
+    donde estaba el `prisma generate`. El cliente del repo lleva meses viejo y
+    el build cache de 240 MiB lo mantiene.
+  - **El binario no se puede ejecutar.** Primer intento con
+    `postinstall: "prisma generate"` → build falló con
+    `sh: 1: prisma: Permission denied` y `Exited with status 127`: en la imagen
+    de Render el shim de `node_modules/.bin/prisma` perdió el bit de ejecución
+    (viene del cache). Solución: invocar el CLI con node
+    (`node ./node_modules/prisma/build/index.js generate`), que no necesita
+    permiso de ejecución, en `postinstall`, en `build` y en los scripts
+    nuevos `db:generate` / `db:deploy`.
 - **Archivos:** `backend/package.json`, `NOTAS.md`, `AGENTS.md` (dominio de
   producción corregido: no hay dominio propio, el frontend vive en
   `k9-pink.vercel.app`).
@@ -254,10 +263,19 @@ generalmente ya está reflejada en `AGENTS.md`.
     idénticos (`13/2/6/7/114/3`) y los historiales de prueba eliminados.
   - Producción: se confirmó por separado que el código nuevo está live (400 de
     validación) y que el fallo de vacuna es el cliente viejo (500
-    `Unknown argument 'tipo'`), no datos ni schema. Conteos restaurados a
-    `vaccine=13`, `history=114`, `user=3`.
-- **Aprendizaje:** "error al guardar" puede ser la base caída **y** un cliente
-  de Prisma desincronizado, y desde la UI se ven igual. `Unknown argument X`
-  con la columna existente en la DB y el mismo payload funcionando en local =
-  cliente generado viejo en el servidor: `prisma generate` también en
-  `postinstall`, no solo en `build`. Y `/health` no toca la base.
+    `Unknown argument 'tipo'`), no datos ni schema.
+  - Después del deploy con `postinstall`: `POST /api/dogs/8/vaccines` con
+    `tipo: 'antiparasitario'` → **201** y `DELETE` → 200 (el mismo request daba
+    500 tres minutos antes). Test completo en producción **11/11**: vacuna con
+    `tipo=desparasitacion`, control veterinario, entrenamiento
+    (`instructor` autocompletado con el usuario logueado), alimentación,
+    incidente, round-trip de `tipo` + `observaciones`, y las cuatro bajas.
+    Conteos idénticos `13/2/6/7/114/3`, usuario y registros de prueba borrados.
+- **Aprendizaje:** el build de Render no es el del repo: el servicio corre
+  **`npm install` a secas**. Si `prisma generate` vive solo en `build`, el
+  cliente nunca se regenera y una columna nueva en el schema da `Unknown
+  argument`. `postinstall` es el único hook que corre con ese build, y en esa
+  imagen hay que invocar la CLI con `node` porque el shim de `.bin` no tiene
+  permiso de ejecución (exit 127). `Unknown argument X` con la columna
+  existente en la DB y el mismo payload funcionando en local = cliente
+  generado viejo en el servidor. Y `/health` no toca la base.

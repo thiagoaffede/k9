@@ -34,8 +34,14 @@ hay abajo tiene un antecedente documentado ahí.
 - `frontend/` — React + Vite + Tailwind. SPA, sin router de servidor.
 - `render.yaml` — define los 2 servicios de Render (web + static).
 
-Flujo de deploy: pushear a `master` dispara el build en Render
-(`npm install && npm run build`) y en Vercel.
+Flujo de deploy: pushear a `master` dispara el build en Render y en Vercel.
+
+Ojo: el servicio de Render corre **solo `npm install`** como build (no
+`npm run build`, aunque `render.yaml` diga otra cosa). Por eso el `prisma
+generate` vive en `postinstall`, y ahí hay que invocar la CLI con `node
+./node_modules/prisma/build/index.js`: el shim de `node_modules/.bin/prisma`
+llega sin permiso de ejecución desde el build cache (`Permission denied`,
+exit 127).
 
 - Backend: `https://k9-emmo.onrender.com`
 - Frontend / producción: `https://k9-pink.vercel.app` (no hay dominio propio;
