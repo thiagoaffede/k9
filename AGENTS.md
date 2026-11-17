@@ -38,8 +38,8 @@ Flujo de deploy: pushear a `master` dispara el build en Render
 (`npm install && npm run build`) y en Vercel.
 
 - Backend: `https://k9-emmo.onrender.com`
-- Frontend (Vercel, preview): `https://k9-pink.vercel.app`
-- Producción: `https://seccioncanes.com`
+- Frontend / producción: `https://k9-pink.vercel.app` (no hay dominio propio;
+  `seccioncanes.com` no existe en DNS)
 - El frontend llama al backend por `VITE_API_URL`, con fallback local.
 
 ## Comandos

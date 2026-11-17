@@ -216,3 +216,48 @@ generalmente ya está reflejada en `AGENTS.md`.
   un string único del bundle (frontend) y el mensaje de una ruta nueva
   (backend, con token real) sí. `seccioncanes.com` no resuelve por DNS, así
   que el dominio de verificación es `k9-pink.vercel.app`.
+
+### 2026-11-16 — "Error al guardar la vacuna": base pausada + cliente Prisma viejo
+- **Qué:** el popup al guardar vacunas tenía **dos** causas encadenadas. (1) El
+  proyecto de Supabase estaba pausado: toda la API daba 500. (2) Después de
+  reanudarlo, solo `vaccines` seguía fallando con `Unknown argument 'tipo'`:
+  el cliente de Prisma que corre en Render está generado con un schema
+  anterior. Se agregó `postinstall: prisma generate` al `backend/package.json`.
+- **Por qué:**
+  - **Base pausada.** `POST /api/auth/login` devolvía 500 con
+    `FATAL: (ENOTFOUND) tenant/user postgres.sjigbclucixwbqbzabss not found`
+    (2/2, determinista) y `db.sjigbclucixwbqbzabss.supabase.co` daba NXDOMAIN,
+    mientras `supabase.com` y los hosts del pooler resolvían bien. Se reanudó
+    desde el dashboard y los datos volvieron intactos
+    (`dog=12`, `vaccine=13`, `history=114`, `user=3`).
+  - **Cliente viejo.** Con la base arriba, producción seguía rechazando la
+    vacuna: `Unknown argument 'tipo'. Did you mean 'id'?`. El código nuevo **sí**
+    está live (las validaciones 400 de `89bff28` responden: "La gravedad debe
+    ser baja, media o alta", "El nombre de la vacuna o producto es
+    obligatorio"), la columna `tipo` existe en la base
+    (`information_schema.columns` la lista) y el mismo payload guarda bien
+    contra esa base desde el backend local. Es la misma trampa del
+    `node_modules` commiteado: el cliente/engine del server quedó viejo.
+    `prisma generate` estaba solo en `build`; si Render reusa el build cache el
+    cliente no se regenera. `postinstall` lo garantiza en cualquier
+    `npm install`.
+- **Archivos:** `backend/package.json`, `NOTAS.md`, `AGENTS.md` (dominio de
+  producción corregido: no hay dominio propio, el frontend vive en
+  `k9-pink.vercel.app`).
+- **Verificación:**
+  - Antes de reanudar: login 500 `tenant/user ... not found` (2/2) y NXDOMAIN
+    de `db.<ref>.supabase.co`; contraste con dominios de Supabase que resuelven.
+  - Con la base arriba, backend local contra la base real: altas y bajas de
+    vacuna, control veterinario, entrenamiento y alimentación con el payload
+    exacto del formulario, round-trip de `observaciones`
+    (`tipo=vacuna`, `obs=nota de prueba`), `DELETE` 200 en las cuatro, conteos
+    idénticos (`13/2/6/7/114/3`) y los historiales de prueba eliminados.
+  - Producción: se confirmó por separado que el código nuevo está live (400 de
+    validación) y que el fallo de vacuna es el cliente viejo (500
+    `Unknown argument 'tipo'`), no datos ni schema. Conteos restaurados a
+    `vaccine=13`, `history=114`, `user=3`.
+- **Aprendizaje:** "error al guardar" puede ser la base caída **y** un cliente
+  de Prisma desincronizado, y desde la UI se ven igual. `Unknown argument X`
+  con la columna existente en la DB y el mismo payload funcionando en local =
+  cliente generado viejo en el servidor: `prisma generate` también en
+  `postinstall`, no solo en `build`. Y `/health` no toca la base.
