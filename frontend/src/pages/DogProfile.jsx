@@ -4,6 +4,7 @@ import api, { BASE_URL } from '../services/api';
 import { Activity, FileText, Printer, Trash2, PlusCircle, Dog as DogIcon, Edit, User, Award, MapPin } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import FichaTecnicaPDF from '../components/FichaTecnicaPDF';
+import { useFeedback } from '../context/FeedbackContext';
 import { fmtFecha, hoyISO } from '../utils/fecha';
 
 const TIPOS_VACUNA = {
@@ -16,10 +17,21 @@ const TIPOS_VACUNA = {
 const mensajeError = (err, fallback) =>
   err?.response?.data?.message || err?.response?.data?.error || fallback;
 
+// Etiquetas legibles para los avisos de alta/baja de sub-entidades.
+const ENTIDADES = {
+  vaccines: 'la vacuna',
+  vetcontrols: 'el control veterinario',
+  feedings: 'el registro de alimentación',
+  trainings: 'el entrenamiento',
+  assignments: 'la asignación',
+  incidents: 'el incidente'
+};
+
 const DogProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const { toast, confirm } = useFeedback();
   const [dog, setDog] = useState(null);
   const [activeTab, setActiveTab] = useState('resumen');
   
@@ -51,14 +63,21 @@ const DogProfile = () => {
     : 'https://via.placeholder.com/150?text=No+Foto';
 
   const handleDeleteDog = async () => {
-    if (window.confirm('¿Eliminar registro de este perro? (Soft Delete)')) {
-      try {
-        await api.delete(`/dogs/${dog.id}`);
-        navigate('/');
-      } catch (err) {
-        console.error(err);
-        alert(mensajeError(err, 'No se pudo eliminar el perro'));
-      }
+    const ok = await confirm({
+      titulo: 'Eliminar registro del perro',
+      mensaje: `¿Eliminar a ${dog.nombre}? Deja de aparecer en el listado, pero sus datos quedan guardados (soft delete).`,
+      confirmar: 'Eliminar',
+      tono: 'danger'
+    });
+    if (!ok) return;
+
+    try {
+      await api.delete(`/dogs/${dog.id}`);
+      toast.success(`${dog.nombre} se eliminó del listado`);
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+      toast.error(mensajeError(err, 'No se pudo eliminar el perro'));
     }
   };
 
@@ -69,20 +88,30 @@ const DogProfile = () => {
       setShowForm(false);
       setFormData({});
       fetchDog();
+      toast.success(`Se guardó ${ENTIDADES[endpoint] || 'el registro'}`);
     } catch (err) {
       console.error(err);
-      alert(mensajeError(err, 'No se pudo guardar el registro'));
+      toast.error(mensajeError(err, 'No se pudo guardar el registro'));
     }
   };
 
   const deleteSubEntity = async (endpointId) => {
-    if (!window.confirm('¿Borrar registro?')) return;
+    const entidad = endpointId.split('/')[0];
+    const ok = await confirm({
+      titulo: 'Borrar registro',
+      mensaje: `¿Borrar ${ENTIDADES[entidad] || 'este registro'}? Esta acción no se puede deshacer.`,
+      confirmar: 'Borrar',
+      tono: 'danger'
+    });
+    if (!ok) return;
+
     try {
       await api.delete(`/dogs/${dog.id}/${endpointId}`);
       fetchDog();
+      toast.success('Registro borrado');
     } catch (err) {
       console.error(err);
-      alert(mensajeError(err, 'No se pudo borrar el registro'));
+      toast.error(mensajeError(err, 'No se pudo borrar el registro'));
     }
   };
 
@@ -92,9 +121,10 @@ const DogProfile = () => {
       await api.put(`/dogs/${dog.id}`, editDogData);
       setEditDogData(null);
       fetchDog();
+      toast.success('Información del perro actualizada');
     } catch (err) {
       console.error(err);
-      alert(mensajeError(err, 'Error actualizando información del perro'));
+      toast.error(mensajeError(err, 'Error actualizando información del perro'));
     }
   };
 
@@ -119,24 +149,32 @@ const DogProfile = () => {
       });
       fetchDog();
       setShowPhotoModal(false);
+      toast.success('Foto de perfil actualizada');
     } catch (err) {
       console.error(err);
-      alert('Error al subir la foto');
+      toast.error(mensajeError(err, 'Error al subir la foto'));
     } finally {
       setUploading(false);
     }
   };
 
   const handleDeletePhoto = async () => {
-    if (window.confirm('¿Eliminar la foto de perfil?')) {
-      try {
-        await api.delete(`/dogs/${dog.id}/photo`);
-        fetchDog();
-        setShowPhotoModal(false);
-      } catch (err) {
-        console.error(err);
-        alert(mensajeError(err, 'Error al eliminar la foto'));
-      }
+    const ok = await confirm({
+      titulo: 'Eliminar foto de perfil',
+      mensaje: '¿Quitar la foto de este perro? Podés volver a subir otra cuando quieras.',
+      confirmar: 'Eliminar',
+      tono: 'danger'
+    });
+    if (!ok) return;
+
+    try {
+      await api.delete(`/dogs/${dog.id}/photo`);
+      fetchDog();
+      setShowPhotoModal(false);
+      toast.success('Foto eliminada');
+    } catch (err) {
+      console.error(err);
+      toast.error(mensajeError(err, 'Error al eliminar la foto'));
     }
   };
 

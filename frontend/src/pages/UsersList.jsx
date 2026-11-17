@@ -3,6 +3,7 @@ import api from '../services/api';
 import { Shield, Plus, Trash2, Edit, X } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useFeedback } from '../context/FeedbackContext';
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -12,6 +13,7 @@ const UsersList = () => {
   
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { toast, confirm } = useFeedback();
 
   const initialForm = { nombre: '', email: '', password: '', rol: 'guia' };
   const [formData, setFormData] = useState(initialForm);
@@ -62,19 +64,28 @@ const UsersList = () => {
       setShowModal(false);
       setFormData(initialForm);
       fetchUsers();
+      toast.success(editId ? 'Usuario actualizado' : 'Usuario creado');
     } catch (err) {
-      alert(err.response?.data?.message || 'Error guardando usuario');
+      toast.error(err.response?.data?.message || 'Error guardando usuario');
     }
   };
 
   const handleDelete = async (id) => {
-    if(window.confirm('¿Eliminar definitivamente a este usuario?')) {
-       try {
-          await api.delete(`/users/${id}`);
-          fetchUsers();
-       } catch (err) {
-          alert('Error eliminando: ' + (err.response?.data?.message || err.message));
-       }
+    const objetivo = users.find((u) => u.id === id);
+    const ok = await confirm({
+      titulo: 'Eliminar usuario',
+      mensaje: `¿Eliminar definitivamente a ${objetivo?.nombre || 'este usuario'}? No se puede deshacer.`,
+      confirmar: 'Eliminar',
+      tono: 'danger'
+    });
+    if (!ok) return;
+
+    try {
+      await api.delete(`/users/${id}`);
+      fetchUsers();
+      toast.success('Usuario eliminado');
+    } catch (err) {
+      toast.error('Error eliminando: ' + (err.response?.data?.message || err.message));
     }
   };
 

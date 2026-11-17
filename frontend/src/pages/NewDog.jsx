@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { useFeedback } from '../context/FeedbackContext';
 
 const NewDog = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const NewDog = () => {
     fecha_nacimiento: ''
   });
   const [foto, setFoto] = useState(null);
+  const { toast } = useFeedback();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,14 +32,15 @@ const NewDog = () => {
           });
         } catch (err) {
           console.error(err);
-          alert('El perro se guardó correctamente, pero la foto no se pudo subir. Podés intentarlo desde su perfil.');
+          toast.warning('El perro se guardó correctamente, pero la foto no se pudo subir. Podés intentarlo desde su perfil.');
         }
       }
 
+      toast.success('Perro registrado correctamente');
       navigate(`/dogs/${dogId}`);
     } catch (err) {
       console.error(err);
-      alert(err.response?.data?.message || 'Error registrando perro');
+      toast.error(err.response?.data?.message || 'Error registrando perro');
     }
   };
 

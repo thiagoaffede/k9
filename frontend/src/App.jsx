@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
+import { FeedbackProvider } from './components/Feedback';
 import Layout from './components/Layout';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -18,39 +19,41 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Layout>
-                <Dashboard />
-              </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/dogs/new" element={
-            <ProtectedRoute>
-               <Layout>
-                  <NewDog />
-               </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/dogs/:id" element={
-            <ProtectedRoute>
-               <Layout>
-                  <DogProfile />
-               </Layout>
-            </ProtectedRoute>
-          } />
-          <Route path="/users" element={
-             <ProtectedRoute>
+      <FeedbackProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={
+              <ProtectedRoute>
                 <Layout>
-                   <UsersList />
+                  <Dashboard />
                 </Layout>
-             </ProtectedRoute>
-          } />
-        </Routes>
-      </BrowserRouter>
+              </ProtectedRoute>
+            } />
+            <Route path="/dogs/new" element={
+              <ProtectedRoute>
+                <Layout>
+                  <NewDog />
+                </Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/dogs/:id" element={
+              <ProtectedRoute>
+                <Layout>
+                  <DogProfile />
+                </Layout>
+              </ProtectedRoute>
+            } />
+            <Route path="/users" element={
+              <ProtectedRoute>
+                <Layout>
+                  <UsersList />
+                </Layout>
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </FeedbackProvider>
     </AuthProvider>
   );
 }

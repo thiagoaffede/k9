@@ -317,3 +317,43 @@ generalmente ya está reflejada en `AGENTS.md`.
   es el único hook garantizado. Y una migración automática no puede ser fatal
   cuando la base puede estar pausada por el proveedor: loguear, arrancar
   degradado y dejar el comando a mano es mejor que no arrancar.
+
+### 2026-11-17 — Avisos y confirmaciones con el estilo del sistema
+- **Qué:** se reemplazaron los 14 diálogos nativos (`alert` y `window.confirm`)
+  de `NewDog`, `DogProfile` y `UsersList` por un sistema propio:
+  `FeedbackProvider` con avisos apilados arriba (`toast.success`, `.error`,
+  `.warning`, `.info`) y un modal de confirmación (`await confirm({...})`), con
+  los colores, tipografía y sombras del resto de la app. Se agregaron avisos de
+  éxito en las acciones que antes no daban feedback (guardar o borrar un
+  registro, actualizar o quitar la foto, crear o editar un usuario).
+- **Por qué:** los diálogos del navegador son negros, bloquean el hilo y no
+  respetan el diseño. Peor: `alert('Error al guardar la vacuna')` tapaba el
+  mensaje real del backend, así que el usuario veía un error genérico aunque la
+  API hubiera explicado la causa.
+- **Archivos:** `frontend/src/components/Feedback.jsx`,
+  `frontend/src/context/FeedbackContext.js`, `frontend/src/App.jsx`,
+  `frontend/src/index.css`,
+  `frontend/src/pages/{DogProfile,NewDog,UsersList}.jsx`.
+- **Decisiones:**
+  - Sin dependencias nuevas: React + Tailwind + lucide-react, que ya estaban.
+  - El hook vive en `context/FeedbackContext.js`, separado del componente,
+    porque exportar un hook y un componente en el mismo archivo rompe la regla
+    `react-refresh/only-export-components` (el mismo error que ya existía en
+    `AuthContext.jsx`). Así el lint queda en la línea base.
+  - El modal se cancela con Escape o click en el fondo y se confirma con Enter;
+    el foco arranca en el botón de confirmar y se bloquea el scroll del body.
+  - Las animaciones (`fb-toast`, `fb-overlay`, `fb-panel`) se definen en
+    `index.css` y se desactivan con `prefers-reduced-motion`.
+- **Verificación:**
+  - `npm run build` → OK.
+  - `npm run lint` → **9 problemas (6 errores, 3 warnings)**, exactamente la
+    línea base documentada; no se agregó ninguno.
+  - Smoke test con `vite build --ssr` sobre un entry temporal: el provider
+    renderiza, `toast` expone las 5 funciones y `confirm` es una función;
+    `useFeedback()` fuera del provider lanza error. Los archivos temporales se
+    borraron.
+  - Grep final sobre `frontend/src`: 0 usos de `alert(`, `window.confirm` ni
+    `prompt(`.
+- **Aprendizaje:** un solo provider con toasts + confirm reemplaza a los
+  diálogos nativos de toda la app sin repetir markup, y obliga a que los
+  handlers sean `async`: `confirm()` devuelve una promesa, no un booleano.
