@@ -357,3 +357,38 @@ generalmente ya está reflejada en `AGENTS.md`.
 - **Aprendizaje:** un solo provider con toasts + confirm reemplaza a los
   diálogos nativos de toda la app sin repetir markup, y obliga a que los
   handlers sean `async`: `confirm()` devuelve una promesa, no un booleano.
+
+### 2026-11-16 — Versionado y novedades en el login
+- **Qué:** el login muestra el número de versión y las últimas novedades, y el
+  pie del sidebar lleva `Sección Canes · vX.Y.Z`. Se agregó `scripts/versionar.js`
+  (`npm run versionar`) que arma la entrada a partir de los commits y escribe
+  `frontend/src/data/novedades.json`, `CHANGELOG.md` y la versión de
+  `frontend/package.json`. Primera versión publicada: `v1.1.0` (entrada `1.0.0`
+  con el resumen del sistema, tag `v1.1.0`).
+- **Por qué:** no había forma de saber qué versión está en producción ni de
+  contarle a la clienta qué cambió; un changelog escrito a mano se desactualiza.
+- **Archivos:** `package.json` (nuevo, raíz), `scripts/versionar.js`,
+  `CHANGELOG.md`, `frontend/src/data/novedades.json`,
+  `frontend/src/components/Novedades.jsx`, `frontend/src/pages/Login.jsx`,
+  `frontend/src/components/Layout.jsx`, `frontend/package.json`.
+- **Verificación:**
+  - `npm run versionar -- --dry` con el `hash` apuntando a HEAD → "No hay nada
+    para versionar." (no inventa versiones vacías).
+  - Después del commit de la feature → `1.0.0 -> v1.1.0 (minor)` con la viñeta
+    del commit, y escribió los 3 archivos.
+  - `npm run build` → OK. `npm run lint` → **9 problemas (6 errores, 3
+    warnings)**: la línea base, no se agregó ninguno.
+  - Local (`:5173/login`) con `chrome --headless --dump-dom`: renderiza
+    `Novedades · v1.0.0 · Nuevo` y las 3 primeras viñetas.
+  - Producción con caso control: el asset anterior `index-XVtCStM_.js` **no**
+    tenía los textos nuevos; tras el push Vercel sirvió `index-CCoUp_HR.js` con
+    "Ver versiones anteriores" y "Mostrar novedades versionadas en el login".
+    DOM de `https://k9-pink.vercel.app/login`: `Novedades | v1.1.0 | Nuevo |
+    16/11/2026`.
+  - Limpieza: se borró el usuario `ui-e2e@test.local` y la fila de `History`
+    que había quedado del E2E; conteos de vuelta en dog 12 · vaccine 13 ·
+    history 116 · user 3.
+- **Aprendizaje:** la versión tiene que salir de un archivo versionado
+  (`novedades.json`), no de `git describe`: Vercel deploya el repo sin tags. Y
+  como el login es público, el texto de cada viñeta no puede nombrar servidores,
+  credenciales ni módulos internos.
