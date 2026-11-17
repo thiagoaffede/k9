@@ -1,0 +1,9 @@
+{
+  "name": "k9",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sección Canes - gestión operativa",
+  "scripts": {
+    "versionar": "node scripts/versionar.js"
+  }
+}

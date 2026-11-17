@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Dog, LogOut, Menu, X, Shield } from 'lucide-react';
+import datos from '../data/novedades.json';
 
 const Layout = ({ children }) => {
   const { user, logout } = useContext(AuthContext);
@@ -100,6 +101,10 @@ const Layout = ({ children }) => {
           <button onClick={handleLogout} className="flex items-center w-full p-3 text-red-500 font-medium hover:bg-red-50 rounded-xl transition-colors">
             <LogOut className="w-5 h-5 mr-3" /> Cerrar Sesión
           </button>
+
+          <p className="mt-3 text-center text-[11px] text-slate-400" title="Versión en producción">
+            Sección Canes · v{datos.actual}
+          </p>
         </div>
       </aside>
 

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Shield, Lock, User, ArrowRight } from 'lucide-react';
+import Novedades from '../components/Novedades';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -21,7 +22,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%)' }}>
+    <div className="min-h-screen flex items-center justify-center relative overflow-x-hidden py-10" style={{ background: 'linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%)' }}>
       
       {/* Decorative Blur Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
@@ -73,6 +74,8 @@ const Login = () => {
             <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
         </form>
+
+        <Novedades />
       </div>
     </div>
   );
