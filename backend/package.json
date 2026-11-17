@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "prisma generate && node index.js",
-    "build": "prisma generate && prisma migrate deploy",
+    "start": "node index.js",
+    "db:generate": "node ./node_modules/prisma/build/index.js generate",
+    "db:deploy": "node ./node_modules/prisma/build/index.js migrate deploy",
+    "build": "npm run db:generate && npm run db:deploy",
+    "postinstall": "node ./node_modules/prisma/build/index.js generate",
     "dev": "nodemon index.js"
   },
   "keywords": [],
