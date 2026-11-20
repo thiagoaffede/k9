@@ -125,13 +125,35 @@ K9/
 │   └── seed.js                    # Seed (admin@k9.com)
 ├── frontend/
 │   ├── src/
-│   │   ├── components/            # Layout, FichaTecnicaPDF
-│   │   ├── context/               # AuthContext
+│   │   ├── components/            # Layout, FichaTecnicaPDF, Feedback, Novedades
+│   │   ├── context/               # AuthContext, FeedbackContext
+│   │   ├── data/                  # novedades.json (versión del login)
 │   │   ├── pages/                 # Login, Dashboard, DogProfile, etc.
-│   │   └── services/              # API client (axios)
+│   │   ├── services/              # API client (axios)
+│   │   └── utils/                 # fecha.js
 │   └── vite.config.js
+├── scripts/versionar.js           # nueva versión a partir de los commits
+├── CHANGELOG.md                   # historial de versiones
+├── package.json                   # npm run versionar
 └── render.yaml                    # Deploy config
 ```
+
+---
+
+## 🆕 Versiones y novedades
+
+El login muestra la versión actual y las últimas novedades; el pie del sidebar
+también lleva el número. Cada tanda de cambios se versiona desde la raíz:
+
+```bash
+npm run versionar -- --dry     # vista previa, no escribe nada
+npm run versionar              # actualiza novedades.json, CHANGELOG.md y package.json
+npm run versionar -- --commit  # + commit y tag vX.Y.Z
+```
+
+`feat` sube minor, `fix`/`perf` sube patch y un `!` en el subject sube major.
+Los cambios internos (`docs`, `chore`, `refactor`) no se muestran en el login.
+Versión actual: **1.1.0**.
 
 ---
 

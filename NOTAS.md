@@ -392,3 +392,20 @@ generalmente ya está reflejada en `AGENTS.md`.
   (`novedades.json`), no de `git describe`: Vercel deploya el repo sin tags. Y
   como el login es público, el texto de cada viñeta no puede nombrar servidores,
   credenciales ni módulos internos.
+
+### 2026-11-20 — Contexto del repo actualizado con el versionado
+- **Qué:** se incorporó a `AGENTS.md` el flujo completo de `npm run versionar`
+  (comandos, reglas de salto, archivos que escribe, tag y `--follow-tags`) y un
+  apartado breve en `README.md`. Estado registrado: **v1.1.0**, tag `v1.1.0`,
+  deploy verificado en `k9-pink.vercel.app`.
+- **Por qué:** el contexto operativo que lee un agente nuevo seguía sin
+  mencionar cómo se publican las versiones ni que Vercel no clona los tags;
+  cualquier sesión nueva tendría que reconstruir la decisión desde cero.
+- **Archivos:** `AGENTS.md`, `README.md`, `NOTAS.md`.
+- **Verificación:** `npm run versionar -- --dry` → "Solo hubo cambios internos
+  (docs, chore, refactor): no hay nada visible para versionar" (los commits
+  desde 1.1.0 son el release y esta nota, ambos internos); `frontend/package.json`
+  en 1.1.0;
+  `git tag` → `v1.1.0`; `git status -sb` sin cambios pendientes.
+- **Aprendizaje:** documentar el flujo nuevo en `AGENTS.md` apenas se crea. Si se
+  deja para después, el próximo agente inventa otro mecanismo de versionado.

@@ -32,6 +32,9 @@ hay abajo tiene un antecedente documentado ahí.
 
 - `backend/` — Express + Prisma. Puerto 5000 en dev, 10000 en Render.
 - `frontend/` — React + Vite + Tailwind. SPA, sin router de servidor.
+- `scripts/versionar.js` + `package.json` (raíz) — generan las versiones.
+- `CHANGELOG.md` + `frontend/src/data/novedades.json` — el historial que ve
+  la clienta en el login.
 - `render.yaml` — define los 2 servicios de Render (web + static).
 
 Flujo de deploy: pushear a `master` dispara el build en Render y en Vercel.
@@ -61,6 +64,7 @@ exit 127).
 | `frontend/` | `npm run dev` | Vite |
 | `frontend/` | `npm run build` | build |
 | `frontend/` | `npm run lint` | ESLint |
+| raíz | `npm run versionar` | nueva versión desde los commits (`--dry`, `--commit`, `--major/--minor/--patch`) |
 
 Las migraciones se aplican **solas al arrancar** (`scripts/migrate.js` dentro
 de `npm start`), porque Render nunca corre `npm run build`. El script invoca la
@@ -150,6 +154,23 @@ Las herramientas pueden truncar la salida. Si ves
 `postgres.sjig...:esto_es_una_prue...`, **no completes de memoria**: leelo
 programáticamente (`[uri]$url.UserInfo`) y verificá que la credencial
 funcione antes de pedirle a alguien que la configure.
+
+### 8. La versión sale de los commits, se publica por tanda
+Después de una tanda de cambios, corré `npm run versionar` desde la raíz.
+Reglas: `feat` → minor, `fix`/`perf` → patch, `!` en el subject (o `--major`)
+→ major; `docs`/`chore`/`refactor` se omiten y si no queda nada visible **no se
+crea versión**. Siempre probá antes con `npm run versionar -- --dry`.
+
+El script escribe `frontend/src/data/novedades.json`, `CHANGELOG.md` y la
+versión de `frontend/package.json`. Commitealos con
+`chore(release): vX.Y.Z` y creá el tag `vX.Y.Z` (identidad con `git -c`).
+Para que el tag suba: `git push origin master --follow-tags`.
+
+La UI lee el número de `novedades.json`, **no** `git describe`: Vercel no clona
+los tags. El login es público, así que las viñetas no pueden nombrar
+servidores, credenciales ni módulos internos: revisá el `--dry` antes de
+publicar. Editar a mano una entrada vieja del JSON es seguro; el script solo
+agrega la nueva al principio. Estado actual: **v1.1.0** (tag `v1.1.0`).
 
 ---
 
